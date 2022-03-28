@@ -2,15 +2,17 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { debounce } from 'lodash';
 import { useDispatch } from 'react-redux';
+import { Container } from '@mui/material';
 
 // Actions
 import { setDimension } from './actions/commonAction';
 
 // Rotues
+import Header from './components/Header';
+import Footer from './components/Footer';
 import Home from './pages/Home';
 import Search from './pages/Search';
 import NotFound from './pages/NotFound';
-import Header from './pages/Header';
 
 function App() {
 
@@ -34,11 +36,21 @@ function App() {
   return (
     <>
       <Header />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/search" element={<Search />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+      <Container
+        maxWidth="xl"
+        sx={{
+          height: '80vh'
+        }}
+      >
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/search" element={<Search />}>
+            <Route path=":itemName" element={<Search />} />
+          </Route>
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Container>
+      <Footer />
     </>
   );
 }

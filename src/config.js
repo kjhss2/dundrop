@@ -1,7 +1,3 @@
-export const API_SERVER = process.env.NODE_ENV === 'production'
-  ? 'http://localhost:8080'
-  : 'http://localhost:8080';
-
-export const VERSION = '/dundrop';
-
-export const API_SERVER_BASE_URL = API_SERVER + VERSION;
+export const IS_DEV = process.env.NODE_ENV === 'production' ? false : true;
+export const NEOPLE_API_SERVER = 'https://api.neople.co.kr/df';
+export const API_KEY = '&apikey=';
