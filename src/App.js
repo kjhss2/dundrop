@@ -7,7 +7,7 @@ import { Container } from '@mui/material';
 // Actions
 import { setDimension } from './actions/commonAction';
 
-// Rotues
+// Pages
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Home from './pages/Home';
@@ -39,7 +39,8 @@ function App() {
       <Container
         maxWidth="xl"
         sx={{
-          height: '80vh'
+          padding: 5,
+          minHeight: '80vh'
         }}
       >
         <Routes>

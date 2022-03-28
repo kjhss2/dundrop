@@ -6,17 +6,15 @@ const NotFound = () => {
     <Container
       style={{
         display: 'flex',
-        height: '80vh',
+        minHeight: '50vh',
         alignItems: 'center',
         justifyContent: 'center'
       }}
     >
       <Typography
         variant="h3"
-        // noWrap
         component="div"
         sx={{
-          // flexGrow: 1,
           display: {
             // xs: 'flex',
             // md: 'none'

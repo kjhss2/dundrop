@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
-
 import * as ActionTypes from '../ActionTypes';
 
 // reducers
 import { commonState } from './commonReducer';
+import { itemSearchState } from './itemSearchReducer';
 
 // dimension
 const dimension = (state = { height: window.innerHeight, width: window.innerWidth }, action) => {
@@ -14,8 +14,8 @@ const dimension = (state = { height: window.innerHeight, width: window.innerWidt
 };
 
 const rootReducer = combineReducers({
-  // 공통
   commonState,
+  itemSearchState,
 
   // browser width, height
   dimension,

@@ -1,0 +1,108 @@
+import React from "react";
+import { Avatar, Box, Modal, TextareaAutosize, Typography } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+
+// Actions
+import { onChangeField } from "../actions/itemSearchAction";
+
+// Components
+
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  // width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
+
+const SearchItemDetailModal = () => {
+
+  const dispatch = useDispatch();
+  const { width } = useSelector((state) => state.dimension);
+  const { searchItem } = useSelector((state) => state.itemSearchState);
+  const { itemId, itemName, itemExplain, growInfo, itemObtainInfo } = searchItem;
+
+  const handleClose = () => {
+    dispatch(onChangeField('searchItem', {}));
+  };
+
+  return (
+    <Modal
+      open={(searchItem && searchItem.itemId) ? true : false}
+      onClose={handleClose}
+      aria-labelledby="modal-modal-title"
+      aria-describedby="modal-modal-description"
+    >
+      <Box sx={style}>
+
+        <Box sx={{ display: 'flex' }}>
+          <Avatar alt="Remy Sharp" src={`https://img-api.neople.co.kr/df/items/${itemId}`} />
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            &nbsp;<Typography>{itemName}</Typography>
+          </Box>
+        </Box>
+
+        <Box sx={{ marginTop: 2 }}>
+          <Typography>{itemExplain}</Typography>
+        </Box>
+
+        {
+          (growInfo && growInfo.total) &&
+          <>
+            <Box sx={{ marginTop: 2 }}>
+              <Typography>{`성장 옵션 총 피해 증가 ${growInfo.total.damage}`}</Typography>
+              {
+                growInfo.total.buff &&
+                <Typography>{`성장 옵션 총 버프력 증가 ${growInfo.total.buff}`}</Typography>
+              }
+            </Box>
+          </>
+        }
+
+        {
+          (growInfo && growInfo.options) &&
+          <>
+            <Box>
+              {
+                growInfo.options.map((option, index) => (
+                  <Box key={index} sx={{ marginTop: 2 }}>
+                    <Box sx={{ display: 'flex' }}>
+                      <Typography>{`${index + 1}옵션 - Lv(${option.level})`}&nbsp;</Typography>
+                      <Typography>{`| 피해 증가 ${option.damage}`}&nbsp;</Typography>
+                      {
+                        option.buff &&
+                        <Typography>{`| 버프력 ${option.buff}`}</Typography>
+                      }
+                    </Box>
+                    <Typography
+                      variant="body2"
+                      color="text.primary"
+                    >
+                      {`${option.explain}`}
+                    </Typography>
+                  </Box>
+                ))
+              }
+            </Box>
+          </>
+        }
+
+        <Box sx={{ marginTop: 2 }}>
+          <Typography variant="h6">{`획득 정보`}</Typography>
+          <TextareaAutosize
+            aria-label="empty textarea"
+            disabled
+            style={{ minWidth: (width * 0.8) }}
+            defaultValue={itemObtainInfo}
+          />
+        </Box>
+      </Box>
+    </Modal >
+  );
+};
+
+export default SearchItemDetailModal;

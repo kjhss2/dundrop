@@ -3,8 +3,8 @@ import { useNavigate, Outlet, useMatch, useResolvedPath } from 'react-router-dom
 import { AppBar, Box, Button, Container, Toolbar } from "@mui/material";
 
 const menus = [
-  { title: '아이템 검색', url: '/search' },
-  { title: '아이템 검색2', url: '/search2' },
+  { title: '아이템 검색(기본)', url: '/search' },
+  { title: '아이템 검색(컨셉)', url: '/concept' },
 ];
 
 const Header = () => {
@@ -49,7 +49,6 @@ const MenuItem = ({ title, url }) => {
   const match = useMatch({ path: resolved.pathname, end: true });
 
   const activeStyle = {
-    // color: 'green',
     fontWeight: 'bold',
     textDecorationLine: 'underline'
   };

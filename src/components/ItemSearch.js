@@ -5,8 +5,8 @@ import { useNavigate, useParams } from "react-router-dom";
 const ItemSearch = () => {
 
   const { itemName: itemNameParam } = useParams();
-  const [itemName, setItemName] = React.useState(itemNameParam);
   const navigate = useNavigate();
+  const [itemName, setItemName] = React.useState(itemNameParam);
 
   const goToItemSearch = () => {
     if (!itemName) {
@@ -19,20 +19,29 @@ const ItemSearch = () => {
   return (
     <Box
       sx={{
-        flex: 1,
-        justifyContent: 'center',
-        alignContent: 'center',
+        display: 'flex',
       }}
     >
-      <TextField
-        id="outlined-basic"
-        label="아이템 검색"
-        variant="outlined"
-        defaultValue={itemNameParam}
-        onChange={(e) => setItemName(e.target.value)}
-        onKeyDown={(e) => e.key === 'Enter' && goToItemSearch()}
-      />
-      <Button variant="text" onClick={() => goToItemSearch()}>검색</Button>
+      <Box sx={{
+        display: 'flex',
+        flexGrow: 1,
+      }}>
+        <TextField
+          id="outlined-basic"
+          label="아이템 검색"
+          variant="outlined"
+          fullWidth
+          defaultValue={itemNameParam}
+          onChange={(e) => setItemName(e.target.value)}
+          onKeyDown={(e) => e.key === 'Enter' && goToItemSearch()}
+        />
+      </Box>
+      <Box sx={{
+        flexGrow: 1,
+        display: 'flex',
+      }}>
+        <Button variant="text" onClick={() => goToItemSearch()}>검색</Button>
+      </Box>
     </Box>
   );
 };
