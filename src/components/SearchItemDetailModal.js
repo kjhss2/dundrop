@@ -22,7 +22,7 @@ const style = {
 const SearchItemDetailModal = () => {
 
   const dispatch = useDispatch();
-  const { width } = useSelector((state) => state.dimension);
+  const { width, height } = useSelector((state) => state.dimension);
   const { searchItem } = useSelector((state) => state.itemSearchState);
   const { itemId, itemName, itemExplain, growInfo, itemObtainInfo } = searchItem;
 
@@ -37,7 +37,7 @@ const SearchItemDetailModal = () => {
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <Box sx={style}>
+      <Box sx={[style, { height: (height * 0.8), overflow: 'auto' }]}>
 
         <Box sx={{ display: 'flex' }}>
           <Avatar alt="Remy Sharp" src={`https://img-api.neople.co.kr/df/items/${itemId}`} />

@@ -24,7 +24,7 @@ const SearchItems = () => {
         // maxHeight: '60vh'
       }}>
         {
-          searchItems.map((item, index) => (
+          searchItems && searchItems.map((item, index) => (
             <SearchItem key={index} item={item} onSearchItemDetail={onSearchItemDetail} />
           ))
         }
