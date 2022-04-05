@@ -24,7 +24,7 @@ const SearchItemDetailModal = () => {
   const dispatch = useDispatch();
   const { width, height } = useSelector((state) => state.dimension);
   const { searchItem } = useSelector((state) => state.itemSearchState);
-  const { itemId, itemName, itemExplain, growInfo, itemObtainInfo } = searchItem;
+  const { itemId, itemName, itemAvailableLevel, itemExplain, growInfo, itemObtainInfo } = searchItem;
 
   const handleClose = () => {
     dispatch(onChangeField('searchItem', {}));
@@ -40,9 +40,12 @@ const SearchItemDetailModal = () => {
       <Box sx={[style, { height: (height * 0.8), overflow: 'auto' }]}>
 
         <Box sx={{ display: 'flex' }}>
-          <Avatar alt="Remy Sharp" src={`https://img-api.neople.co.kr/df/items/${itemId}`} />
+          <Avatar alt="Remy Sharp" src={`https://img-api.neople.co.kr/df/items/${itemId}`} variant="square" />
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             &nbsp;<Typography>{itemName}</Typography>
+          </Box>
+          <Box sx={{ display: 'flex', flexGrow: 1, alignItems: 'center', justifyContent: 'flex-end' }}>
+            <Typography>레벨제한 : {itemAvailableLevel}</Typography>
           </Box>
         </Box>
 
@@ -80,7 +83,7 @@ const SearchItemDetailModal = () => {
                     </Box>
                     <Typography
                       variant="body2"
-                      color="text.primary"
+                      color="cadetblue"
                     >
                       {`${option.explain}`}
                     </Typography>

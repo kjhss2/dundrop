@@ -50,7 +50,7 @@ const SearchItem = ({ item, onSearchItemDetail }) => {
       <ListItem alignItems="flex-start">
 
         <ListItemAvatar>
-          <Avatar alt="Remy Sharp" src={`https://img-api.neople.co.kr/df/items/${itemId}`} />
+          <Avatar alt="Remy Sharp" src={`https://img-api.neople.co.kr/df/items/${itemId}`} variant="square" />
         </ListItemAvatar>
 
         <ListItemText
