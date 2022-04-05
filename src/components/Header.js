@@ -3,8 +3,8 @@ import { useNavigate, Outlet, useMatch, useResolvedPath } from 'react-router-dom
 import { AppBar, Box, Button, Container, Toolbar } from "@mui/material";
 
 const menus = [
+  { title: '아이템 검색(105렙)', url: '/search105' },
   { title: '아이템 검색', url: '/search' },
-  { title: '아이템 검색(105렙)', url: '/concept' },
 ];
 
 const Header = () => {
