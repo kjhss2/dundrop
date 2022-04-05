@@ -3,8 +3,8 @@ import { useNavigate, Outlet, useMatch, useResolvedPath } from 'react-router-dom
 import { AppBar, Box, Button, Container, Toolbar } from "@mui/material";
 
 const menus = [
-  { title: '아이템 검색(기본)', url: '/search' },
-  { title: '아이템 검색(컨셉)', url: '/concept' },
+  { title: '아이템 검색', url: '/search' },
+  { title: '아이템 검색(105렙)', url: '/concept' },
 ];
 
 const Header = () => {
@@ -18,9 +18,9 @@ const Header = () => {
 
             <Button
               onClick={() => navigate("/")}
-              sx={{ my: 2, color: 'white', display: 'block', fontSize: 22 }}
+              sx={{ my: 2, color: 'white', display: 'block', fontSize: 17 }}
             >
-              DunDrop
+              DunDrop(Beta)
             </Button>
 
             <Box
@@ -59,7 +59,7 @@ const MenuItem = ({ title, url }) => {
         {
           my: 2,
           color: 'white',
-          fontSize: 18,
+          fontSize: 15,
           marginRight: 3,
         },
         match && activeStyle

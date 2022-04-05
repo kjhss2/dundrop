@@ -26,7 +26,6 @@ export const searchItemDetailFetch = (id) => {
   return (dispatch) => {
     callAPI(`/items/${id}?`)
       .then(response => {
-        console.log(response);
         const { status, data } = response;
         if (status === 200) {
           dispatch({

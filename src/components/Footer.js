@@ -14,8 +14,10 @@ const Footer = () => {
           alt="Neople 오픈 API"
           onClick={() => window.open('https://developers.neople.co.kr')}
         />
+      </div>
+      <div>
         <Typography
-          variant="h7"
+          variant="h6"
           component="div"
           sx={{
             // flexGrow: 1,
@@ -25,7 +27,7 @@ const Footer = () => {
             },
           }}
         >
-          {'오류 & 건의 문의 : kjhss2@nate.com'}
+          {'오류 & 건의 : kjhss2@nate.com'}
         </Typography>
       </div>
     </Container>
