@@ -12,6 +12,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import Home from './pages/Home';
 import Search from './pages/Search';
+import ItemSearch105 from './pages/ItemSearch105';
 import NotFound from './pages/NotFound';
 
 function App() {
@@ -48,6 +49,7 @@ function App() {
           <Route path="/search" element={<Search />}>
             <Route path=":itemName" element={<Search />} />
           </Route>
+          <Route path="/search105" element={<ItemSearch105 />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Container>
