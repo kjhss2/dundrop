@@ -1,5 +1,6 @@
 import { callAPI } from '../lib/CommonApi';
 import * as ActionTypes from '../redux/ActionTypes';
+import { chooseByTagItems } from './commonData';
 
 export const searchItemsFetch = (itemName) => {
 
@@ -31,6 +32,31 @@ export const searchItemDetailFetch = (id) => {
           dispatch({
             type: ActionTypes.ITEM__FETCH_ITEM_DETAIL,
             item: data
+          });
+        }
+      });
+  };
+};
+
+export const searchItems105Fetch = (itemName, tags) => {
+
+  let makeTagURL = '';
+
+  if (tags) {
+    makeTagURL = chooseByTagItems[0].itemIds;
+    console.log(makeTagURL);
+  }
+
+  const url = `/multi/items?itemIds=${makeTagURL}&q=minLevel:105,rarity:에픽&limit=30&wordType=front&`;
+
+  return (dispatch) => {
+    callAPI(url)
+      .then(response => {
+        const { status, data } = response;
+        if (status === 200) {
+          dispatch({
+            type: ActionTypes.ITEM__FETCH_ITEMS,
+            items: data.rows
           });
         }
       });
