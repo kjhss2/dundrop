@@ -14,7 +14,7 @@ const SearchComponent = () => {
   const [itemType, setItemType] = React.useState('ALL');
 
   const onSearch = () => {
-    dispatch(searchItems105Fetch(keyword, tags));
+    dispatch(searchItems105Fetch(tags, keyword));
   };
 
   return (

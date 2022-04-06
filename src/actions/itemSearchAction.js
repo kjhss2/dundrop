@@ -1,6 +1,6 @@
 import { callAPI } from '../lib/CommonApi';
 import * as ActionTypes from '../redux/ActionTypes';
-import { chooseByTagItems } from './commonData';
+import { chooseByTagItems, itemDropInfos } from './commonData';
 
 export const searchItemsFetch = (itemName) => {
 
@@ -38,16 +38,27 @@ export const searchItemDetailFetch = (id) => {
   };
 };
 
-export const searchItems105Fetch = (itemName, tags) => {
+export const searchItems105Fetch = (tags, itemName) => {
 
-  let makeTagURL = '';
+  let requestUrl = '';
 
-  if (tags) {
-    makeTagURL = chooseByTagItems[0].itemIds;
-    console.log(makeTagURL);
+  if (tags && tags.length > 0) {
+
+    let makeTagItemIds = '';
+    tags.forEach(tag => {
+      makeTagItemIds = makeTagItemIds.concat(itemDropInfos.filter(({ tags }) => tags.indexOf(tag) > -1).map(({ itemId }) => itemId));
+    });
+    if (!makeTagItemIds) {
+      window.alert('해당 하는 Tag가 존재 하지 않습니다.');
+      return () => { };
+    }
+    requestUrl = `/multi/items?itemIds=${makeTagItemIds}`;
+  } else {
+    requestUrl = `/items?itemName=${itemName}`;
   }
 
-  const url = `/multi/items?itemIds=${makeTagURL}&q=minLevel:105,rarity:에픽&limit=30&wordType=front&`;
+  const endPoint = `&q=minLevel:105,rarity:에픽&limit=30&wordType=front&`;
+  const url = requestUrl + endPoint;
 
   return (dispatch) => {
     callAPI(url)

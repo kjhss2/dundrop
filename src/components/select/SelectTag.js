@@ -19,7 +19,7 @@ const SelectTag = ({ tags, setTags }) => {
         <Select
           labelId="select-tag-checkbox-label"
           id="select-tag"
-          multiple
+          // multiple
           value={tags}
           onChange={handleChange}
           input={<OutlinedInput label="Tag" />}

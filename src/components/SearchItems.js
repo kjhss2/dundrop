@@ -6,6 +6,7 @@ import { Search } from '@mui/icons-material';
 // Actions
 import { searchItemDetailFetch } from "../actions/itemSearchAction";
 import SearchItemDetailModal from "./SearchItemDetailModal";
+import { IS_DEV } from "../config";
 
 const SearchItems = () => {
 
@@ -71,6 +72,7 @@ const SearchItem = ({ item, onSearchItemDetail }) => {
               {` | ${itemType} `}
               {` | ${itemTypeDetail} `}
               {` | 레벨제한 ${itemAvailableLevel}`}
+              {IS_DEV && ` | ${itemId}`}
             </React.Fragment>
           }
         />
