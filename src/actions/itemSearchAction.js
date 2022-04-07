@@ -71,6 +71,7 @@ export const searchItems105Fetch = (searchTags, itemName) => {
       return () => { };
     }
     requestUrl = `/multi/items?itemIds=${makeTagItemIds}`;
+    endPoint = `&`;
   } else {
     requestUrl = `/items?itemName=${itemName}`;
     endPoint = `&q=minLevel:105,rarity:에픽&limit=30&wordType=front&`;
