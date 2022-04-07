@@ -28,7 +28,7 @@ export const tagItems = [
   { id: 't-027', label: '#Wa!!', value: 'Wa!!' },
   { id: 't-028', label: '#빙결', value: '빙결' },
   { id: 't-029', label: '#점프', value: '점프' },
-  { id: 't-030', label: '#무력하', value: '무력하' },
+  { id: 't-030', label: '#무력화', value: '무력화' },
   { id: 't-031', label: '#파티', value: '파티' },
   { id: 't-032', label: '#아이템 사용', value: '아이템 사용' },
   { id: 't-033', label: '#MP 유지', value: 'MP 유지' },
