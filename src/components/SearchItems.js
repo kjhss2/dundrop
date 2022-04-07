@@ -84,7 +84,7 @@ const SearchItem = ({ item, onSearchItemDetail, isMobile }) => {
 
         <Box
           sx={{
-            width: 500,
+            width: 450,
           }}
         >
           <ListItemText
@@ -128,28 +128,22 @@ const SearchItem = ({ item, onSearchItemDetail, isMobile }) => {
             flexGrow: 1,
           }}
         >
-          <ListItemText
-            primary={'드랍 정보'}
-            sx={{
-              color: '#df6a07'
-            }}
-            secondary={
-              <React.Fragment>
-                <Typography
-                  sx={{ display: 'inline' }}
-                  component="span"
-                  variant="body2"
-                  color="text.primary"
-                >
-                  {
-                    dropInfos.map((info, index) => (
-                      <React.Fragment key={index}>{info}</React.Fragment>
-                    ))
-                  }
-                </Typography>
-              </React.Fragment>
-            }
-          />
+          <Typography
+            sx={{ color: '#df6a07' }}
+          >
+            드랍 정보
+          </Typography>
+          {
+            dropInfos.map((info, index) => (
+              <Typography key={index}
+                // component="span"
+                variant="body2"
+                color="text.primary"
+              >
+                {info}
+              </Typography>
+            ))
+          }
         </Box>
 
         <ListItemIcon>
