@@ -1,7 +1,8 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Avatar, IconButton, List, ListItem, ListItemAvatar, ListItemIcon, ListItemText, Typography } from "@mui/material";
+import { Avatar, Box, IconButton, List, ListItem, ListItemAvatar, ListItemIcon, ListItemText, Typography } from "@mui/material";
 import { Search } from '@mui/icons-material';
+import Skeleton from '@mui/material/Skeleton';
 
 // Actions
 import { searchItemDetailFetch } from "../actions/itemSearchAction";
@@ -12,6 +13,7 @@ const SearchItems = () => {
 
   const dispatch = useDispatch();
   const { searchItems } = useSelector((state) => state.itemSearchState);
+  const { isRequesting } = useSelector((state) => state.commonState);
 
   const onSearchItemDetail = (id) => {
     dispatch(searchItemDetailFetch(id));
@@ -19,25 +21,42 @@ const SearchItems = () => {
 
   return (
     <>
-      <List sx={{
-        bgcolor: 'background.paper',
-        overflow: 'auto',
-        // maxHeight: '60vh'
-      }}>
-        {
-          searchItems && searchItems.map((item, index) => (
-            <SearchItem key={index} item={item} onSearchItemDetail={onSearchItemDetail} />
-          ))
-        }
-        {
-          (searchItems && searchItems.length === 0) &&
-          <Typography
-            color="text.primary"
-          >
-            {'조회된 정보가 없습니다.'}
-          </Typography>
-        }
-      </List>
+      {
+        isRequesting ?
+          <Box sx={{
+            display: 'flex',
+            p: 1,
+            gap: 1
+          }}>
+            <Skeleton variant="circular" width={40} height={40} />
+            <Box sx={{
+              flexGrow: 1
+            }}>
+              <Skeleton variant="text" animation="wave" width={'100%'} />
+              <Skeleton variant="text" animation="wave" width={'100%'} />
+            </Box>
+          </Box>
+          :
+          <List sx={{
+            bgcolor: 'background.paper',
+            overflow: 'auto',
+            // maxHeight: '60vh'
+          }}>
+            {
+              searchItems && searchItems.map((item, index) => (
+                <SearchItem key={index} item={item} onSearchItemDetail={onSearchItemDetail} />
+              ))
+            }
+            {
+              (searchItems && searchItems.length === 0) &&
+              <Typography
+                color="text.primary"
+              >
+                {'조회된 정보가 없습니다.'}
+              </Typography>
+            }
+          </List>
+      }
       <SearchItemDetailModal />
     </>
   );

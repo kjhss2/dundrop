@@ -61,7 +61,7 @@ export const searchItems105Fetch = (tags, itemName) => {
   const url = requestUrl + endPoint;
 
   return (dispatch) => {
-    callAPI(url)
+    callAPI(url, {}, dispatch)
       .then(response => {
         const { status, data } = response;
         if (status === 200) {
