@@ -39,33 +39,39 @@ export const searchItemDetailFetch = (id) => {
 };
 
 export const searchItems105Fetch = (itemTypeKeyword, tagsKeyword, itemNameKeyword) => {
-
-  let filteredItems = allItems;
-
-  if (tagsKeyword && tagsKeyword.length > 0) {
-    tagsKeyword.forEach(tag => {
-      filteredItems = filteredItems.filter(({ tags }) => {
-        const splitTags = tags[0].split(',');
-        if (splitTags.indexOf(tag) > -1) {
-          return true;
-        } else {
-          return false;
-        }
-      });
-    });
-  }
-
-  // 장비유형 필터
-  if (itemTypeKeyword !== 'ALL') {
-    filteredItems = filteredItems.filter(({ itemType }) => itemType.includes(itemTypeKeyword));
-  }
-
-  // 아이템명 필터
-  if (itemNameKeyword) {
-    filteredItems = filteredItems.filter(({ itemName }) => itemName.includes(itemNameKeyword));
-  }
-
   return (dispatch) => {
+
+    // Start isRequesting
+    dispatch({ type: ActionTypes.COMMON__FETCH_REQUEST });
+
+    let filteredItems = allItems;
+
+    if (tagsKeyword && tagsKeyword.length > 0) {
+      tagsKeyword.forEach(tag => {
+        filteredItems = filteredItems.filter(({ tags }) => {
+          const splitTags = tags[0].split(',');
+          if (splitTags.indexOf(tag) > -1) {
+            return true;
+          } else {
+            return false;
+          }
+        });
+      });
+    }
+
+    // 장비유형 필터
+    if (itemTypeKeyword !== 'ALL') {
+      filteredItems = filteredItems.filter(({ itemType }) => itemType.includes(itemTypeKeyword));
+    }
+
+    // 아이템명 필터
+    if (itemNameKeyword) {
+      filteredItems = filteredItems.filter(({ itemName }) => itemName.includes(itemNameKeyword));
+    }
+
+    // Stop isRequesting
+    dispatch({ type: ActionTypes.COMMON__FETCH_REQUEST_COMPLETE });
+
     dispatch({
       type: ActionTypes.ITEM__FETCH_ITEMS_105,
       items: filteredItems,
