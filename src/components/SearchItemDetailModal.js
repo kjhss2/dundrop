@@ -74,8 +74,8 @@ const SearchItemDetailModal = () => {
                 growInfo.options.map((option, index) => (
                   <Box key={index} sx={{ marginTop: 2 }}>
                     <Box sx={{ display: 'flex' }}>
-                      <Typography>{`${index + 1}옵션 - Lv(${option.level})`}&nbsp;</Typography>
-                      <Typography>{`| 피해 증가 ${option.damage}`}&nbsp;</Typography>
+                      <Typography>{`${index + 1}옵션 - Lv(${option.level || ' - '})`}&nbsp;</Typography>
+                      <Typography>{`| 피해 증가 ${option.damage || '-'}`}&nbsp;</Typography>
                       {
                         option.buff &&
                         <Typography>{`| 버프력 ${option.buff}`}</Typography>
