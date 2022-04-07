@@ -22,13 +22,23 @@ const SearchComponent = () => {
     dispatch(searchItems105Fetch(itemType, tags, keyword));
   };
 
+  const onSetTags = (value) => {
+    setTags(value);
+    dispatch(searchItems105Fetch(itemType, value, keyword));
+  };
+
+  const onSetItemType = (value) => {
+    setItemType(value);
+    dispatch(searchItems105Fetch(value, tags, keyword));
+  };
+
   return (
     <Box sx={{
       display: isMobile ? '' : 'flex',
       gap: 1,
     }}>
 
-      <SelectItemType itemType={itemType} setItemType={setItemType} />
+      <SelectItemType itemType={itemType} setItemType={onSetItemType} />
 
       <Box
         sx={{
@@ -36,7 +46,7 @@ const SearchComponent = () => {
           flexGrow: 1,
         }}
       >
-        <SelectTag tags={tags} setTags={setTags} />
+        <SelectTag tags={tags} setTags={onSetTags} />
       </Box>
 
       <Box

@@ -1,4 +1,3 @@
-import { result } from 'lodash';
 import { callAPI } from '../lib/CommonApi';
 import * as ActionTypes from '../redux/ActionTypes';
 import { allItems } from './commonData';
