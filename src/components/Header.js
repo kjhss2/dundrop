@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate, Outlet, useMatch, useResolvedPath } from 'react-router-dom';
 import { AppBar, Box, Button, Container, Toolbar } from "@mui/material";
+import { useSelector } from "react-redux";
 
 const menus = [
   { title: '아이템 검색(105렙)', url: '/search105' },
@@ -9,6 +10,7 @@ const menus = [
 
 const Header = () => {
   const navigate = useNavigate();
+  const { isMobile } = useSelector((state) => state.dimension);
 
   return (
     <>
@@ -18,16 +20,16 @@ const Header = () => {
 
             <Button
               onClick={() => navigate("/")}
-              sx={{ my: 2, color: 'white', display: 'block', fontSize: 17 }}
+              sx={{ color: 'white', display: 'block', fontSize: 17 }}
             >
-              DunDrop(Beta)
+              DunDrop{isMobile && <br />}(Beta)
             </Button>
 
             <Box
               sx={{
                 flexGrow: 1,
                 display: { xs: 'flex' },
-                // display: { xs: 'flex', md: 'none' }
+                // display: { xs: 'flex', md: 'none' },
                 justifyContent: 'center'
               }}>
               {menus.map((menu, index) => (
@@ -57,10 +59,10 @@ const MenuItem = ({ title, url }) => {
     <Button
       sx={[
         {
-          my: 2,
+          my: 1,
           color: 'white',
           fontSize: 15,
-          marginRight: 3,
+          // marginRight: 1,
         },
         match && activeStyle
       ]}

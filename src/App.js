@@ -11,9 +11,12 @@ import { setDimension } from './actions/commonAction';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Home from './pages/Home';
-import Search from './pages/Search';
+import ItemSearch from './pages/ItemSearch';
 import ItemSearch105 from './pages/ItemSearch105';
 import NotFound from './pages/NotFound';
+
+// Import
+import { IS_MOBILE_WIDTH } from './config';
 
 function App() {
 
@@ -23,7 +26,8 @@ function App() {
   const handleResize = debounce(() => {
     dispatch(setDimension({
       width: window.innerWidth,
-      height: window.innerHeight
+      height: window.innerHeight,
+      isMobile: window.innerWidth < IS_MOBILE_WIDTH
     }));
   }, 100);
 
@@ -46,9 +50,7 @@ function App() {
       >
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/search" element={<Search />}>
-            <Route path=":itemName" element={<Search />} />
-          </Route>
+          <Route path="/search" element={<ItemSearch />} />
           <Route path="/search105" element={<ItemSearch105 />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
