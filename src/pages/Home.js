@@ -65,6 +65,14 @@ const Home = () => {
         <TabPanel value={value} index={1}>
           <List component="nav" aria-label="mailbox folders">
             <ListItem>
+              <ListItemText primary="노블레스 코드 캐릭터별 보유 아이템 표시 기능" secondary="업데이트 예정" />
+            </ListItem>
+            <Divider />
+            <ListItem>
+              <ListItemText primary="캐릭터별 보유 아이템 표시 기능" secondary="업데이트 예정" />
+            </ListItem>
+            <Divider />
+            <ListItem>
               <ListItemText primary="아이템 검색(105렙) 업데이트" secondary="2022-04-07" />
             </ListItem>
             <Divider />
