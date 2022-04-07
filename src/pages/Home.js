@@ -65,7 +65,11 @@ const Home = () => {
         <TabPanel value={value} index={1}>
           <List component="nav" aria-label="mailbox folders">
             <ListItem>
-              <ListItemText primary="Beta 버전 작업중입니다." secondary="2022-04-05" />
+              <ListItemText primary="아이템 검색(105렙) 업데이트" secondary="2022-04-07" />
+            </ListItem>
+            <Divider />
+            <ListItem>
+              <ListItemText primary="Beta 버전 작업중입니다." secondary="2022-04-01" />
             </ListItem>
             <Divider />
           </List>
