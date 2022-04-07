@@ -1,25 +1,18 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 // Components
-import SearchItems from "../components/SearchItems";
 import SearchComponent from "../components/SearchComponent";
-
-// Actions
-import { initSearchItems } from "../actions/itemSearchAction";
+import SearchItems from "../components/SearchItems";
 
 const ItemSearch105 = () => {
 
-  const dispatch = useDispatch();
-
-  React.useEffect(() => {
-    dispatch(initSearchItems());
-  }, [dispatch]);
+  const { searchItems105 } = useSelector((state) => state.itemSearchState);
 
   return (
     <>
       <SearchComponent />
-      <SearchItems />
+      <SearchItems items={searchItems105} />
     </>
   );
 };

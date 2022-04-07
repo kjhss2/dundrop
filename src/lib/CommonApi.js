@@ -34,6 +34,7 @@ const commonFetch = async (endPoint, config, dispatch, skipSpinner) => {
     return handleInternalServerSuccessResponse(response, dispatch, skipSpinner);
   } catch (error) {
     dispatchStopSpinner(dispatch, skipSpinner);
+    return error.response;
   }
 };
 

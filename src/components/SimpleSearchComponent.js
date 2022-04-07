@@ -1,19 +1,22 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import { Box, Button, TextField } from "@mui/material";
-import { useNavigate, useParams } from "react-router-dom";
 
-const ItemSearch = () => {
+// Actions
+import { searchItemsFetch } from "../actions/itemSearchAction";
 
-  const { itemName: itemNameParam } = useParams();
-  const navigate = useNavigate();
-  const [itemName, setItemName] = React.useState(itemNameParam);
+const SimpleSearchComponent = () => {
+
+  const dispatch = useDispatch();
+  const [itemName, setItemName] = React.useState('');
 
   const goToItemSearch = () => {
     if (!itemName) {
       window.alert('아이템명을 입력해 주세요.!!');
       return;
     }
-    navigate(`/search/${itemName}`);
+
+    dispatch(searchItemsFetch(itemName));
   };
 
   return (
@@ -31,7 +34,6 @@ const ItemSearch = () => {
           label="아이템 검색"
           variant="outlined"
           fullWidth
-          defaultValue={itemNameParam}
           onChange={(e) => setItemName(e.target.value)}
           onKeyDown={(e) => e.key === 'Enter' && goToItemSearch()}
         />
@@ -46,4 +48,4 @@ const ItemSearch = () => {
   );
 };
 
-export default ItemSearch;
+export default SimpleSearchComponent;

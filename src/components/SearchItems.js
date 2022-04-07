@@ -9,10 +9,9 @@ import { searchItemDetailFetch } from "../actions/itemSearchAction";
 import SearchItemDetailModal from "./SearchItemDetailModal";
 import { IS_DEV } from "../config";
 
-const SearchItems = () => {
+const SearchItems = ({ items }) => {
 
   const dispatch = useDispatch();
-  const { searchItems } = useSelector((state) => state.itemSearchState);
   const { isRequesting } = useSelector((state) => state.commonState);
 
   const onSearchItemDetail = (id) => {
@@ -43,12 +42,12 @@ const SearchItems = () => {
             // maxHeight: '60vh'
           }}>
             {
-              searchItems && searchItems.map((item, index) => (
+              items && items.map((item, index) => (
                 <SearchItem key={index} item={item} onSearchItemDetail={onSearchItemDetail} />
               ))
             }
             {
-              (searchItems && searchItems.length === 0) &&
+              (items && items.length === 0) &&
               <Typography
                 color="text.primary"
               >

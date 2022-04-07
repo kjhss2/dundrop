@@ -1,18 +1,15 @@
 import React from "react";
-import { Avatar, Box, Modal, TextareaAutosize, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
+import { Avatar, Box, Modal, TextareaAutosize, Typography } from "@mui/material";
 
 // Actions
 import { onChangeField } from "../actions/itemSearchAction";
-
-// Components
 
 const style = {
   position: 'absolute',
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  // width: 400,
   bgcolor: 'background.paper',
   border: '2px solid #000',
   boxShadow: 24,
@@ -104,7 +101,7 @@ const SearchItemDetailModal = () => {
           />
         </Box>
       </Box>
-    </Modal >
+    </Modal>
   );
 };
 

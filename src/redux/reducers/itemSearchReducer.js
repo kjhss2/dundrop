@@ -1,6 +1,7 @@
 import * as ActionTypes from '../ActionTypes';
 
 const initState = {
+  searchItems105: [],
   searchItems: [],
   searchItem: {},
 };
@@ -11,6 +12,7 @@ export const itemSearchState = (state = Object.assign({}, initState), action) =>
     case ActionTypes.ITEM__INIT_ITEMS:
       return {
         ...state,
+        searchItems105: [],
         searchItems: [],
         searchItem: {},
       };
@@ -19,6 +21,12 @@ export const itemSearchState = (state = Object.assign({}, initState), action) =>
       return {
         ...state,
         searchItems: action.items,
+      };
+
+    case ActionTypes.ITEM__FETCH_ITEMS_105:
+      return {
+        ...state,
+        searchItems105: action.items,
       };
 
     case ActionTypes.ITEM__FETCH_ITEM_DETAIL:

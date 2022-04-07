@@ -46,7 +46,6 @@ const Home = () => {
           <Typography variant="h7">던전엔파이터 아이템 검색 사이트</Typography>
         </Box>
       </Box>
-      {/* <ItemSearch /> */}
       <Box sx={{ width: '100%' }}>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">

@@ -1,6 +1,6 @@
 import { callAPI } from '../lib/CommonApi';
 import * as ActionTypes from '../redux/ActionTypes';
-import { chooseByTagItems, itemDropInfos } from './commonData';
+import { allItems } from './commonData';
 
 export const searchItemsFetch = (itemName) => {
 
@@ -38,19 +38,35 @@ export const searchItemDetailFetch = (id) => {
   };
 };
 
-export const searchItems105Fetch = (tags, itemName) => {
+export const searchItems105Fetch = (searchTags, itemName) => {
 
   let requestUrl = '';
 
-  if (tags && tags.length > 0) {
+  if (searchTags && searchTags.length > 0) {
 
     let makeTagItemIds = '';
-    tags.forEach(tag => {
-      makeTagItemIds = makeTagItemIds.concat(itemDropInfos.filter(({ tags }) => tags.indexOf(tag) > -1).map(({ itemId }) => itemId));
+    let idCount = 0;
+
+    searchTags.forEach(tag => {
+      makeTagItemIds = makeTagItemIds.concat(allItems.filter(({ tags }) => {
+        // 과도한 반복된 split : 성능 최적화 필요
+        const splitTags = tags[0].split(',');
+        if (splitTags.indexOf(tag) > -1) {
+          idCount++;
+          return true;
+        } else {
+          return false;
+        }
+      }).map(({ itemId }) => itemId));
     });
+
     if (!makeTagItemIds) {
       window.alert('해당 하는 Tag가 존재 하지 않습니다.');
       return () => { };
+    }
+    if (idCount > 30) {
+      // window.alert('조회하려는 아이템 개수가 초과되었습니다.');
+      // return () => { };
     }
     requestUrl = `/multi/items?itemIds=${makeTagItemIds}`;
   } else {
@@ -66,8 +82,14 @@ export const searchItems105Fetch = (tags, itemName) => {
         const { status, data } = response;
         if (status === 200) {
           dispatch({
-            type: ActionTypes.ITEM__FETCH_ITEMS,
+            type: ActionTypes.ITEM__FETCH_ITEMS_105,
             items: data.rows
+          });
+        } else {
+          console.log(data.error.message);
+          dispatch({
+            type: ActionTypes.ITEM__FETCH_ITEMS_105,
+            items: []
           });
         }
       });
