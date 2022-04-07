@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 
 // Components
 import SimpleSearchComponent from "../components/SimpleSearchComponent";
-import SearchItems from "../components/SearchItems";
+import SimpleSearchItems from "../components/SimpleSearchItems";
 
 const ItemSearch = () => {
 
@@ -12,7 +12,7 @@ const ItemSearch = () => {
   return (
     <>
       <SimpleSearchComponent />
-      <SearchItems items={searchItems} />
+      <SimpleSearchItems items={searchItems} />
     </>
   );
 };

@@ -1,3 +1,4 @@
+import { result } from 'lodash';
 import { callAPI } from '../lib/CommonApi';
 import * as ActionTypes from '../redux/ActionTypes';
 import { allItems } from './commonData';
@@ -38,64 +39,38 @@ export const searchItemDetailFetch = (id) => {
   };
 };
 
-export const searchItems105Fetch = (searchTags, itemName) => {
+export const searchItems105Fetch = (itemTypeKeyword, tagsKeyword, itemNameKeyword) => {
 
-  let requestUrl = '';
-  let endPoint = ``;
+  let filteredItems = allItems;
 
-  if (searchTags && searchTags.length > 0) {
-
-    let makeTagItemIds = '';
-    let idCount = 0;
-
-    searchTags.forEach(tag => {
-      makeTagItemIds = makeTagItemIds.concat(allItems.filter(({ tags }) => {
-        // 과도한 반복된 split : 성능 최적화 필요
+  if (tagsKeyword && tagsKeyword.length > 0) {
+    tagsKeyword.forEach(tag => {
+      filteredItems = filteredItems.filter(({ tags }) => {
         const splitTags = tags[0].split(',');
         if (splitTags.indexOf(tag) > -1) {
-          idCount++;
           return true;
         } else {
           return false;
         }
-      }).map(({ itemId }) => itemId));
+      });
     });
-
-    if (!makeTagItemIds) {
-      window.alert('해당 하는 Tag가 존재 하지 않습니다.');
-      return () => { };
-    }
-    if (idCount > 15) {
-      console.log(idCount);
-      window.alert('조회하려는 아이템 개수가 초과되었습니다.');
-      return () => { };
-    }
-    requestUrl = `/multi/items?itemIds=${makeTagItemIds}`;
-    endPoint = `&`;
-  } else {
-    requestUrl = `/items?itemName=${itemName}`;
-    endPoint = `&q=minLevel:105,rarity:에픽&limit=30&wordType=front&`;
   }
 
-  const url = requestUrl + endPoint;
+  // 장비유형 필터
+  if (itemTypeKeyword !== 'ALL') {
+    filteredItems = filteredItems.filter(({ itemType }) => itemType.includes(itemTypeKeyword));
+  }
+
+  // 아이템명 필터
+  if (itemNameKeyword) {
+    filteredItems = filteredItems.filter(({ itemName }) => itemName.includes(itemNameKeyword));
+  }
 
   return (dispatch) => {
-    callAPI(url, {}, dispatch)
-      .then(response => {
-        const { status, data } = response;
-        if (status === 200) {
-          dispatch({
-            type: ActionTypes.ITEM__FETCH_ITEMS_105,
-            items: data.rows
-          });
-        } else {
-          console.log(data.error.message);
-          dispatch({
-            type: ActionTypes.ITEM__FETCH_ITEMS_105,
-            items: []
-          });
-        }
-      });
+    dispatch({
+      type: ActionTypes.ITEM__FETCH_ITEMS_105,
+      items: filteredItems
+    });
   };
 };
 

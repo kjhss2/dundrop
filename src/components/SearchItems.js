@@ -7,12 +7,12 @@ import Skeleton from '@mui/material/Skeleton';
 // Actions
 import { searchItemDetailFetch } from "../actions/itemSearchAction";
 import SearchItemDetailModal from "./SearchItemDetailModal";
-import { IS_DEV } from "../config";
 
 const SearchItems = ({ items }) => {
 
   const dispatch = useDispatch();
   const { isRequesting } = useSelector((state) => state.commonState);
+  const { isMobile } = useSelector((state) => state.dimension);
 
   const onSearchItemDetail = (id) => {
     dispatch(searchItemDetailFetch(id));
@@ -43,7 +43,7 @@ const SearchItems = ({ items }) => {
           }}>
             {
               items && items.map((item, index) => (
-                <SearchItem key={index} item={item} onSearchItemDetail={onSearchItemDetail} />
+                <SearchItem key={index} item={item} onSearchItemDetail={onSearchItemDetail} isMobile={isMobile} />
               ))
             }
             {
@@ -61,39 +61,79 @@ const SearchItems = ({ items }) => {
   );
 };
 
-const SearchItem = ({ item, onSearchItemDetail }) => {
-  const { itemId, itemName, itemType, itemTypeDetail, itemRarity, itemAvailableLevel } = item;
+const SearchItem = ({ item, onSearchItemDetail, isMobile }) => {
+  const { itemId, itemName, itemType, dropInfos, desc } = item;
 
   return (
     <>
-      <ListItem alignItems="flex-start">
+      <ListItem sx={{
+        display: isMobile ? 'block' : 'flex'
+      }}>
 
-        <ListItemAvatar>
-          <Avatar alt="Remy Sharp" src={`https://img-api.neople.co.kr/df/items/${itemId}`} variant="square" />
-        </ListItemAvatar>
-
-        <ListItemText
-          primary={itemName}
+        <Box
           sx={{
-            color: '#d39500'
           }}
-          secondary={
-            <React.Fragment>
-              <Typography
-                sx={{ display: 'inline' }}
-                component="span"
-                variant="body2"
-                color="text.primary"
-              >
-                {`${itemRarity} `}
-              </Typography>
-              {` | ${itemType} `}
-              {` | ${itemTypeDetail} `}
-              {` | 레벨제한 ${itemAvailableLevel}`}
-              {IS_DEV && ` | ${itemId}`}
-            </React.Fragment>
-          }
-        />
+        >
+          <ListItemAvatar>
+            <Avatar alt="Remy Sharp" src={`https://img-api.neople.co.kr/df/items/${itemId}`} variant="square" />
+          </ListItemAvatar>
+        </Box>
+
+        <Box
+          sx={{
+            width: 500,
+          }}
+        >
+          <ListItemText
+            primary={itemName}
+            sx={{
+              color: '#d39500'
+            }}
+            secondary={
+              <React.Fragment>
+                <Typography
+                  sx={{ display: 'inline' }}
+                  component="span"
+                  variant="body2"
+                  color="text.primary"
+                >
+                  {`${itemType} `}
+                </Typography>
+                {` | ${desc}`}
+                {/* {IS_DEV && ` | ${itemId}`} */}
+              </React.Fragment>
+            }
+          />
+        </Box>
+
+        <Box
+          sx={{
+            flexGrow: 1,
+          }}
+        >
+          <ListItemText
+            primary={'드랍 정보'}
+            sx={{
+              color: '#df6a07'
+            }}
+            secondary={
+              <React.Fragment>
+                <Typography
+                  sx={{ display: 'inline' }}
+                  component="span"
+                  variant="body2"
+                  color="text.primary"
+                >
+                  {
+                    dropInfos.map(info => (
+                      <div>{info}</div>
+                    ))
+                  }
+                </Typography>
+              </React.Fragment>
+            }
+          />
+        </Box>
 
         <ListItemIcon>
           <IconButton edge="end" aria-label="delete" onClick={() => onSearchItemDetail(itemId)}>

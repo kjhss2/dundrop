@@ -19,7 +19,7 @@ const SearchComponent = () => {
   const [itemType, setItemType] = React.useState('ALL');
 
   const onSearch = () => {
-    dispatch(searchItems105Fetch(tags, keyword));
+    dispatch(searchItems105Fetch(itemType, tags, keyword));
   };
 
   return (
@@ -47,7 +47,7 @@ const SearchComponent = () => {
       >
         <TextField
           id="tf-name"
-          label="아이템 검색"
+          label="아이템명"
           variant="outlined"
           fullWidth
           defaultValue={keyword}
