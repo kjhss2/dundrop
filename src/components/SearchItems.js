@@ -62,7 +62,7 @@ const SearchItems = ({ items }) => {
 };
 
 const SearchItem = ({ item, onSearchItemDetail, isMobile }) => {
-  const { itemId, itemName, itemType, dropInfos, desc } = item;
+  const { itemId, itemName, itemType, tags, dropInfos, desc } = item;
 
   return (
     <>
@@ -100,10 +100,17 @@ const SearchItem = ({ item, onSearchItemDetail, isMobile }) => {
                   {`${itemType} `}
                 </Typography>
                 {` | ${desc}`}
-                {/* {IS_DEV && ` | ${itemId}`} */}
               </React.Fragment>
             }
           />
+          <Typography
+            sx={{ display: 'inline' }}
+            component="span"
+            variant="body2"
+            color="text.primary"
+          >
+            {tags}
+          </Typography>
         </Box>
 
         <Box
@@ -125,8 +132,8 @@ const SearchItem = ({ item, onSearchItemDetail, isMobile }) => {
                   color="text.primary"
                 >
                   {
-                    dropInfos.map(info => (
-                      <div>{info}</div>
+                    dropInfos.map((info, index) => (
+                      <React.Fragment key={index}>{info}</React.Fragment>
                     ))
                   }
                 </Typography>
