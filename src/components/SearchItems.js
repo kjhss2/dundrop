@@ -62,7 +62,10 @@ const SearchItems = ({ items }) => {
 };
 
 const SearchItem = ({ item, onSearchItemDetail, isMobile }) => {
+
+  const { selectedTags } = useSelector((state) => state.itemSearchState);
   const { itemId, itemName, itemType, tags, dropInfos, desc } = item;
+  const makeTags = tags && tags[0].split(',').map(tag => ({ isTagMatch: selectedTags.includes(tag), label: '#' + tag }));
 
   return (
     <>
@@ -103,14 +106,21 @@ const SearchItem = ({ item, onSearchItemDetail, isMobile }) => {
               </React.Fragment>
             }
           />
-          <Typography
-            sx={{ display: 'inline' }}
-            component="span"
-            variant="body2"
-            color="text.primary"
-          >
-            {tags}
-          </Typography>
+          {
+            makeTags.map((tag, index) => (
+              <React.Fragment key={index}>
+                <Typography
+                  sx={{ display: 'inline' }}
+                  component="span"
+                  variant="body2"
+                  color="text.primary"
+                  fontWeight={tag.isTagMatch ? 'bold' : ''}
+                >
+                  {tag.label}
+                </Typography>
+              </React.Fragment>
+            ))
+          }
         </Box>
 
         <Box

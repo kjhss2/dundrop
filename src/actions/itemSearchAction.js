@@ -68,7 +68,8 @@ export const searchItems105Fetch = (itemTypeKeyword, tagsKeyword, itemNameKeywor
   return (dispatch) => {
     dispatch({
       type: ActionTypes.ITEM__FETCH_ITEMS_105,
-      items: filteredItems
+      items: filteredItems,
+      selectedTags: tagsKeyword
     });
   };
 };

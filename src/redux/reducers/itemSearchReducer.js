@@ -2,6 +2,7 @@ import * as ActionTypes from '../ActionTypes';
 
 const initState = {
   searchItems105: [],
+  selectedTags: [],
   searchItems: [],
   searchItem: {},
 };
@@ -27,6 +28,7 @@ export const itemSearchState = (state = Object.assign({}, initState), action) =>
       return {
         ...state,
         searchItems105: action.items,
+        selectedTags: action.selectedTags,
       };
 
     case ActionTypes.ITEM__FETCH_ITEM_DETAIL:

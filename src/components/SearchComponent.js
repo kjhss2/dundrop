@@ -22,14 +22,14 @@ const SearchComponent = () => {
     dispatch(searchItems105Fetch(itemType, tags, keyword));
   };
 
-  const onSetTags = (value) => {
-    setTags(value);
-    dispatch(searchItems105Fetch(itemType, value, keyword));
+  const onSetTags = (_tags) => {
+    setTags(_tags);
+    dispatch(searchItems105Fetch(itemType, _tags, keyword));
   };
 
-  const onSetItemType = (value) => {
-    setItemType(value);
-    dispatch(searchItems105Fetch(value, tags, keyword));
+  const onSetItemType = (_itemType) => {
+    setItemType(_itemType);
+    dispatch(searchItems105Fetch(_itemType, tags, keyword));
   };
 
   return (
