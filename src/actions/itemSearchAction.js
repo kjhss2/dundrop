@@ -41,6 +41,7 @@ export const searchItemDetailFetch = (id) => {
 export const searchItems105Fetch = (searchTags, itemName) => {
 
   let requestUrl = '';
+  let endPoint = ``;
 
   if (searchTags && searchTags.length > 0) {
 
@@ -64,16 +65,17 @@ export const searchItems105Fetch = (searchTags, itemName) => {
       window.alert('해당 하는 Tag가 존재 하지 않습니다.');
       return () => { };
     }
-    if (idCount > 30) {
-      // window.alert('조회하려는 아이템 개수가 초과되었습니다.');
-      // return () => { };
+    if (idCount > 15) {
+      console.log(idCount);
+      window.alert('조회하려는 아이템 개수가 초과되었습니다.');
+      return () => { };
     }
     requestUrl = `/multi/items?itemIds=${makeTagItemIds}`;
   } else {
     requestUrl = `/items?itemName=${itemName}`;
+    endPoint = `&q=minLevel:105,rarity:에픽&limit=30&wordType=front&`;
   }
 
-  const endPoint = `&q=minLevel:105,rarity:에픽&limit=30&wordType=front&`;
   const url = requestUrl + endPoint;
 
   return (dispatch) => {
