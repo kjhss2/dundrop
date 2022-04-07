@@ -54,7 +54,7 @@ export const allItems = [
   { itemId: "073a49a592516fef6eb217c24fc85f75", itemName: '격동하는 마음', itemType: '상의', tags: ['생존'], dropInfos: ['캐니언 힐', '나사우 삼림'], desc: '시간 전쟁 원코' },
   { itemId: "476df057a837cdca0b902c8f3bf86677", itemName: '고귀한 신의', itemType: '상의', tags: ['생존,속도'], dropInfos: ['파괴된 죽은자의 성(상급) - 심연을 걷는 자'], desc: '아공간 생성후 패턴회피 가능 종료시 30초 속도 증가' },
   { itemId: "fef28f7cbfb26551a39d7aea7cce3250", itemName: '드래곤 슬레이어', itemType: '상의', tags: ['모속성'], dropInfos: ['캐니언 힐', '나사우 삼림'], desc: '모속강의 속성을 당담' },
-  { itemId: "fdab01437e9eca7ce0ae660a78ca499a", itemName: '리버시블 레더 코트', itemType: '상의', tags: ['광폭화'], dropInfos: ['백색의 땅'], desc: 'HP 0되면 그뒤부터 MP소모' },
+  { itemId: "fdab01437e9eca7ce0ae660a78ca499a", itemName: '리버시블 레더 코트', itemType: '상의', tags: ['광폭화,MP 회복'], dropInfos: ['백색의 땅'], desc: 'HP 0되면 그뒤부터 MP소모' },
   { itemId: "6f08f07510bd67ab0505c392e9805009", itemName: '미련이 남은 녹슨 원혼', itemType: '상의', tags: ['회피,속도'], dropInfos: ['캐니언 힐', '왕의 요람'], desc: '캐릭터를 작게하고 회피랑 속도 크게올림' },
   { itemId: "a9c11f7134c3172d62c526bf01259f01", itemName: '쉐도우블랙 슈트', itemType: '상의', tags: ['저주,쿨감,회복'], dropInfos: ['왕의 요람', '백색의 땅'], desc: '허수아비 위치 유지시 쿨감 + 상태이상 몹공격시 1 % 피참' },
   { itemId: "91ff7b1e87520d0ed4f8b5adf31f9cb7", itemName: '아머드 파워 상의', itemType: '상의', tags: ['화상'], dropInfos: ['캐니언 힐', '이터널 플레임 연구소'], desc: '크리티컬 공격5회 캐릭 주변 화상화상 내성무시 30%' },
