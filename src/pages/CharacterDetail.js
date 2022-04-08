@@ -91,7 +91,7 @@ const CharacterDetail = () => {
           }}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
               <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-                <Tab label="아이템 검색" {...a11yProps(0)} />
+                <Tab label="보유 아이템 검색" {...a11yProps(0)} />
                 <Tab label="아이템 획득 이력" {...a11yProps(1)} />
               </Tabs>
             </Box>
