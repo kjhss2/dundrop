@@ -13,10 +13,12 @@ const SearchComponent = () => {
 
   const dispatch = useDispatch();
   const { isMobile } = useSelector((state) => state.dimension);
+  const { selectedItemType, selectedTags, selectedKeyword } = useSelector((state) => state.itemSearchState);
 
-  const [keyword, setKeyword] = React.useState('');
-  const [tags, setTags] = React.useState([]);
-  const [itemType, setItemType] = React.useState('ALL');
+  // react-state
+  const [itemType, setItemType] = React.useState(selectedItemType);
+  const [tags, setTags] = React.useState(selectedTags);
+  const [keyword, setKeyword] = React.useState(selectedKeyword);
 
   const onSearch = () => {
     dispatch(searchItems105Fetch(itemType, tags, keyword));

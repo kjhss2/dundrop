@@ -7,6 +7,7 @@ import { IS_MOBILE_WIDTH } from '../../config';
 // reducers
 import { commonState } from './commonReducer';
 import { itemSearchState } from './itemSearchReducer';
+import { characterState } from './characterReducer';
 
 // dimension
 const dimension = (state = { height: window.innerHeight, width: window.innerWidth, isMobile: window.innerWidth < IS_MOBILE_WIDTH }, action) => {
@@ -19,6 +20,7 @@ const dimension = (state = { height: window.innerHeight, width: window.innerWidt
 const rootReducer = combineReducers({
   commonState,
   itemSearchState,
+  characterState,
 
   // browser width, height
   dimension,

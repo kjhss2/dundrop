@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Avatar, Box, IconButton, List, ListItem, ListItemAvatar, ListItemIcon, ListItemText, Typography } from "@mui/material";
-import { Search } from '@mui/icons-material';
+import { Search, Check } from '@mui/icons-material';
 
 // Actions
 import { searchItemDetailFetch } from "../actions/itemSearchAction";
@@ -25,7 +25,6 @@ const SearchItems = ({ items }) => {
         <List sx={{
           bgcolor: 'background.paper',
           overflow: 'auto',
-          // maxHeight: '60vh'
         }}>
           {
             items && items.map((item, index) => (
@@ -50,23 +49,19 @@ const SearchItems = ({ items }) => {
 const SearchItem = ({ item, onSearchItemDetail, isMobile }) => {
 
   const { selectedTags } = useSelector((state) => state.itemSearchState);
-  const { itemId, itemName, itemType, tags, dropInfos, desc } = item;
+  const { itemId, itemName, itemType, tags, dropInfos, desc, isGetting } = item;
   const makeTags = tags && tags[0].split(',').map(tag => ({ isTagMatch: selectedTags.includes(tag), label: '#' + tag }));
 
   return (
     <>
       <ListItem sx={{
-        display: isMobile ? 'block' : 'flex'
+        display: isMobile ? 'block' : 'flex',
+        backgroundColor: isGetting ? 'aliceblue' : ''
       }}>
 
-        <Box
-          sx={{
-          }}
-        >
-          <ListItemAvatar>
-            <Avatar alt="Remy Sharp" src={`https://img-api.neople.co.kr/df/items/${itemId}`} variant="square" />
-          </ListItemAvatar>
-        </Box>
+        <ListItemAvatar>
+          <Avatar alt="Remy Sharp" src={`https://img-api.neople.co.kr/df/items/${itemId}`} variant="square" />
+        </ListItemAvatar>
 
         <Box
           sx={{
@@ -131,6 +126,22 @@ const SearchItem = ({ item, onSearchItemDetail, isMobile }) => {
             ))
           }
         </Box>
+
+        {isGetting &&
+          <Box sx={{
+            display: 'flex',
+          }}>
+            <Check />
+            <Typography
+              sx={{ display: 'inline' }}
+              variant="body2"
+              color="text.primary"
+              fontWeight={'bold'}
+            >
+              보유중
+            </Typography>
+          </Box>
+        }
 
         <ListItemIcon>
           <IconButton edge="end" aria-label="delete" onClick={() => onSearchItemDetail(itemId)}>

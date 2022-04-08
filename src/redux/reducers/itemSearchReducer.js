@@ -2,9 +2,13 @@ import * as ActionTypes from '../ActionTypes';
 
 const initState = {
   searchItems105: [],
-  selectedTags: [],
   searchItems: [],
   searchItem: {},
+
+  // selected filter
+  selectedItemType: 'ALL',
+  selectedTags: [],
+  selectedKeyword: '',
 };
 
 export const itemSearchState = (state = Object.assign({}, initState), action) => {
@@ -16,6 +20,10 @@ export const itemSearchState = (state = Object.assign({}, initState), action) =>
         searchItems105: [],
         searchItems: [],
         searchItem: {},
+        // filter
+        selectedItemType: 'ALL',
+        selectedTags: [],
+        selectedKeyword: '',
       };
 
     case ActionTypes.ITEM__FETCH_ITEMS:
@@ -28,7 +36,9 @@ export const itemSearchState = (state = Object.assign({}, initState), action) =>
       return {
         ...state,
         searchItems105: action.items,
+        selectedItemType: action.selectedItemType,
         selectedTags: action.selectedTags,
+        selectedKeyword: action.selectedKeyword,
       };
 
     case ActionTypes.ITEM__FETCH_ITEM_DETAIL:

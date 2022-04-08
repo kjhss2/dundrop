@@ -7,16 +7,20 @@ import { Container } from '@mui/material';
 // Actions
 import { setDimension } from './actions/commonAction';
 
-// Pages
-import Header from './components/Header';
-import Footer from './components/Footer';
-import Home from './pages/Home';
-import ItemSearch from './pages/ItemSearch';
-import ItemSearch105 from './pages/ItemSearch105';
-import NotFound from './pages/NotFound';
-
 // Import
 import { IS_MOBILE_WIDTH } from './config';
+
+// Common
+import Header from './components/Header';
+import Footer from './components/Footer';
+import NotFound from './pages/NotFound';
+import Home from './pages/Home';
+
+// Pages
+import ItemSearch from './pages/ItemSearch';
+import ItemSearch105 from './pages/ItemSearch105';
+import CharacterSearch from './pages/CharacterSearch';
+import CharacterDetail from './pages/CharacterDetail';
 
 function App() {
 
@@ -33,7 +37,7 @@ function App() {
 
   React.useEffect(() => {
     window.addEventListener('resize', handleResize);
-    return () => { // cleanup 
+    return () => { // cleanup
       window.removeEventListener('resize', handleResize);
     };
   }, [handleResize]);
@@ -50,8 +54,10 @@ function App() {
       >
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/search" element={<ItemSearch />} />
+          <Route path="/character" element={<CharacterSearch />} />
+          <Route path="/character/:serverId/:characterId" element={<CharacterDetail />} />
           <Route path="/search105" element={<ItemSearch105 />} />
+          <Route path="/search" element={<ItemSearch />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Container>

@@ -4,8 +4,9 @@ import { AppBar, Box, Button, Container, Toolbar } from "@mui/material";
 import { useSelector } from "react-redux";
 
 const menus = [
-  { title: '아이템 검색(105렙)', url: '/search105' },
-  { title: '아이템 검색', url: '/search' },
+  { title: '캐릭터 검색', url: '/character', active: true },
+  { title: '아이템 검색(Tag)', url: '/search105', active: false },
+  { title: '아이템 검색', url: '/search', active: true },
 ];
 
 const Header = () => {
@@ -32,7 +33,7 @@ const Header = () => {
                 // display: { xs: 'flex', md: 'none' },
                 justifyContent: 'center'
               }}>
-              {menus.map((menu, index) => (
+              {menus.filter(menu => menu.active).map((menu, index) => (
                 <MenuItem key={index} title={menu.title} url={menu.url} />
               ))}
             </Box>
@@ -62,7 +63,6 @@ const MenuItem = ({ title, url }) => {
           my: 1,
           color: 'white',
           fontSize: 15,
-          // marginRight: 1,
         },
         match && activeStyle
       ]}

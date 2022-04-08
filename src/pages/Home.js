@@ -59,6 +59,8 @@ const Home = () => {
           좀 더 편하게 105레벨 아이템을 검색 할 수 있는 사이트를 만들어 보자 해서 만들게 되었습니다.<br />
           <br />
           해당 사이트는 현재 베타로 운영중이며, 불편한 점이 있으시면 문의주시면 감사하겠습니다.<br />
+          <br />
+          현재 사이트는 PC화면(넓이 1000px 이상)에서 최적화된 화면을 보실 수 있으며 모바일에서도 보시기 불편함이 없게 수정 예정입니다.
         </TabPanel>
         <TabPanel value={value} index={1}>
           <List component="nav" aria-label="mailbox folders">
@@ -67,7 +69,7 @@ const Home = () => {
             </ListItem>
             <Divider />
             <ListItem>
-              <ListItemText primary="캐릭터별 보유 아이템 표시 기능" secondary="업데이트 예정" />
+              <ListItemText primary="캐릭터 검색 메뉴 업데이트" secondary="2022-04-08 | 캐릭터별 보유 아이템 표시 기능" />
             </ListItem>
             <Divider />
             <ListItem>

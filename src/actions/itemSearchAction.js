@@ -39,12 +39,12 @@ export const searchItemDetailFetch = (id) => {
 };
 
 export const searchItems105Fetch = (itemTypeKeyword, tagsKeyword, itemNameKeyword) => {
-  return (dispatch) => {
+  return (dispatch, getState) => {
 
     // Start isRequesting
     dispatch({ type: ActionTypes.COMMON__FETCH_REQUEST });
 
-    let filteredItems = allItems;
+    let filteredItems = Object.assign([], allItems);
 
     if (tagsKeyword && tagsKeyword.length > 0) {
       tagsKeyword.forEach(tag => {
@@ -69,13 +69,34 @@ export const searchItems105Fetch = (itemTypeKeyword, tagsKeyword, itemNameKeywor
       filteredItems = filteredItems.filter(({ itemName }) => itemName.includes(itemNameKeyword));
     }
 
+    // 검색된 캐릭터 보유 아이템 처리
+    const { gettingItemIds } = getState().characterState;
+    if (gettingItemIds && gettingItemIds.size > 0) {
+      filteredItems = filteredItems.map((item) => {
+        if (gettingItemIds.has(item.itemId)) {
+          item['isGetting'] = true;
+        } else {
+          item['isGetting'] = false;
+        }
+        return item;
+      });
+    } else {
+      // 더미데이터로 아이템 데이터 관리 처리를 위한 임시 코드 : 추후 아이템 데이터 DB 이관 후 리펙토링 예정
+      filteredItems = filteredItems.map((item) => {
+        item['isGetting'] = false;
+        return item;
+      });
+    }
+
     // Stop isRequesting
     dispatch({ type: ActionTypes.COMMON__FETCH_REQUEST_COMPLETE });
 
     dispatch({
       type: ActionTypes.ITEM__FETCH_ITEMS_105,
       items: filteredItems,
-      selectedTags: tagsKeyword
+      selectedItemType: itemTypeKeyword,
+      selectedTags: tagsKeyword,
+      selectedKeyword: itemNameKeyword,
     });
   };
 };
