@@ -10,7 +10,7 @@ export const characterSearchFetch = (charName) => {
   }
 
   return (dispatch) => {
-    callAPI(`/servers/all/characters?characterName=${charName}&`, {}, dispatch)
+    callAPI(`/servers/all/characters?characterName=${charName}&wordType=full&limit=200&`, {}, dispatch)
       .then(response => {
         const { status, data } = response;
         if (status === 200) {
