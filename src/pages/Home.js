@@ -1,4 +1,4 @@
-import { Box, Divider, List, ListItem, ListItemText, Tab, Tabs, Typography } from "@mui/material";
+import { Box, Button, Divider, List, ListItem, ListItemText, Tab, Tabs, Typography } from "@mui/material";
 import React from "react";
 import Guide from "../components/Guide";
 
@@ -63,7 +63,15 @@ const Home = () => {
           안녕하세요. 2006년부터 소소하게 던전엔파이터를 즐기고 있는 유저입니다.<br />
           이번에 만렙 확장과 더불어 신규 105레벨 아이템을 좀 더 쉽게 검색하는 기능을 만들고자 사이트를 개발 하게 되었습니다.<br />
           개발을 시작한지 얼마 안되서 부족한 점이 많지만 필요한 기능들을 추가할 예정입니다.<br />
-          해당 사이트는 현재 베타로 운영중이며, 불편한 점이 있으시면 문의주시면 감사하겠습니다.<br />
+          던드롭은 현재 베타로 운영중이며, 불편한 점이 있으시면 문의주시면 감사하겠습니다.<br />
+          <br />
+          <Button
+            onClick={() => handleChange(null, 1)}
+            variant="outlined"
+          >
+            사이트 사용방법 가이드 바로 가기
+          </Button>
+          <br />
           <br />
           ※ 주요 기능<br />
           1. 105렙 아이템 Tag 검색 및 드랍 정보<br />
