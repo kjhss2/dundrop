@@ -14,6 +14,9 @@ import { getServerName } from '../lib/CommonFunction';
 import Loading from '../components/LoadingView';
 import SearchItemDetailModal from '../components/SearchItemDetailModal';
 import ItemSearch105 from './ItemSearch105';
+import { allItems, itemTypes } from '../actions/commonData';
+import ItemSheet from '../components/ItemSheet';
+import LoadingView from '../components/LoadingView';
 
 function a11yProps(index) {
   return {
@@ -92,7 +95,8 @@ const CharacterDetail = () => {
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
               <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
                 <Tab label="보유 아이템 검색" {...a11yProps(0)} />
-                <Tab label="아이템 획득 이력" {...a11yProps(1)} />
+                <Tab label="보유 아이템 전체 시트" {...a11yProps(1)} />
+                <Tab label="아이템 획득 이력" {...a11yProps(2)} />
               </Tabs>
             </Box>
 
@@ -100,6 +104,9 @@ const CharacterDetail = () => {
               <ItemSearch105 />
             </TabPanel>
             <TabPanel value={value} index={1}>
+              <ItemSheets />
+            </TabPanel>
+            <TabPanel value={value} index={2}>
               {
                 character && character.timeline.rows.map((row, index) => (
                   <SearchItem key={index} item={row} onSearchItemDetail={onSearchItemDetail} isMobile={isMobile} />
@@ -156,6 +163,19 @@ const CharacterInfo = ({ serverId, info }) => {
         </CardContent>
       </CardActionArea>
     </Card>
+  );
+};
+
+const ItemSheets = () => {
+  let filteredItems = allItems;
+  return (
+    <LoadingView>
+      {
+        itemTypes.filter(type => type.value !== 'ALL').map((type, index) => (
+          <ItemSheet key={index} filter={type.value} items={filteredItems} />
+        ))
+      }
+    </LoadingView>
   );
 };
 

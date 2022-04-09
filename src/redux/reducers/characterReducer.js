@@ -1,3 +1,4 @@
+import { allItems } from '../../actions/commonData';
 import * as ActionTypes from '../ActionTypes';
 
 const initState = {
@@ -14,6 +15,16 @@ const makeGettingItemIds = ({ timeline }) => {
       ids.add(data.itemId);
     });
   }
+
+  // 타임라인 기반 보유 아이템 여부 업데이트
+  allItems.forEach((item) => {
+    if (ids.has(item.itemId)) {
+      item['isGetting'] = true;
+    } else {
+      item['isGetting'] = false;
+    }
+  });
+
   return ids;
 };
 
@@ -40,7 +51,7 @@ export const characterState = (state = Object.assign({}, initState), action) => 
         ...state,
         character: action.item,
         gettingItemIds: makeGettingItemIds(action.item),
-        gettingItemIdsCount: action.item.timeline.rows.length
+        gettingItemIdsCount: action.item.timeline.rows.length,
       };
 
     default:
