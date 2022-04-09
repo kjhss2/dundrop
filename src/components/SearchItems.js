@@ -36,7 +36,7 @@ const SearchItems = ({ items }) => {
             <Typography
               color="text.primary"
             >
-              {'조회된 정보가 없습니다.'}
+              {'조회된 정보가 없습니다. 원하는 장비유형, Tag를 선택하거나 검색버튼을 클릭해 주세요.'}
             </Typography>
           }
         </List>

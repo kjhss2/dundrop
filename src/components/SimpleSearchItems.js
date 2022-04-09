@@ -33,6 +33,9 @@ const SimpleSearchItems = ({ items }) => {
             (items && items.length === 0) &&
             <Typography
               color="text.primary"
+              sx={{
+                paddingLeft: 1
+              }}
             >
               {'조회된 정보가 없습니다.'}
             </Typography>
