@@ -101,7 +101,6 @@ const CharacterDetail = () => {
                 <Tab label="장착 아이템(준비중)" {...a11yProps(3)} />
               </Tabs>
             </Box>
-
             <TabPanel value={value} index={0}>
               <ItemSearch105 />
             </TabPanel>
@@ -176,6 +175,7 @@ const ItemSheets = () => {
   let filteredItems = allItems;
 
   const [tags, setTags] = React.useState([]);
+  const [open, setOpen] = React.useState(false);
 
   const onSetTags = (_tags) => {
     setTags(_tags);
@@ -183,7 +183,14 @@ const ItemSheets = () => {
 
   return (
     <LoadingView>
-      <SelectTag tags={tags} setTags={onSetTags} />
+      <Box sx={{
+        justifyContent: 'center',
+        width: '50%',
+      }}
+        onClick={() => setOpen(!open)}
+      >
+        <SelectTag tags={tags} setTags={onSetTags} open={open} setOpen={setOpen} />
+      </Box>
       {
         itemTypes.filter(type => type.value !== 'ALL').map((type, index) => (
           <ItemSheet key={index} filter={type.value} items={filteredItems} tags={tags} />

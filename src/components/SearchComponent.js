@@ -19,6 +19,7 @@ const SearchComponent = () => {
   const [itemType, setItemType] = React.useState(selectedItemType);
   const [tags, setTags] = React.useState(selectedTags);
   const [keyword, setKeyword] = React.useState(selectedKeyword);
+  const [open, setOpen] = React.useState(false);
 
   const onSearch = () => {
     dispatch(searchItems105Fetch(itemType, tags, keyword));
@@ -37,6 +38,7 @@ const SearchComponent = () => {
   return (
     <Box sx={{
       display: isMobile ? '' : 'flex',
+      alignItems: 'center',
       gap: 1,
     }}>
 
@@ -44,17 +46,18 @@ const SearchComponent = () => {
 
       <Box
         sx={{
-          minWidth: 50,
           flexGrow: 1,
+          minWidth: 50,
         }}
+        onClick={() => setOpen(!open)}
       >
-        <SelectTag tags={tags} setTags={onSetTags} />
+        <SelectTag tags={tags} setTags={onSetTags} open={open} setOpen={setOpen} />
       </Box>
 
       <Box
         sx={{
-          minWidth: 50,
           flexGrow: 1,
+          minWidth: 50,
         }}
       >
         <TextField
