@@ -185,7 +185,7 @@ const ItemSheets = () => {
 };
 
 const SearchItem = ({ item, onSearchItemDetail, isMobile }) => {
-  const { date, data: { itemId, itemName, channelName, channelNo, dungeonName } } = item;
+  const { code, name, date, data: { itemId, itemName, channelName, channelNo, dungeonName } } = item;
 
   return (
     <ListItem sx={{
@@ -215,9 +215,11 @@ const SearchItem = ({ item, onSearchItemDetail, isMobile }) => {
                 color="text.primary"
               >
                 {`획득일 : ${date} | `}
-                {`채널 : ${channelName}(${channelNo}) `}
+                {channelName && `채널 : ${channelName}`}
+                {channelNo && `(${channelNo})`}
               </Typography>
-              {` | ${dungeonName}`}
+              {dungeonName && ` | ${dungeonName}`}
+              {` | ${name || ''}`}
             </React.Fragment>
           }
         />

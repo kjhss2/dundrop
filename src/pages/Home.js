@@ -50,7 +50,8 @@ const Home = () => {
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
             <Tab label="소개" {...a11yProps(0)} />
-            <Tab label="공지사항" {...a11yProps(1)} />
+            <Tab label="확인된 문제" {...a11yProps(1)} />
+            <Tab label="공지사항" {...a11yProps(2)} />
           </Tabs>
         </Box>
         <TabPanel value={value} index={0}>
@@ -63,6 +64,14 @@ const Home = () => {
           현재 사이트는 PC화면(넓이 1000px 이상)에서 최적화된 화면을 보실 수 있으며 모바일에서도 보시기 불편함이 없게 수정 예정입니다.
         </TabPanel>
         <TabPanel value={value} index={1}>
+          <List component="nav" aria-label="mailbox folders">
+            <ListItem>
+              <ListItemText primary="상자 정가로 회득한 템이 보유 아이템에 표시 되지 않는 현상(수정완료)" secondary="2020.04.09 | 아이템 타임라인 항아리정가,초월 추가" />
+            </ListItem>
+            <Divider />
+          </List>
+        </TabPanel>
+        <TabPanel value={value} index={2}>
           <List component="nav" aria-label="mailbox folders">
             <ListItem>
               <ListItemText primary="노블레스 코드 캐릭터별 보유 아이템 표시 기능" secondary="업데이트 예정" />

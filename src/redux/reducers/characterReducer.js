@@ -9,12 +9,11 @@ const initState = {
 };
 
 const makeGettingItemIds = (gettingItemIds, timeline) => {
-  console.log(gettingItemIds);
-  console.log(timeline);
-
   if (timeline && timeline.rows.length > 0) {
     timeline.rows.forEach(({ data }) => {
-      gettingItemIds.add(data.itemId);
+      if (data && data.itemId) {
+        gettingItemIds.add(data.itemId);
+      }
     });
   }
 
