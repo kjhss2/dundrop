@@ -29,7 +29,11 @@ export const characterTimelineFetch = (serverId, characterId) => {
   // 검색 종료일 : 현재날짜
   const endDate = moment().format('YYYY-MM-DD HH:mm');
   return (dispatch) => {
-    callAPI(`/servers/${serverId}/characters/${characterId}/timeline?limit=100&startDate=${startDate}&endDate=${endDate}&code=505&`, {}, dispatch)
+    // code 504 : 아이템 획득(항아리)
+    // code 505 : 아이템 획득(지옥 파티)
+    // code 515 : 아이템 초월 수령 (NPC)
+    // code 516 : 아이템 초월 (초월의돌)
+    callAPI(`/servers/${serverId}/characters/${characterId}/timeline?limit=100&startDate=${startDate}&endDate=${endDate}&code=504,505,515,516&`, {}, dispatch)
       .then(response => {
         const { status, data } = response;
         if (status === 200) {
