@@ -214,8 +214,8 @@ const SearchItem = ({ item, onSearchItemDetail, isMobile }) => {
                 variant="body2"
                 color="text.primary"
               >
-                {`획득일 : ${date} | `}
-                {channelName && `채널 : ${channelName}`}
+                {`획득일 : ${date} `}
+                {channelName && ` | 채널 : ${channelName}`}
                 {channelNo && `(${channelNo})`}
               </Typography>
               {dungeonName && ` | ${dungeonName}`}
