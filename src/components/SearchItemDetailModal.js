@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Avatar, Box, Modal, TextareaAutosize, Typography } from "@mui/material";
+import { Avatar, Box, Button, Modal, TextareaAutosize, Typography } from "@mui/material";
 
 // Actions
 import { onChangeField } from "../actions/itemSearchAction";
@@ -36,7 +36,15 @@ const SearchItemDetailModal = () => {
     >
       <Box sx={[style, { height: (height * 0.8), overflow: 'auto' }]}>
 
-        <Box sx={{ display: 'flex' }}>
+        <Button
+          onClick={handleClose}
+          fullWidth
+          variant="outlined"
+        >
+          닫기
+        </Button>
+
+        <Box sx={{ display: 'flex', marginTop: 1 }}>
           <Avatar alt="Remy Sharp" src={`https://img-api.neople.co.kr/df/items/${itemId}`} variant="square" />
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             &nbsp;<Typography>{itemName}</Typography>
@@ -100,6 +108,13 @@ const SearchItemDetailModal = () => {
             defaultValue={itemObtainInfo}
           />
         </Box>
+        <Button
+          onClick={handleClose}
+          fullWidth
+          variant="outlined"
+        >
+          닫기
+        </Button>
       </Box>
     </Modal>
   );
