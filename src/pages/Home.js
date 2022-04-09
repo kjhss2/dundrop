@@ -78,6 +78,10 @@ const Home = () => {
             </ListItem>
             <Divider />
             <ListItem>
+              <ListItemText primary="아이템 Tag 추가(아칸셋)" secondary="2022-04-09 | 자주 사용하는 순서대로 Tag 변경, 보유 아이템 전체 시트 Tag 필터 추가" />
+            </ListItem>
+            <Divider />
+            <ListItem>
               <ListItemText primary="캐릭터 검색 메뉴 업데이트" secondary="2022-04-08 | 캐릭터별 보유 아이템 표시 기능" />
             </ListItem>
             <Divider />

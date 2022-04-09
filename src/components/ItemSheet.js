@@ -1,10 +1,10 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import { Avatar, Box, Tooltip, Typography } from "@mui/material";
 import SearchItemDetailModal from "./SearchItemDetailModal";
-import { useDispatch } from "react-redux";
 import { searchItemDetailFetch } from "../actions/itemSearchAction";
 
-const ItemSheet = ({ items, filter }) => {
+const ItemSheet = ({ items, filter, tags }) => {
 
   const dispatch = useDispatch();
 
@@ -27,7 +27,20 @@ const ItemSheet = ({ items, filter }) => {
           </Typography>
         </Box>
         {
-          items.filter(item => item.itemType === filter).map(item => (
+          items.filter(item => {
+            if (item.itemType === filter) {
+              let matchCount = tags.length;
+              // 선택된 Tag 시트 표시
+              tags.forEach(tag => {
+                if (item.tags[0].includes(tag)) {
+                  matchCount--;
+                }
+              });
+              return matchCount < 1;
+            } else {
+              return false;
+            }
+          }).map(item => (
             <Tooltip key={item.itemId} title={item.itemName + ' : ' + item.dropInfos} placement="top" disableInteractive>
               <Box sx={{
                 opacity: item.isGetting ? '1' : '0.5',

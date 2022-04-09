@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 const menus = [
   { title: '캐릭터 검색', url: '/character', active: true },
   { title: '아이템 검색(Tag)', url: '/search105', active: false },
-  { title: '아이템 검색', url: '/search', active: true },
+  { title: '아이템 검색', url: '/search', active: false },
 ];
 
 const Header = () => {

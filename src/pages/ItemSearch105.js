@@ -19,7 +19,7 @@ const ItemSearch105 = () => {
         marginTop: 5
       }}>
         <Typography variant="body1" color="text.primary">
-          {'무기 검색은 [아이템 검색] 메뉴를 이용해주세요.'} &nbsp;
+          {'무기는 제외하였습니다.'} &nbsp;
         </Typography>
         <Typography variant="body1" color="text.primary">
           {'던파공홈 언제나우린☆님 게시글 내용을 참고 하였습니다.'}
