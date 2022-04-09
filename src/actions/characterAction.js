@@ -25,9 +25,9 @@ export const characterSearchFetch = (charName) => {
 
 export const characterTimelineFetch = (serverId, characterId) => {
   // 검색 시작일 : 현재날짜 3달 전
-  const startDate = moment().subtract(3, 'months').format('YYYY-MM-DD');
+  const startDate = moment().subtract(3, 'months').format('YYYY-MM-DD 23:59');
   // 검색 종료일 : 현재날짜
-  const endDate = moment().format('YYYY-MM-DD');
+  const endDate = moment().format('YYYY-MM-DD hh:mm');
   return (dispatch) => {
     callAPI(`/servers/${serverId}/characters/${characterId}/timeline?limit=100&startDate=${startDate}&endDate=${endDate}&code=505&`, {}, dispatch)
       .then(response => {
