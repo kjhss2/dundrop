@@ -22,7 +22,7 @@ const ItemSheet = ({ items, filter }) => {
         <Box sx={{
           minWidth: 100,
         }}>
-          <Typography gutterBottom variant="h5">
+          <Typography gutterBottom>
             {filter}
           </Typography>
         </Box>

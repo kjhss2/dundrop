@@ -25,9 +25,9 @@ export const characterSearchFetch = (charName) => {
 
 export const characterTimelineFetch = (serverId, characterId) => {
   // 검색 시작일 : 현재날짜 3달 전
-  const startDate = moment().subtract(3, 'months').format('YYYY-MM-DD 23:59');
+  const startDate = moment().subtract(90, 'days').format('YYYY-MM-DD');
   // 검색 종료일 : 현재날짜
-  const endDate = moment().format('YYYY-MM-DD hh:mm');
+  const endDate = moment().format('YYYY-MM-DD HH:mm');
   return (dispatch) => {
     callAPI(`/servers/${serverId}/characters/${characterId}/timeline?limit=100&startDate=${startDate}&endDate=${endDate}&code=505&`, {}, dispatch)
       .then(response => {
@@ -37,9 +37,30 @@ export const characterTimelineFetch = (serverId, characterId) => {
             type: ActionTypes.CHARACTER__FETCH_TIMELINE,
             item: data
           });
+
+          // get timeline next data
+          if (data.timeline.next) {
+            characterTimelineFetchNext(dispatch, serverId, characterId, data.timeline.next);
+          }
         }
       });
   };
+};
+
+export const characterTimelineFetchNext = async (dispatch, serverId, characterId, next) => {
+  callAPI(`/servers/${serverId}/characters/${characterId}/timeline?next=${next}&`, {}, dispatch)
+    .then(response => {
+      const { status, data } = response;
+      if (status === 200) {
+        dispatch({
+          type: ActionTypes.CHARACTER__FETCH_TIMELINE,
+          item: data
+        });
+        if (data.timeline.next) {
+          characterTimelineFetchNext(dispatch, serverId, characterId, data.timeline.next);
+        }
+      }
+    });
 };
 
 export const initCharacter = () => ({

@@ -3,7 +3,7 @@ import { Avatar, Card, CardActionArea, CardContent, CardMedia, IconButton, ListI
 import { Box } from '@mui/system';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 // Actions
 import { characterTimelineFetch, initCharacter } from "../actions/characterAction";
@@ -50,7 +50,7 @@ const CharacterDetail = () => {
   const params = useParams();
   const dispatch = useDispatch();
   const { isMobile } = useSelector((state) => state.dimension);
-  const { character } = useSelector((state) => state.characterState);
+  const { character, timeline } = useSelector((state) => state.characterState);
 
   React.useEffect(() => {
     dispatch(characterTimelineFetch(params.serverId, params.characterId));
@@ -108,12 +108,12 @@ const CharacterDetail = () => {
             </TabPanel>
             <TabPanel value={value} index={2}>
               {
-                character && character.timeline.rows.map((row, index) => (
+                timeline.map((row, index) => (
                   <SearchItem key={index} item={row} onSearchItemDetail={onSearchItemDetail} isMobile={isMobile} />
                 ))
               }
               {
-                (character && character.timeline.rows.length === 0) &&
+                (timeline.length === 0) &&
                 <Typography
                   color="text.primary"
                 >
@@ -131,11 +131,12 @@ const CharacterDetail = () => {
 };
 
 const CharacterInfo = ({ serverId, info }) => {
+  const navigate = useNavigate();
   const { characterId, characterName, jobGrowName, level, guildName, adventureName } = info;
 
   return (
     <Card>
-      <CardActionArea>
+      <CardActionArea onClick={() => navigate(`/character/${serverId}/${characterId}`)}>
         <CardMedia
           component="img"
           image={`https://img-api.neople.co.kr/df/servers/${serverId}/characters/${characterId}?zoom=3`}

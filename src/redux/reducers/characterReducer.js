@@ -4,28 +4,30 @@ import * as ActionTypes from '../ActionTypes';
 const initState = {
   characters: [],
   character: '',
-  gettingItemIds: [],
-  gettingItemIdsCount: 0,
+  timeline: [],
+  gettingItemIds: new Set([]),
 };
 
-const makeGettingItemIds = ({ timeline }) => {
-  let ids = new Set([]);
+const makeGettingItemIds = (gettingItemIds, timeline) => {
+  console.log(gettingItemIds);
+  console.log(timeline);
+
   if (timeline && timeline.rows.length > 0) {
     timeline.rows.forEach(({ data }) => {
-      ids.add(data.itemId);
+      gettingItemIds.add(data.itemId);
     });
   }
 
   // 타임라인 기반 보유 아이템 여부 업데이트
   allItems.forEach((item) => {
-    if (ids.has(item.itemId)) {
+    if (gettingItemIds.has(item.itemId)) {
       item['isGetting'] = true;
     } else {
       item['isGetting'] = false;
     }
   });
 
-  return ids;
+  return gettingItemIds;
 };
 
 export const characterState = (state = Object.assign({}, initState), action) => {
@@ -36,8 +38,8 @@ export const characterState = (state = Object.assign({}, initState), action) => 
         ...state,
         characters: [],
         character: '',
-        gettingItemIds: [],
-        gettingItemIdsCount: 0,
+        timeline: [],
+        gettingItemIds: new Set([]),
       };
 
     case ActionTypes.CHARACTER__FETCH_ITEMS:
@@ -50,8 +52,8 @@ export const characterState = (state = Object.assign({}, initState), action) => 
       return {
         ...state,
         character: action.item,
-        gettingItemIds: makeGettingItemIds(action.item),
-        gettingItemIdsCount: action.item.timeline.rows.length,
+        timeline: [...state.timeline, ...action.item.timeline.rows],
+        gettingItemIds: makeGettingItemIds(state.gettingItemIds, action.item.timeline),
       };
 
     default:
