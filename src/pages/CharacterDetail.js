@@ -17,6 +17,7 @@ import ItemSearch105 from './ItemSearch105';
 import { allItems, itemTypes } from '../actions/commonData';
 import ItemSheet from '../components/ItemSheet';
 import LoadingView from '../components/LoadingView';
+import SelectTag from '../components/select/SelectTag';
 
 function a11yProps(index) {
   return {
@@ -94,7 +95,7 @@ const CharacterDetail = () => {
           }}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
               <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-                <Tab label="보유 아이템 검색" {...a11yProps(0)} />
+                <Tab label="Tag 검색" {...a11yProps(0)} />
                 <Tab label="보유 아이템 전체 시트" {...a11yProps(1)} />
                 <Tab label="아이템 획득 이력" {...a11yProps(2)} />
                 <Tab label="장착 아이템(준비중)" {...a11yProps(3)} />
@@ -173,11 +174,19 @@ const CharacterInfo = ({ serverId, info }) => {
 
 const ItemSheets = () => {
   let filteredItems = allItems;
+
+  const [tags, setTags] = React.useState([]);
+
+  const onSetTags = (_tags) => {
+    setTags(_tags);
+  };
+
   return (
     <LoadingView>
+      <SelectTag tags={tags} setTags={onSetTags} />
       {
         itemTypes.filter(type => type.value !== 'ALL').map((type, index) => (
-          <ItemSheet key={index} filter={type.value} items={filteredItems} />
+          <ItemSheet key={index} filter={type.value} items={filteredItems} tags={tags} />
         ))
       }
     </LoadingView>
@@ -185,7 +194,7 @@ const ItemSheets = () => {
 };
 
 const SearchItem = ({ item, onSearchItemDetail, isMobile }) => {
-  const { code, name, date, data: { itemId, itemName, channelName, channelNo, dungeonName } } = item;
+  const { name, date, data: { itemId, itemName, channelName, channelNo, dungeonName } } = item;
 
   return (
     <ListItem sx={{
