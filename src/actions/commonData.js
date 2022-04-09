@@ -329,7 +329,7 @@ export const allItems = [
   { itemId: "7b590f832a97ee8eacc17a54e3fe2d4a", itemName: '황혼의 성단', itemType: '귀걸이', tags: ['회복,광폭화'], dropInfos: ['노블레스 코드 - 강철의 비비안'], desc: '본인 딜이 쌔면 좋은 장비 본인 딜로 10% 깔때마다 피증' },
   // { itemId: "",itemName: '신화',itemType: '귀걸이',tags: ['신화'],dropInfos: ['-'],desc:'' },
   { itemId: "2e1b235fd35aa26bda52427c07e795ec", itemName: '엔트 정령의 귀걸이', itemType: '귀걸이', tags: ['커스텀(엔트)'], dropInfos: ['베리콜리스(히어로즈)', '백색의 땅(히어로즈)', '캐니언 힐(히어로즈)', '파괴된 죽은 자의 성(익스) 이상', '노블레스 코드(익스) 이상'], desc: '히어로즈,상급(익스) 전용' },
-  { itemId: "d4611183c02aaf2c96da65125778985f", itemName: '블루 베릴 네클레스', itemType: '귀걸이', tags: ['커스텀(블루 베릴)'], dropInfos: ['파괴된 죽은 자의 성(익스) 이상'], desc: '파죽성(익스) 전용 아이템' },
+  { itemId: "13784e929edd0cb8cfdcb38d629cfc79", itemName: '블루 베릴 이어링', itemType: '귀걸이', tags: ['커스텀(블루 베릴)'], dropInfos: ['파괴된 죽은 자의 성(익스) 이상'], desc: '파죽성(익스) 전용 아이템' },
   { itemId: "089aa9cba8ce4d68f3101c827f3daa38", itemName: '숲속의 마녀 귀걸이', itemType: '귀걸이', tags: ['커스텀(숲속의 마녀)'], dropInfos: ['노블레스 코드(익스) 이상'], desc: '노블레스 코드(익스) 전용 아이템' },
 ];
 
