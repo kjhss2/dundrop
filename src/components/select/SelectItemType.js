@@ -1,5 +1,6 @@
 import React from "react";
 import { Box, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import { itemTypes } from "../../actions/commonData";
 
 function SelectItemType({ itemType, setItemType }) {
 
@@ -18,18 +19,11 @@ function SelectItemType({ itemType, setItemType }) {
           label="장비유형"
           onChange={handleChange}
         >
-          <MenuItem value={'ALL'}>전체부위</MenuItem>
-          <MenuItem value={'상의'}>상의</MenuItem>
-          <MenuItem value={'하의'}>하의</MenuItem>
-          <MenuItem value={'머리어깨'}>머리어깨</MenuItem>
-          <MenuItem value={'벨트'}>벨트</MenuItem>
-          <MenuItem value={'신발'}>신발</MenuItem>
-          <MenuItem value={'팔찌'}>팔찌</MenuItem>
-          <MenuItem value={'목걸이'}>목걸이</MenuItem>
-          <MenuItem value={'반지'}>반지</MenuItem>
-          <MenuItem value={'보조장비'}>보조장비</MenuItem>
-          <MenuItem value={'귀걸이'}>귀걸이</MenuItem>
-          <MenuItem value={'마법석'}>마법석</MenuItem>
+          {
+            itemTypes.map((type, index) => (
+              <MenuItem key={index} value={type.value}>{type.label}</MenuItem>
+            ))
+          }
         </Select>
       </FormControl>
     </Box>

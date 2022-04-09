@@ -49,6 +49,21 @@ export const tagItems = [
   { id: 't-048', label: '#커스텀(숲속의 마녀)', value: '커스텀(숲속의 마녀)' },
 ];
 
+export const itemTypes = [
+  { value: 'ALL', label: '전체부위' },
+  { value: '상의', label: '상의' },
+  { value: '하의', label: '하의' },
+  { value: '머리어깨', label: '머리어깨' },
+  { value: '벨트', label: '벨트' },
+  { value: '신발', label: '신발' },
+  { value: '팔찌', label: '팔찌' },
+  { value: '목걸이', label: '목걸이' },
+  { value: '반지', label: '반지' },
+  { value: '보조장비', label: '보조장비' },
+  { value: '귀걸이', label: '귀걸이' },
+  { value: '마법석', label: '마법석' },
+];
+
 export const allItems = [
   // 상의
   { itemId: "073a49a592516fef6eb217c24fc85f75", itemName: '격동하는 마음', itemType: '상의', tags: ['생존'], dropInfos: ['캐니언 힐', '나사우 삼림'], desc: '시간 전쟁 원코' },
