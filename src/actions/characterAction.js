@@ -10,8 +10,14 @@ export const characterSearchFetch = (charName) => {
     return;
   }
 
+  let wordType = '&wordType=full';
+  // 한 글자 아이디 검색 시에만 검색유형 match 처리
+  if (charName.length === 1) {
+    wordType = '&wordType=match';
+  }
+
   return (dispatch) => {
-    callAPI(`/servers/all/characters?characterName=${charName}&wordType=full&limit=200&`, {}, dispatch)
+    callAPI(`/servers/all/characters?characterName=${charName}${wordType}&limit=200&`, {}, dispatch)
       .then(response => {
         const { status, data } = response;
         if (status === 200) {
