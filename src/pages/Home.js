@@ -46,7 +46,7 @@ const Home = () => {
           <Typography variant="h5">던드롭(DunDrop)</Typography>
         </Box>
         <Box sx={{ marginLeft: 2 }}>
-          <Typography variant="h7">던전엔파이터 아이템 검색 사이트</Typography>
+          <Typography variant="h7">던전앤파이터 아이템 검색 사이트</Typography>
         </Box>
       </Box>
       <Box sx={{ width: '100%' }}>
@@ -62,7 +62,7 @@ const Home = () => {
           <Guide />
         </TabPanel>
         <TabPanel value={value} index={0}>
-          안녕하세요. 2006년부터 소소하게 던전엔파이터를 즐기고 있는 유저입니다.<br />
+          안녕하세요. 2006년부터 소소하게 던전앤파이터를 즐기고 있는 유저입니다.<br />
           이번에 만렙 확장과 더불어 신규 105레벨 아이템을 좀 더 쉽게 검색하는 기능을 만들고자 사이트를 개발 하게 되었습니다.<br />
           개발을 시작한지 얼마 안되서 부족한 점이 많지만 필요한 기능들을 추가할 예정입니다.<br />
           던드롭은 현재 베타로 운영중이며, 불편한 점이 있으시면 문의주시면 감사하겠습니다.<br />
@@ -104,9 +104,16 @@ const Home = () => {
             </ListItem>
             <Divider />
             <ListItem>
-              <ListItemText primary="아이템 Tag 추가(아칸셋)" secondary="2022-04-09 | 자주 사용하는 순서대로 Tag 변경, 보유 아이템 전체 시트 Tag 필터 추가" />
+              <ListItemText primary="보유 아이템 TAG 요약 업데이트" secondary="2022-04-10" />
             </ListItem>
             <Divider />
+            <ListItem>
+              <ListItemText primary="캐릭터 장착 아이템 TAG 요약 업데이트" secondary="2022-04-10" />
+            </ListItem>
+            <Divider />
+            <ListItem>
+              <ListItemText primary="아이템 Tag 추가(아칸셋) 업데이트" secondary="2022-04-09 | 자주 사용하는 순서대로 Tag 변경, 보유 아이템 전체 시트 Tag 필터 추가" />
+            </ListItem>
             <ListItem>
               <ListItemText primary="캐릭터 검색 메뉴 업데이트" secondary="2022-04-08 | 캐릭터별 보유 아이템 표시 기능" />
             </ListItem>

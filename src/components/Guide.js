@@ -15,6 +15,9 @@ const guides = [
   { src: require('../lib/img/guide/guide10.JPG'), alt: '가이드10', desc: '10. 아이템 아이콘에 마우스를 가져다 되시면 아이템명과 간단한 드랍 정보가 출력됩니다. 아이콘을 클릭하시면 해당 아이템의 상세 정보창이 나타납니다.' },
   { src: require('../lib/img/guide/guide11.JPG'), alt: '가이드11', desc: '11. 클릭한 아이템의 상세 정보창입니다. 닫기 버튼을 클릭하시거나 검은색 부분을 클릭하시면 닫힙니다.' },
   { src: require('../lib/img/guide/guide12.JPG'), alt: '가이드12', desc: '12. 아이템 획득 이력입니다. 캐릭터가 획득한 아이템 이력이 출력됩니다.' },
+  { src: require('../lib/img/guide/guide13.JPG'), alt: '가이드13', desc: '13. 캐릭터가 장착중인 아이템 TAG 요약이 표시 됩니다. 보유한 TAG가 많은 순서대로 정렬됩니다.' },
+  { src: require('../lib/img/guide/guide14.JPG'), alt: '가이드14', desc: '14. 보유 아이템 전체 시트 신규 기능입니다. 보유한 아이템의 전체 TAG 요약이 표시됩니다. TAG가 많은 순서대로 정렬되어 세팅하시는데 참고하시면 됩니다. TAG 요약 숨기기 버튼을 누르면 보유 아이템 TAG 요약이 숨김 처리 됩니다.' },
+  { src: require('../lib/img/guide/guide15.JPG'), alt: '가이드15', desc: '15. 장착 아이템 탭 입니다. 현재 캐릭터가 장착중인 아이템 목록과 105레벨 아이템의 경우 피해증가/버프/성장 레벨이 표시됩니다.' },
 ];
 
 const Guide = () => {
