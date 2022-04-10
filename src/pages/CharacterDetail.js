@@ -69,19 +69,22 @@ const CharacterDetail = () => {
           }}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
               <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-                <Tab label="Tag 검색" {...a11yProps(0)} />
+                <Tab label="장착 아이템" {...a11yProps(0)} />
                 <Tab label="보유 아이템 전체 시트" {...a11yProps(1)} />
-                <Tab label="아이템 획득 이력" {...a11yProps(2)} />
-                <Tab label="장착 아이템" {...a11yProps(3)} />
+                <Tab label="Tag 검색" {...a11yProps(2)} />
+                <Tab label="아이템 획득 이력" {...a11yProps(3)} />
               </Tabs>
             </Box>
             <TabPanel value={value} index={0}>
-              <ItemSearch105 />
+              <MountEquipments items={allEquipment} />
             </TabPanel>
             <TabPanel value={value} index={1}>
               <ItemSheets tagEquipmentSummary={tagEquipmentSummary} isMobile={isMobile} />
             </TabPanel>
             <TabPanel value={value} index={2}>
+              <ItemSearch105 />
+            </TabPanel>
+            <TabPanel value={value} index={3}>
               {
                 timeline.map((row, index) => (
                   <SearchItem key={index} item={row} onSearchItemDetail={onSearchItemDetail} isMobile={isMobile} />
@@ -95,9 +98,6 @@ const CharacterDetail = () => {
                   {'조회된 정보가 없습니다.'}
                 </Typography>
               }
-            </TabPanel>
-            <TabPanel value={value} index={3}>
-              <MountEquipments items={allEquipment} />
             </TabPanel>
           </Box>
 
@@ -184,7 +184,7 @@ const ItemSheets = ({ isMobile }) => {
   React.useEffect(() => {
     makeAllTagSummray();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [allItems]);
 
   const onSetTags = (_tags) => {
     setTags(_tags);
