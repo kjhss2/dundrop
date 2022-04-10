@@ -15,7 +15,7 @@ import ItemSearch105 from './ItemSearch105';
 import ItemSheet from '../components/ItemSheet';
 import LoadingView from '../components/LoadingView';
 import SelectTag from '../components/select/SelectTag';
-import { allItems, itemTypes } from '../actions/commonData';
+import { allItems, excludeTags, itemTypes } from '../actions/commonData';
 import MountEquipments from '../components/MountEquipments';
 
 const CharacterDetail = () => {
@@ -196,7 +196,7 @@ const ItemSheets = ({ isMobile }) => {
 
     allItems.filter(item => item.isGetting).forEach(item => {
       // 장착 장비 Tag 요약 정보 획득
-      item.tags[0].split(',').forEach(tag => {
+      item.tags[0].split(',').filter(tag => !excludeTags.includes(tag)).forEach(tag => {
         // 이미 tag가 존재하면 카운터 추가, 없다면 신규 set 추가
         if (_allTagsSummary.has(tag)) {
           const getTag = _allTagsSummary.get(tag);

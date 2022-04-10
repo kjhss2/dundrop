@@ -102,7 +102,11 @@ const Home = () => {
         <TabPanel value={value} index={3}>
           <List component="nav" aria-label="mailbox folders">
             <ListItem>
-              <ListItemText primary="노블레스 코드 캐릭터별 보유 아이템 표시 기능" secondary="업데이트 예정" />
+              <ListItemText primary="다중 캐릭터별 보유 아이템 표시 기능(노블레스 코드용 보유 아이템 검색)" secondary="업데이트 예정" />
+            </ListItem>
+            <Divider />
+            <ListItem>
+              <ListItemText primary="#크리티컬 히트 TAG 업데이트" secondary="2022-04-11 | TAG 선택에는 표시 되지만 TAG 요약에는 딜 관련이 아니며 해당되는 템 개수가 많아 제외 하였습니다." />
             </ListItem>
             <Divider />
             <ListItem>

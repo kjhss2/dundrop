@@ -1,7 +1,7 @@
 import moment from 'moment';
 import { callAPI } from '../lib/CommonApi';
 import * as ActionTypes from '../redux/ActionTypes';
-import { allItems } from './commonData';
+import { allItems, excludeTags } from './commonData';
 
 export const characterSearchFetch = (charName) => {
 
@@ -59,7 +59,7 @@ export const characterEquipmentSearchFetch = (serverId, characterId) => {
             filteredItems = [...filteredItems, ...allItems.filter(({ itemName }) => itemName === eq.itemName).map(item => {
 
               // 장착 장비 Tag 요약 정보 획득
-              item.tags[0].split(',').forEach(tag => {
+              item.tags[0].split(',').filter(tag => !excludeTags.includes(tag)).forEach(tag => {
                 // 이미 tag가 존재하면 카운터 추가, 없다면 신규 set 추가
                 if (tagEquipmentSummary.has(tag)) {
                   const getTag = tagEquipmentSummary.get(tag);
