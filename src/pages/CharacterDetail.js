@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Avatar, Box, Card, CardActionArea, CardContent, CardMedia, IconButton, ListItem, ListItemAvatar, ListItemIcon, ListItemText, Tab, Tabs, Typography } from '@mui/material';
+import { Avatar, Box, Card, CardActionArea, CardContent, CardMedia, FormControlLabel, IconButton, ListItem, ListItemAvatar, ListItemIcon, ListItemText, Switch, Tab, Tabs, Typography } from '@mui/material';
 import { Search } from '@mui/icons-material';
 
 // Actions
@@ -78,7 +78,7 @@ const CharacterDetail = () => {
               <ItemSearch105 />
             </TabPanel>
             <TabPanel value={value} index={1}>
-              <ItemSheets />
+              <ItemSheets tagEquipmentSummary={tagEquipmentSummary} isMobile={isMobile} />
             </TabPanel>
             <TabPanel value={value} index={2}>
               {
@@ -142,23 +142,26 @@ const CharacterInfo = ({ serverId, info, tagEquipmentSummary }) => {
               {`레벨 : ${level}`}
             </Typography>
           </Box>
-          <Box
-            sx={{
-              marginTop: 2
-            }}>
-            <Typography variant="h6">
-              {`장착 아이템 TAG 요약`}
-            </Typography>
-            {
-              tagEquipmentSummary.map((item, index) => {
-                return (
-                  <Typography key={index} variant="body2" color="text.secondary">
-                    {`#${item.name}(${item.value})`}
-                  </Typography>
-                );
-              })
-            }
-          </Box>
+          {
+            tagEquipmentSummary && tagEquipmentSummary.length > 0 &&
+            <Box
+              sx={{
+                marginTop: 2
+              }}>
+              <Typography variant="h6">
+                {`장착 아이템 TAG 요약`}
+              </Typography>
+              {
+                tagEquipmentSummary.map((item, index) => {
+                  return (
+                    <Typography key={index} variant="body2" color="text.secondary">
+                      {`#${item.name}(${item.value})`}
+                    </Typography>
+                  );
+                })
+              }
+            </Box>
+          }
         </CardContent>
       </CardActionArea>
     </Card>
@@ -166,14 +169,45 @@ const CharacterInfo = ({ serverId, info, tagEquipmentSummary }) => {
 };
 
 // 보유 아이템 전체 시트
-const ItemSheets = () => {
+const ItemSheets = ({ isMobile }) => {
   let filteredItems = allItems;
 
   const [tags, setTags] = React.useState([]);
   const [open, setOpen] = React.useState(false);
+  const [checked, setChecked] = React.useState(false);
+  const [allTagsSummary, setAllTagsSummary] = React.useState([]);
+
+  React.useEffect(() => {
+    makeAllTagSummray();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const onSetTags = (_tags) => {
     setTags(_tags);
+  };
+
+  const makeAllTagSummray = () => {
+
+    let _allTagsSummary = new Map();
+
+    allItems.filter(item => item.isGetting).forEach(item => {
+      // 장착 장비 Tag 요약 정보 획득
+      item.tags[0].split(',').forEach(tag => {
+        // 이미 tag가 존재하면 카운터 추가, 없다면 신규 set 추가
+        if (_allTagsSummary.has(tag)) {
+          const getTag = _allTagsSummary.get(tag);
+          _allTagsSummary.delete(tag);
+          _allTagsSummary.set(tag, getTag + 1);
+        } else {
+          _allTagsSummary.set(tag, 1);
+        }
+      });
+    });
+    // map to array
+    _allTagsSummary = Array.from(_allTagsSummary, ([name, value]) => ({ name, value }));
+    // 장착 장비 Tag 요약 정보 정렬(sort)
+    _allTagsSummary.sort(({ value }, { value: bValue }) => bValue - value);
+    setAllTagsSummary(_allTagsSummary);
   };
 
   return (
@@ -181,16 +215,46 @@ const ItemSheets = () => {
       <Box sx={{
         justifyContent: 'center',
         width: '50%',
-      }}
-        onClick={() => setOpen(!open)}
-      >
-        <SelectTag tags={tags} setTags={onSetTags} open={open} setOpen={setOpen} />
+      }}>
+        <Box onClick={() => setOpen(!open)}>
+          <SelectTag tags={tags} setTags={onSetTags} open={open} setOpen={setOpen} />
+        </Box>
+        <FormControlLabel control={
+          <Switch
+            defaultChecked
+            checked={checked}
+            onChange={(e) => setChecked(e.target.checked)}
+          />
+        } label="TAG 요약 숨기기" />
       </Box>
-      {
-        itemTypes.filter(type => type.value !== 'ALL').map((type, index) => (
-          <ItemSheet key={index} filter={type.value} items={filteredItems} tags={tags} />
-        ))
-      }
+      <Box sx={{
+        display: isMobile ? 'block' : 'flex',
+        gap: 1.5,
+      }}>
+        <Box>
+          {
+            itemTypes.filter(type => type.value !== 'ALL').map((type, index) => (
+              <ItemSheet key={index} filter={type.value} items={filteredItems} tags={tags} />
+            ))
+          }
+        </Box>
+        <Box sx={{
+          display: checked ? 'none' : ''
+        }}>
+          <Typography fontWeight={'bold'} fontSize={16}>
+            {`보유 아이템 TAG 요약`}
+          </Typography>
+          {
+            allTagsSummary.map((item, index) => {
+              return (
+                <Typography key={index} variant="body2" color="text.secondary">
+                  {`#${item.name}(${item.value})`}
+                </Typography>
+              );
+            })
+          }
+        </Box>
+      </Box>
     </>
   );
 };
