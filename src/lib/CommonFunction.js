@@ -20,3 +20,26 @@ export const getServerName = (key) => {
       break;
   }
 };
+
+export const getItemRarityColor = (key) => {
+  switch (key) {
+    case '커먼':
+      return '#FFFFFF';
+    case '언커먼':
+      return '#68D5ED';
+    case '레어':
+      return '#B36BFF';
+    case '유니크':
+      return '#FF00FF';
+    case '에픽':
+      return '#FFB400';
+    case '크로니클':
+      return '#FF6666';
+    case '레전더리	':
+      return '#FF7800';
+    case '신화':
+      return 'deeppink';
+    default:
+      break;
+  }
+};

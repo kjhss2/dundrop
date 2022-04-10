@@ -5,9 +5,12 @@ import { Search } from '@mui/icons-material';
 
 // Actions
 import { searchItemDetailFetch } from "../actions/itemSearchAction";
+
+// Component
 import SearchItemDetailModal from "./SearchItemDetailModal";
 import { IS_DEV } from "../config";
 import LoadingView from "./LoadingView";
+import { getItemRarityColor } from "../lib/CommonFunction";
 
 const SimpleSearchItems = ({ items }) => {
 
@@ -61,7 +64,7 @@ const SearchItem = ({ item, onSearchItemDetail }) => {
         <ListItemText
           primary={itemName}
           sx={{
-            color: '#d39500'
+            color: getItemRarityColor(itemRarity)
           }}
           secondary={
             <React.Fragment>

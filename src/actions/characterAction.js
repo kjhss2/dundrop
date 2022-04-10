@@ -1,6 +1,7 @@
 import moment from 'moment';
 import { callAPI } from '../lib/CommonApi';
 import * as ActionTypes from '../redux/ActionTypes';
+import { allItems } from './commonData';
 
 export const characterSearchFetch = (charName) => {
 
@@ -17,6 +18,65 @@ export const characterSearchFetch = (charName) => {
           dispatch({
             type: ActionTypes.CHARACTER__FETCH_ITEMS,
             items: data.rows
+          });
+
+          // 조회된 캐릭터 목록 장비 요약 생성
+          // data.rows.filter(({ level }) => level === 110).forEach(character => {
+          //   characterEquipmentSearchFetch(character.serverId, character.characterId);
+          // });
+        }
+      });
+  };
+};
+
+export const characterEquipmentSearchFetch = (serverId, characterId) => {
+  return (dispatch) => {
+    callAPI(`/servers/${serverId}/characters/${characterId}/equip/equipment?&`, {}, dispatch)
+      .then(response => {
+        const { status, data } = response;
+        if (status === 200) {
+
+          let filteredItems = [];
+          let tagEquipmentSummary = new Map();
+
+          // API로 조회된 정보에 장착 장비 Tag, tags, desc 데이터 setting 작업(10점짜리 코드..)
+          data.equipment.forEach(eq => {
+            filteredItems = [...filteredItems, ...allItems.filter(({ itemName }) => itemName === eq.itemName).map(item => {
+
+              // 장착 장비 Tag 요약 정보 획득
+              item.tags[0].split(',').forEach(tag => {
+                // 이미 tag가 존재하면 카운터 추가, 없다면 신규 set 추가
+                if (tagEquipmentSummary.has(tag)) {
+                  const getTag = tagEquipmentSummary.get(tag);
+                  tagEquipmentSummary.delete(tag);
+                  tagEquipmentSummary.set(tag, getTag + 1);
+                } else {
+                  tagEquipmentSummary.set(tag, 1);
+                }
+              });
+
+              // tags, desc setting
+              eq['tags'] = item.tags;
+              eq['desc'] = item.desc;
+              return eq;
+            })];
+
+            // 신화 아이템은 별도 처리(추후 신화 아이템도 아이템 데이터에 추가)
+            if (eq.itemRarity === '신화') {
+              eq['tags'] = ['신화'];
+              filteredItems = [...filteredItems, eq];
+            }
+          });
+
+          // map to array
+          tagEquipmentSummary = Array.from(tagEquipmentSummary, ([name, value]) => ({ name, value }));
+          // 장착 장비 Tag 요약 정보 정렬(sort)
+          tagEquipmentSummary.sort(({ value }, { value: bValue }) => bValue - value);
+
+          dispatch({
+            type: ActionTypes.CHARACTER__FETCH_EQUIPMENT,
+            allEquipment: data.equipment,
+            tagEquipmentSummary
           });
         }
       });

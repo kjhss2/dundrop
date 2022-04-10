@@ -4,6 +4,9 @@ import * as ActionTypes from '../ActionTypes';
 const initState = {
   characters: [],
   character: '',
+  allEquipment: [],
+  tagEquipmentSummary: [],
+
   timeline: [],
   gettingItemIds: new Set([]),
 };
@@ -37,6 +40,8 @@ export const characterState = (state = Object.assign({}, initState), action) => 
         ...state,
         characters: [],
         character: '',
+        allEquipment: [],
+        tagEquipmentSummary: [],
         timeline: [],
         gettingItemIds: new Set([]),
       };
@@ -45,6 +50,13 @@ export const characterState = (state = Object.assign({}, initState), action) => 
       return {
         ...state,
         characters: action.items.sort(({ level }, { level: bLevel }) => bLevel - level),
+      };
+
+    case ActionTypes.CHARACTER__FETCH_EQUIPMENT:
+      return {
+        ...state,
+        allEquipment: action.allEquipment,
+        tagEquipmentSummary: action.tagEquipmentSummary,
       };
 
     case ActionTypes.CHARACTER__FETCH_TIMELINE:

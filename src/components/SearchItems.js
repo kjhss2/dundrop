@@ -9,6 +9,7 @@ import SearchItemDetailModal from "./SearchItemDetailModal";
 
 // Components
 import LoadingView from "./LoadingView";
+import { getItemRarityColor } from "../lib/CommonFunction";
 
 const SearchItems = ({ items }) => {
 
@@ -25,7 +26,9 @@ const SearchItems = ({ items }) => {
         <List sx={{
           bgcolor: 'background.paper',
           overflow: 'auto',
-        }}>
+        }}
+          dense={true}
+        >
           {
             items && items.map((item, index) => (
               <SearchItem key={index} item={item} onSearchItemDetail={onSearchItemDetail} isMobile={isMobile} />
@@ -71,7 +74,7 @@ const SearchItem = ({ item, onSearchItemDetail, isMobile }) => {
           <ListItemText
             primary={itemName}
             sx={{
-              color: '#d39500'
+              color: getItemRarityColor('에픽')
             }}
             secondary={
               <React.Fragment>

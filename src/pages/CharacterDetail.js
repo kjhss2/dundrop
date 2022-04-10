@@ -1,59 +1,32 @@
-import { Search } from '@mui/icons-material';
-import { Avatar, Card, CardActionArea, CardContent, CardMedia, IconButton, ListItem, ListItemAvatar, ListItemIcon, ListItemText, Tab, Tabs, Typography } from '@mui/material';
-import { Box } from '@mui/system';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
+import { Avatar, Box, Card, CardActionArea, CardContent, CardMedia, IconButton, ListItem, ListItemAvatar, ListItemIcon, ListItemText, Tab, Tabs, Typography } from '@mui/material';
+import { Search } from '@mui/icons-material';
 
 // Actions
-import { characterTimelineFetch, initCharacter } from "../actions/characterAction";
+import { characterEquipmentSearchFetch, characterTimelineFetch, initCharacter } from "../actions/characterAction";
 import { initSearchItems, searchItemDetailFetch } from '../actions/itemSearchAction';
+import { getItemRarityColor, getServerName } from '../lib/CommonFunction';
 
 // Components
-import { getServerName } from '../lib/CommonFunction';
-import Loading from '../components/LoadingView';
 import SearchItemDetailModal from '../components/SearchItemDetailModal';
 import ItemSearch105 from './ItemSearch105';
-import { allItems, itemTypes } from '../actions/commonData';
 import ItemSheet from '../components/ItemSheet';
 import LoadingView from '../components/LoadingView';
 import SelectTag from '../components/select/SelectTag';
-
-function a11yProps(index) {
-  return {
-    id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
-  };
-}
-
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
-}
+import { allItems, itemTypes } from '../actions/commonData';
+import MountEquipments from '../components/MountEquipments';
 
 const CharacterDetail = () => {
 
   const params = useParams();
   const dispatch = useDispatch();
   const { isMobile } = useSelector((state) => state.dimension);
-  const { character, timeline } = useSelector((state) => state.characterState);
+  const { character, tagEquipmentSummary, timeline, allEquipment } = useSelector((state) => state.characterState);
 
   React.useEffect(() => {
+    dispatch(characterEquipmentSearchFetch(params.serverId, params.characterId));
     dispatch(characterTimelineFetch(params.serverId, params.characterId));
     dispatch(initSearchItems());
     return () => { // cleanup
@@ -74,22 +47,22 @@ const CharacterDetail = () => {
 
   return (
     <>
-      <Loading>
+      <LoadingView>
         <Box sx={{
           display: isMobile ? '' : 'flex',
           gap: 1
         }}>
           {/* 캐릭터 정보 */}
           <Box sx={{
-            maxWidth: isMobile ? 200 : 300
+            maxWidth: isMobile ? 180 : 240
           }}>
             {
               character &&
-              <CharacterInfo info={character} serverId={params.serverId} />
+              <CharacterInfo info={character} serverId={params.serverId} tagEquipmentSummary={tagEquipmentSummary} />
             }
           </Box>
 
-          {/* 아이템 Tab */}
+          {/* 아이템 Tabs */}
           <Box sx={{
             flexGrow: 1
           }}>
@@ -98,7 +71,7 @@ const CharacterDetail = () => {
                 <Tab label="Tag 검색" {...a11yProps(0)} />
                 <Tab label="보유 아이템 전체 시트" {...a11yProps(1)} />
                 <Tab label="아이템 획득 이력" {...a11yProps(2)} />
-                <Tab label="장착 아이템(준비중)" {...a11yProps(3)} />
+                <Tab label="장착 아이템" {...a11yProps(3)} />
               </Tabs>
             </Box>
             <TabPanel value={value} index={0}>
@@ -123,18 +96,20 @@ const CharacterDetail = () => {
               }
             </TabPanel>
             <TabPanel value={value} index={3}>
-              준비중 입니다.
+              <MountEquipments items={allEquipment} />
             </TabPanel>
           </Box>
 
         </Box>
-      </Loading>
+      </LoadingView>
       <SearchItemDetailModal isMobile={isMobile} />
     </>
   );
 };
 
-const CharacterInfo = ({ serverId, info }) => {
+// 캐릭터 정보
+const CharacterInfo = ({ serverId, info, tagEquipmentSummary }) => {
+
   const navigate = useNavigate();
   const { characterId, characterName, jobGrowName, level, guildName, adventureName } = info;
 
@@ -147,30 +122,50 @@ const CharacterInfo = ({ serverId, info }) => {
           alt="green iguana"
         />
         <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
+          <Typography gutterBottom variant="h6" component="div">
             {characterName}
           </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {`모험단 : ${adventureName}`}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {`서버 : ${getServerName(serverId)}`}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {`길드 : ${guildName || ''}`}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {`직업 : ${jobGrowName}`}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {`레벨 : ${level}`}
-          </Typography>
+          <Box>
+            <Typography variant="body2" color="text.secondary">
+              {`모험단 : ${adventureName}`}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              {`서버 : ${getServerName(serverId)}`}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              {`길드 : ${guildName || ''}`}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              {`직업 : ${jobGrowName}`}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              {`레벨 : ${level}`}
+            </Typography>
+          </Box>
+          <Box
+            sx={{
+              marginTop: 2
+            }}>
+            <Typography variant="h6">
+              {`장착 아이템 TAG 요약`}
+            </Typography>
+            {
+              tagEquipmentSummary.map((item, index) => {
+                return (
+                  <Typography key={index} variant="body2" color="text.secondary">
+                    {`#${item.name}(${item.value})`}
+                  </Typography>
+                );
+              })
+            }
+          </Box>
         </CardContent>
       </CardActionArea>
     </Card>
   );
 };
 
+// 보유 아이템 전체 시트
 const ItemSheets = () => {
   let filteredItems = allItems;
 
@@ -182,7 +177,7 @@ const ItemSheets = () => {
   };
 
   return (
-    <LoadingView>
+    <>
       <Box sx={{
         justifyContent: 'center',
         width: '50%',
@@ -196,12 +191,13 @@ const ItemSheets = () => {
           <ItemSheet key={index} filter={type.value} items={filteredItems} tags={tags} />
         ))
       }
-    </LoadingView>
+    </>
   );
 };
 
+// 아이템 획득 이력
 const SearchItem = ({ item, onSearchItemDetail, isMobile }) => {
-  const { name, date, data: { itemId, itemName, channelName, channelNo, dungeonName } } = item;
+  const { name, date, data: { itemId, itemRarity, itemName, channelName, channelNo, dungeonName } } = item;
 
   return (
     <ListItem sx={{
@@ -220,7 +216,7 @@ const SearchItem = ({ item, onSearchItemDetail, isMobile }) => {
         <ListItemText
           primary={itemName}
           sx={{
-            color: '#d39500'
+            color: getItemRarityColor(itemRarity)
           }}
           secondary={
             <React.Fragment>
@@ -230,6 +226,7 @@ const SearchItem = ({ item, onSearchItemDetail, isMobile }) => {
                 variant="body2"
                 color="text.primary"
               >
+                {`${itemRarity} | `}
                 {`획득일 : ${date} `}
                 {channelName && ` | 채널 : ${channelName}`}
                 {channelNo && `(${channelNo})`}
@@ -249,5 +246,34 @@ const SearchItem = ({ item, onSearchItemDetail, isMobile }) => {
     </ListItem>
   );
 };
+
+// for Tabs
+function a11yProps(index) {
+  return {
+    id: `simple-tab-${index}`,
+    'aria-controls': `simple-tabpanel-${index}`,
+  };
+}
+
+// for Tabs
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 3 }}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
 
 export default CharacterDetail;
