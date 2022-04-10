@@ -46,7 +46,7 @@ const Home = () => {
           <Typography variant="h5">던드롭(DunDrop)</Typography>
         </Box>
         <Box sx={{ marginLeft: 2 }}>
-          <Typography variant="h7">던전앤파이터 아이템 검색 사이트</Typography>
+          <Typography variant="h7">던전앤파이터 TAG별 아이템 드랍정보, 보유 아이템 검색 사이트</Typography>
         </Box>
       </Box>
       <Box sx={{ width: '100%' }}>
