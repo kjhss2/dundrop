@@ -154,9 +154,12 @@ const SearchItem = ({ item, onSearchItemDetail, isMobile }) => {
                   <Typography color={'#0d0e12'} fontSize={14}>
                     {`총 피해 증가(${growInfo.total.damage})`}
                   </Typography>
-                  <Typography color={'#0d0e12'} fontSize={14}>
-                    {`총 버프력 증가(${growInfo.total.buff})`}
-                  </Typography>
+                  {
+                    growInfo.total.buff &&
+                    <Typography color={'#0d0e12'} fontSize={14}>
+                      {`총 버프력 증가(${growInfo.total.buff})`}
+                    </Typography>
+                  }
                 </Box>
 
                 <Box sx={{
