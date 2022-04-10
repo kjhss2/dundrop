@@ -5,7 +5,7 @@ import { Avatar, Box, Card, CardActionArea, CardContent, CardMedia, FormControlL
 import { Search } from '@mui/icons-material';
 
 // Actions
-import { characterEquipmentSearchFetch, characterTimelineFetch, initCharacter } from "../actions/characterAction";
+import { characterEquipmentSearchFetch, characterInfoFetch, characterTimelineFetch, initCharacter } from "../actions/characterAction";
 import { initSearchItems, searchItemDetailFetch } from '../actions/itemSearchAction';
 import { getItemRarityColor, getServerName } from '../lib/CommonFunction';
 
@@ -26,6 +26,7 @@ const CharacterDetail = () => {
   const { character, tagEquipmentSummary, timeline, allEquipment } = useSelector((state) => state.characterState);
 
   React.useEffect(() => {
+    dispatch(characterInfoFetch(params.serverId, params.characterId));
     dispatch(characterEquipmentSearchFetch(params.serverId, params.characterId));
     dispatch(characterTimelineFetch(params.serverId, params.characterId));
     dispatch(initSearchItems());
@@ -111,7 +112,7 @@ const CharacterDetail = () => {
 const CharacterInfo = ({ serverId, info, tagEquipmentSummary }) => {
 
   const navigate = useNavigate();
-  const { characterId, characterName, jobGrowName, level, guildName, adventureName } = info;
+  const { characterId, characterName, jobGrowName, level, guildName, adventureName, status } = info;
 
   return (
     <Card>
@@ -140,6 +141,9 @@ const CharacterInfo = ({ serverId, info, tagEquipmentSummary }) => {
             </Typography>
             <Typography variant="body2" color="text.secondary">
               {`레벨 : ${level}`}
+            </Typography>
+            <Typography color="text.secondary" fontWeight={'bold'} fontSize={16}>
+              {`명성 : ${status.filter(s => s.name === '모험가 명성').map(s => s.value)}`}
             </Typography>
           </Box>
           {

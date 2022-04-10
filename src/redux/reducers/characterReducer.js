@@ -59,12 +59,17 @@ export const characterState = (state = Object.assign({}, initState), action) => 
         tagEquipmentSummary: action.tagEquipmentSummary,
       };
 
-    case ActionTypes.CHARACTER__FETCH_TIMELINE:
+    case ActionTypes.CHARACTER__FETCH_INFO:
       return {
         ...state,
         character: action.item,
-        timeline: [...state.timeline, ...action.item.timeline.rows],
-        gettingItemIds: makeGettingItemIds(state.gettingItemIds, action.item.timeline),
+      };
+
+    case ActionTypes.CHARACTER__FETCH_TIMELINE:
+      return {
+        ...state,
+        timeline: [...state.timeline, ...action.timeline.rows],
+        gettingItemIds: makeGettingItemIds(state.gettingItemIds, action.timeline),
       };
 
     default:

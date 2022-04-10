@@ -29,6 +29,21 @@ export const characterSearchFetch = (charName) => {
   };
 };
 
+export const characterInfoFetch = (serverId, characterId) => {
+  return (dispatch) => {
+    callAPI(`/servers/${serverId}/characters/${characterId}/status?`, {}, dispatch)
+      .then(response => {
+        const { status, data } = response;
+        if (status === 200) {
+          dispatch({
+            type: ActionTypes.CHARACTER__FETCH_INFO,
+            item: data
+          });
+        }
+      });
+  };
+};
+
 export const characterEquipmentSearchFetch = (serverId, characterId) => {
   return (dispatch) => {
     callAPI(`/servers/${serverId}/characters/${characterId}/equip/equipment?&`, {}, dispatch)
@@ -99,7 +114,7 @@ export const characterTimelineFetch = (serverId, characterId) => {
         if (status === 200) {
           dispatch({
             type: ActionTypes.CHARACTER__FETCH_TIMELINE,
-            item: data
+            timeline: data.timeline
           });
 
           // get timeline next data
@@ -118,7 +133,7 @@ export const characterTimelineFetchNext = async (dispatch, serverId, characterId
       if (status === 200) {
         dispatch({
           type: ActionTypes.CHARACTER__FETCH_TIMELINE,
-          item: data
+          timeline: data.timeline,
         });
         if (data.timeline.next) {
           characterTimelineFetchNext(dispatch, serverId, characterId, data.timeline.next);

@@ -71,6 +71,8 @@ const Home = () => {
           1. 105렙 아이템 Tag 검색 및 드랍 정보<br />
           2. 보유 중인 아이템 표시 기능<br />
           3. 캐릭터 아이템 획득 이력<br />
+          4. 캐릭터 장착 아이템 TAG 요약(22.04.10)<br />
+          5. 캐릭터 보유 아이템 TAG 요약(22.04.10)<br />
           <br />
           <Button
             onClick={() => navigate('/character')}
