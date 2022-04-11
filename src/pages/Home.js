@@ -94,6 +94,10 @@ const Home = () => {
         <TabPanel value={value} index={2}>
           <List component="nav" aria-label="mailbox folders">
             <ListItem>
+              <ListItemText primary="#같은 특수문자가 포함된 캐릭터가 검색되지 않는 현상(수정완료)" secondary="2020.04.11" />
+            </ListItem>
+            <Divider />
+            <ListItem>
               <ListItemText primary="상자 정가로 회득한 템이 보유 아이템에 표시 되지 않는 현상(수정완료)" secondary="2020.04.09 | 아이템 타임라인 항아리정가,초월 추가" />
             </ListItem>
             <Divider />

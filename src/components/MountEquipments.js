@@ -11,7 +11,6 @@ import { getItemRarityColor } from "../lib/CommonFunction";
 import SearchItemDetailModal from "./SearchItemDetailModal";
 
 const MountEquipments = ({ items }) => {
-  console.log(items);
 
   const dispatch = useDispatch();
   const { isMobile } = useSelector((state) => state.dimension);
