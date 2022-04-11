@@ -1,9 +1,9 @@
 # Dundrop
 
 ## 프로젝트 소개
-개인프로젝트용 던전엔파이터 아이템 드랍정보 검색 사이트 www.dundrop.xyz
+개인프로젝트용 던전앤파이터 아이템 드랍정보 검색 사이트 www.dundrop.xyz
 - 프론트엔드 : react
-- 배포 서버 : AWS EC2(Linux)
+- 배포 서버 : AWS(EC2, Route 53, Linux)
 - 웹 서버 SW : nginx
 
 ## 반영하고 싶은 기능 및 라이브러리
