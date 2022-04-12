@@ -68,7 +68,7 @@ const CharacterDetail = () => {
             flexGrow: 1
           }}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-              <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+              <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" variant="scrollable" scrollButtons="auto">
                 <Tab label="장착 아이템" {...a11yProps(0)} />
                 <Tab label="보유 아이템 전체 시트" {...a11yProps(1)} />
                 <Tab label="Tag 검색" {...a11yProps(2)} />
