@@ -2,11 +2,12 @@ import { allItems } from '../../actions/commonData';
 import * as ActionTypes from '../ActionTypes';
 
 const initState = {
+  characterSearchHistory: window.sessionStorage.getItem('characterSearchHistory') || '',
   characters: [],
+  selectedCharacters: window.sessionStorage.getItem('selectedCharacters') || [],
   character: '',
   allEquipment: [],
   tagEquipmentSummary: [],
-
   timeline: [],
   gettingItemIds: new Set([]),
 };
@@ -50,6 +51,7 @@ export const characterState = (state = Object.assign({}, initState), action) => 
       return {
         ...state,
         characters: action.items.sort(({ level }, { level: bLevel }) => bLevel - level),
+        characterSearchHistory: action.characterSearchHistory
       };
 
     case ActionTypes.CHARACTER__FETCH_EQUIPMENT:
@@ -71,6 +73,9 @@ export const characterState = (state = Object.assign({}, initState), action) => 
         timeline: [...state.timeline, ...action.timeline.rows],
         gettingItemIds: makeGettingItemIds(state.gettingItemIds, action.timeline),
       };
+
+    case ActionTypes.CHARACTER__ON_CHANGE_FIELD:
+      return { ...state, [action.label]: action.value };
 
     default:
       return state;

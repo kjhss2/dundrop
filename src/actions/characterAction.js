@@ -16,6 +16,26 @@ export const characterSearchFetch = (charName) => {
     wordType = '&wordType=match';
   }
 
+  // 캐릭터 검색 이력 저장
+  let characterSearchHistory = window.sessionStorage.getItem('characterSearchHistory');
+  if (characterSearchHistory !== null) {
+
+    const histories = characterSearchHistory.split(',');
+    // 최근 검색 캐릭터명이 같다면 이력 제외 처리
+    if (histories[0] !== charName) {
+      // 검색 이력이 10개가 넘는다면 마지막 검색 기록 제거 처리
+      if (histories.length > 10) {
+        const lastCommaIndex = characterSearchHistory.lastIndexOf(',');
+        characterSearchHistory = characterSearchHistory.substring(0, lastCommaIndex);
+      }
+      characterSearchHistory = charName.concat(',' + characterSearchHistory);
+      window.sessionStorage.setItem('characterSearchHistory', characterSearchHistory);
+    }
+  } else {
+    characterSearchHistory = charName;
+    window.sessionStorage.setItem('characterSearchHistory', characterSearchHistory);
+  }
+
   return (dispatch) => {
     callAPI(`/servers/all/characters?characterName=${encodeURIComponent(charName)}${wordType}&limit=200&`, {}, dispatch)
       .then(response => {
@@ -23,7 +43,8 @@ export const characterSearchFetch = (charName) => {
         if (status === 200) {
           dispatch({
             type: ActionTypes.CHARACTER__FETCH_ITEMS,
-            items: data.rows
+            items: data.rows,
+            characterSearchHistory
           });
 
           // 조회된 캐릭터 목록 장비 요약 생성
@@ -150,4 +171,10 @@ export const characterTimelineFetchNext = async (dispatch, serverId, characterId
 
 export const initCharacter = () => ({
   type: ActionTypes.CHARACTER__INIT,
+});
+
+export const onChangeField = (label, value) => ({
+  type: ActionTypes.CHARACTER__ON_CHANGE_FIELD,
+  label,
+  value
 });
