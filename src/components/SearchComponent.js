@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Box, Button, TextField } from "@mui/material";
+import { Box, Button, IconButton, TextField, Tooltip } from "@mui/material";
 
 // Actions
 import { searchItems105Fetch } from "../actions/itemSearchAction";
@@ -72,6 +72,13 @@ const SearchComponent = () => {
       </Box>
 
       <Button variant="text" onClick={() => onSearch()}>검색</Button>
+      <Tooltip title="타임라인 기준 획득 하였던 아이템 이력을 바탕으로 출력됩니다. 아이템 해체 및 성장에 쓰인 아이템도 출력이 됩니다." placement="top">
+        <IconButton sx={{
+          fontSize: 16
+        }}>
+          TAG검색 설명
+        </IconButton>
+      </Tooltip>
 
     </Box>
   );

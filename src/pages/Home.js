@@ -73,6 +73,7 @@ const Home = () => {
           3. 캐릭터 아이템 획득 이력<br />
           4. 캐릭터 장착 아이템 TAG 요약(22.04.10)<br />
           5. 캐릭터 보유 아이템 TAG 요약(22.04.10)<br />
+          6. 다중 캐릭터 선택 기능(22.04.13)<br />
           <br />
           <Button
             onClick={() => navigate('/character')}

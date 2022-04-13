@@ -136,6 +136,7 @@ const SearchItem = ({ item, onSearchItemDetail, isMobile }) => {
         {(isGetting) &&
           <Box sx={{
             display: 'flex',
+            alignItems: 'center',
             marginRight: 1,
           }}>
             <Check />
@@ -148,7 +149,7 @@ const SearchItem = ({ item, onSearchItemDetail, isMobile }) => {
               color="text.primary"
               fontWeight={'bold'}
             >
-              검색 캐릭터 보유중
+              검색 캐릭터 <br/> 획득이력 존재
             </Typography>
           </Box>
         }

@@ -102,7 +102,7 @@ const CharacterSearchComponent = () => {
             alignItems: 'center'
           }}>
             <Typography variant="h6">다중 캐릭터 목록(최대 4캐릭)</Typography>
-            <Tooltip title="노블레스 코드용 선택한 캐릭터 아이템 보유 여부 표시" placement="top">
+            <Tooltip title="노블레스 코드용 선택한 캐릭터 아이템 획득이력 여부 표시" placement="top">
               <IconButton sx={{
                 fontSize: 16
               }}>
