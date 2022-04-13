@@ -21,7 +21,7 @@ export const tagItems = [
   { id: 't-011', label: '#수속성 강화', value: '수속성 강화' },
   { id: 't-012', label: '#암속성 강화', value: '암속성 강화' },
   { id: 't-004', label: '#콤보', value: '콤보' },
-  { id: 't-004', label: '#크리티컬 히트', value: '크리티컬 히트' },
+  { id: 't-050', label: '#크리티컬 히트', value: '크리티컬 히트' },
   { id: 't-002', label: '#광폭화', value: '광폭화' },
   { id: 't-005', label: '#MP 소모', value: 'MP 소모' },
   { id: 't-008', label: '#속도', value: '속도' },
