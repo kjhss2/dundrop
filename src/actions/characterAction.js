@@ -24,7 +24,7 @@ export const characterSearchFetch = (charName) => {
     // 최근 검색 캐릭터명이 같다면 이력 제외 처리
     if (histories[0] !== charName) {
       // 검색 이력이 10개가 넘는다면 마지막 검색 기록 제거 처리
-      if (histories.length > 10) {
+      if (histories.length > 9) {
         const lastCommaIndex = characterSearchHistory.lastIndexOf(',');
         characterSearchHistory = characterSearchHistory.substring(0, lastCommaIndex);
       }
@@ -53,6 +53,65 @@ export const characterSearchFetch = (charName) => {
           // });
         }
       });
+  };
+};
+
+export const selectCharacter = (isSelect, serverId, characterId, characterName, navigate) => {
+
+  let selectedCharacters = Object.assign([], JSON.parse(sessionStorage.getItem("selectedCharacters")));
+
+  if (selectedCharacters !== null) {
+    // 캐릭터 선택 시
+    if (isSelect) {
+      if (selectedCharacters.length >= 4) {
+        window.alert('다중 캐릭터는 최대 4개까지 선택 가능합니다.');
+      } else {
+        // 중복 여부 검사
+        let isAddPossible = true;
+        selectedCharacters.forEach(c => {
+          if (c.serverId === serverId && c.characterId === characterId) {
+            window.alert('중복된 다중 캐릭터 입니다.');
+            isAddPossible = false;
+          }
+        });
+        // 중복 여부 검사 끝
+        if (isAddPossible) {
+          selectedCharacters = [...selectedCharacters, { serverId, characterId, characterName }];
+          window.sessionStorage.setItem('selectedCharacters', JSON.stringify(selectedCharacters));
+        }
+      }
+    } else {
+      //캐릭터 해제 시
+
+      let spliceIndex = -1;
+      selectedCharacters.forEach((c, index) => {
+        if (c.serverId === serverId && c.characterId === characterId) {
+          // spliceIndex 획득
+          spliceIndex = index;
+        }
+      });
+
+      if (spliceIndex > -1) {
+        selectedCharacters.splice(spliceIndex, 1);
+        window.sessionStorage.setItem('selectedCharacters', JSON.stringify(selectedCharacters));
+      }
+    }
+  } else {
+    selectedCharacters = [{ serverId, characterId, characterName }];
+    window.sessionStorage.setItem('selectedCharacters', JSON.stringify(selectedCharacters));
+  }
+
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.CHARACTER__SELECT_CHARACTERS,
+      selectedCharacters
+    });
+
+    // 4개의 다중 캐릭터가 선택 되었다면 캐릭터 상세 페이지 이동
+    if (selectedCharacters && selectedCharacters.length === 4) {
+      navigate(`/character/${serverId}/${characterId}`);
+    }
+
   };
 };
 

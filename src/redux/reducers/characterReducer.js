@@ -4,7 +4,7 @@ import * as ActionTypes from '../ActionTypes';
 const initState = {
   characterSearchHistory: window.sessionStorage.getItem('characterSearchHistory') || '',
   characters: [],
-  selectedCharacters: window.sessionStorage.getItem('selectedCharacters') || [],
+  selectedCharacters: JSON.parse(sessionStorage.getItem("selectedCharacters")) || [],
   character: '',
   allEquipment: [],
   tagEquipmentSummary: [],
@@ -52,6 +52,12 @@ export const characterState = (state = Object.assign({}, initState), action) => 
         ...state,
         characters: action.items.sort(({ level }, { level: bLevel }) => bLevel - level),
         characterSearchHistory: action.characterSearchHistory
+      };
+
+    case ActionTypes.CHARACTER__SELECT_CHARACTERS:
+      return {
+        ...state,
+        selectedCharacters: action.selectedCharacters
       };
 
     case ActionTypes.CHARACTER__FETCH_EQUIPMENT:

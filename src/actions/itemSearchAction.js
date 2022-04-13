@@ -46,7 +46,7 @@ export const initGettingItems = () => {
 };
 
 export const searchItems105Fetch = (itemTypeKeyword, tagsKeyword, itemNameKeyword) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
 
     // Start isRequesting
     dispatch({ type: ActionTypes.COMMON__FETCH_REQUEST });

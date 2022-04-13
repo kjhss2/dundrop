@@ -1,12 +1,13 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { Box, Card, CardActionArea, CardContent, CardMedia, Typography } from "@mui/material";
+import { Box, Card, CardActionArea, CardContent, CardMedia, Checkbox, FormControlLabel, FormGroup, Typography } from "@mui/material";
 
 // Imports
 import { getServerName } from "../lib/CommonFunction";
 import LoadingView from "./LoadingView";
 import SearchItemDetailModal from "./SearchItemDetailModal";
+import { selectCharacter } from "../actions/characterAction";
 
 const CharacterItems = () => {
 
@@ -44,14 +45,47 @@ const CharacterItems = () => {
 
 const SearchItem = ({ item }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { selectedCharacters } = useSelector((state) => state.characterState);
   const { serverId, characterId, characterName, jobGrowName, level } = item;
+  const [checked, setChecked] = React.useState(false);
+
+  const onSelectCharacter = (event) => {
+    dispatch(selectCharacter(event.target.checked, serverId, characterId, characterName, navigate));
+  };
+
+  const checkSelectedCharacter = () => {
+    setChecked(false);
+    selectedCharacters && selectedCharacters.forEach(c => {
+      if (c.serverId === serverId && c.characterId === characterId) {
+        setChecked(true);
+      }
+    });
+  };
+
+  React.useEffect(() => {
+    checkSelectedCharacter();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [item, selectedCharacters]);// 아이템 목록과 다중 캐릭터 선택 변경 시 업데이트
 
   return (
     <Card sx={{ maxWidth: 345 }}>
-      <CardActionArea onClick={() => navigate(`/character/${serverId}/${characterId}`)}>
+      <CardContent sx={{
+        backgroundColor: '#d3d3d3',
+      }}>
+        <FormGroup>
+          <FormControlLabel control={<Checkbox checked={checked} />} onChange={onSelectCharacter} label="다중 캐릭터 선택" />
+        </FormGroup>
+      </CardContent>
+
+      <CardActionArea>
         <CardMedia
+          sx={{
+            maxWidth: 250
+          }}
+          onClick={() => navigate(`/character/${serverId}/${characterId}`)}
           component="img"
-          image={`https://img-api.neople.co.kr/df/servers/${serverId}/characters/${characterId}?zoom=3`}
+          image={`https://img-api.neople.co.kr/df/servers/${serverId}/characters/${characterId}?zoom=1`}
           alt="green iguana"
         />
         <CardContent>
