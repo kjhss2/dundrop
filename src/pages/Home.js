@@ -95,15 +95,15 @@ const Home = () => {
         <TabPanel value={value} index={2}>
           <List component="nav" aria-label="mailbox folders">
             <ListItem>
-              <ListItemText primary="일부 사용자 브라우저에서 보유 아이템 여부가 출력되지 않는 현상(확인중)" secondary="2020.04.13" />
+              <ListItemText primary="일부 사용자 브라우저에서 보유 아이템 여부가 출력되지 않는 현상(확인중)" secondary="2022.04.13" />
             </ListItem>
             <Divider />
             <ListItem>
-              <ListItemText sx={{ textDecoration: 'line-through' }} primary="#같은 특수문자가 포함된 캐릭터가 검색되지 않는 현상(수정완료)" secondary="2020.04.13" />
+              <ListItemText sx={{ textDecoration: 'line-through' }} primary="#같은 특수문자가 포함된 캐릭터가 검색되지 않는 현상(수정완료)" secondary="2022.04.13" />
             </ListItem>
             <Divider />
             <ListItem>
-              <ListItemText sx={{ textDecoration: 'line-through' }} primary="상자 정가로 회득한 템이 보유 아이템에 표시 되지 않는 현상(수정완료)" secondary="2020.04.09 | 아이템 타임라인 항아리정가,초월 추가" />
+              <ListItemText sx={{ textDecoration: 'line-through' }} primary="상자 정가로 회득한 템이 보유 아이템에 표시 되지 않는 현상(수정완료)" secondary="2022.04.09 | 아이템 타임라인 항아리정가,초월 추가" />
             </ListItem>
             <Divider />
           </List>
@@ -111,11 +111,11 @@ const Home = () => {
         <TabPanel value={value} index={3}>
           <List component="nav" aria-label="mailbox folders">
             <ListItem>
-              <ListItemText primary="최근 캐릭터 검색 이력 업데이트" secondary="2022-04-13" />
+              <ListItemText primary="다중 캐릭터 획득이력 표시 기능 업데이트" secondary="2022-04-13 | 노블레스 코드용 보유 아이템 검색" />
             </ListItem>
             <Divider />
             <ListItem>
-              <ListItemText primary="다중 캐릭터별 보유 아이템 표시 기능(노블레스 코드용 보유 아이템 검색)" secondary="업데이트 예정" />
+              <ListItemText primary="최근 캐릭터 검색 이력 업데이트" secondary="2022-04-13" />
             </ListItem>
             <Divider />
             <ListItem>
