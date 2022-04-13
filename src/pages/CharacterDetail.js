@@ -85,7 +85,7 @@ const CharacterDetail = () => {
               <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" variant="scrollable" scrollButtons="auto">
                 <Tab label="장착 아이템" {...a11yProps(0)} />
                 <Tab label="획득이력 아이템 전체 시트" {...a11yProps(1)} />
-                <Tab label="Tag 검색" {...a11yProps(2)} />
+                <Tab label="TAG검색" {...a11yProps(2)} />
                 <Tab label="아이템 획득이력" {...a11yProps(3)} />
               </Tabs>
             </Box>
@@ -167,7 +167,7 @@ const CharacterInfo = ({ serverId, info, tagEquipmentSummary }) => {
                 marginTop: 2
               }}>
               <Typography variant="h6">
-                {`장착 아이템 TAG 요약`}
+                {`장착 아이템 TAG요약`}
               </Typography>
               {
                 tagEquipmentSummary.map((item, index) => {
@@ -209,7 +209,7 @@ const ItemSheets = ({ isMobile }) => {
     let _allTagsSummary = new Map();
 
     allItems.filter(item => item.isGetting).forEach(item => {
-      // 장착 장비 Tag 요약 정보 획득
+      // 장착 장비 TAG요약 정보 획득
       item.tags[0].split(',').filter(tag => !excludeTags.includes(tag)).forEach(tag => {
         // 이미 tag가 존재하면 카운터 추가, 없다면 신규 set 추가
         if (_allTagsSummary.has(tag)) {
@@ -223,7 +223,7 @@ const ItemSheets = ({ isMobile }) => {
     });
     // map to array
     _allTagsSummary = Array.from(_allTagsSummary, ([name, value]) => ({ name, value }));
-    // 장착 장비 Tag 요약 정보 정렬(sort)
+    // 장착 장비 TAG요약 정보 정렬(sort)
     _allTagsSummary.sort(({ value }, { value: bValue }) => bValue - value);
     setAllTagsSummary(_allTagsSummary);
   };
@@ -263,7 +263,7 @@ const ItemSheets = ({ isMobile }) => {
             checked={checked}
             onChange={(e) => setChecked(e.target.checked)}
           />
-        } label="TAG 요약 숨기기" />
+        } label="TAG요약 숨기기" />
       </Box>
       <Box sx={{
         display: isMobile ? 'block' : 'flex',
@@ -280,7 +280,7 @@ const ItemSheets = ({ isMobile }) => {
           display: checked ? 'none' : ''
         }}>
           <Typography fontWeight={'bold'} fontSize={16}>
-            {`획득이력 아이템 TAG 요약`}
+            {`획득이력 아이템 TAG요약`}
           </Typography>
           {
             allTagsSummary.map((item, index) => {

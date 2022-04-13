@@ -68,11 +68,11 @@ const Home = () => {
           던드롭은 현재 베타로 운영중이며, 불편한 점이 있으시면 문의주시면 감사하겠습니다.<br />
           <br />
           ※ 주요 기능<br />
-          1. 105렙 아이템 Tag 검색 및 드랍 정보<br />
+          1. 105렙 아이템 TAG검색 및 드랍 정보<br />
           2. 보유 중인 아이템 표시 기능<br />
           3. 캐릭터 아이템 획득 이력<br />
-          4. 캐릭터 장착 아이템 TAG 요약(22.04.10)<br />
-          5. 캐릭터 보유 아이템 TAG 요약(22.04.10)<br />
+          4. 캐릭터 장착 아이템 TAG요약(22.04.10)<br />
+          5. 캐릭터 보유 아이템 TAG요약(22.04.10)<br />
           6. 다중 캐릭터 선택 기능(22.04.13)<br />
           <br />
           <Button
@@ -119,15 +119,15 @@ const Home = () => {
             </ListItem>
             <Divider />
             <ListItem>
-              <ListItemText primary="#크리티컬 히트 TAG 업데이트" secondary="2022-04-11 | TAG 선택에는 표시 되지만 TAG 요약에는 딜 관련이 아니며 해당되는 템 개수가 많아 제외 하였습니다." />
+              <ListItemText primary="#크리티컬 히트 TAG 업데이트" secondary="2022-04-11 | TAG선택에는 표시 되지만 TAG요약에는 딜 관련이 아니며 해당되는 템 개수가 많아 제외 하였습니다." />
             </ListItem>
             <Divider />
             <ListItem>
-              <ListItemText primary="보유 아이템 TAG 요약 업데이트" secondary="2022-04-10" />
+              <ListItemText primary="보유 아이템 TAG요약 업데이트" secondary="2022-04-10" />
             </ListItem>
             <Divider />
             <ListItem>
-              <ListItemText primary="캐릭터 장착 아이템 TAG 요약 업데이트" secondary="2022-04-10" />
+              <ListItemText primary="캐릭터 장착 아이템 TAG요약 업데이트" secondary="2022-04-10" />
             </ListItem>
             <Divider />
             <ListItem>

@@ -144,7 +144,7 @@ export const characterEquipmentSearchFetch = (serverId, characterId) => {
           data.equipment.forEach(eq => {
             filteredItems = [...filteredItems, ...allItems.filter(({ itemName }) => itemName === eq.itemName).map(item => {
 
-              // 장착 장비 Tag 요약 정보 획득
+              // 장착 장비 TAG요약 정보 획득
               item.tags[0].split(',').filter(tag => !excludeTags.includes(tag)).forEach(tag => {
                 // 이미 tag가 존재하면 카운터 추가, 없다면 신규 set 추가
                 if (tagEquipmentSummary.has(tag)) {
@@ -171,7 +171,7 @@ export const characterEquipmentSearchFetch = (serverId, characterId) => {
 
           // map to array
           tagEquipmentSummary = Array.from(tagEquipmentSummary, ([name, value]) => ({ name, value }));
-          // 장착 장비 Tag 요약 정보 정렬(sort)
+          // 장착 장비 TAG요약 정보 정렬(sort)
           tagEquipmentSummary.sort(({ value }, { value: bValue }) => bValue - value);
 
           dispatch({

@@ -14,7 +14,7 @@ const SelectTag = ({ tags, setTags, open, setOpen }) => {
 
   return (
     <FormControl fullWidth>
-      <InputLabel id="select-tag-label">Tag 선택</InputLabel>
+      <InputLabel id="select-tag-label">Tag선택</InputLabel>
       <Select
         labelId="select-tag-label"
         id="select-tag"
