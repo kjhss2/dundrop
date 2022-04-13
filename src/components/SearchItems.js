@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Avatar, Box, IconButton, List, ListItem, ListItemAvatar, ListItemIcon, ListItemText, Typography } from "@mui/material";
-import { Search, Check } from '@mui/icons-material';
+import { Avatar, Box, Chip, IconButton, List, ListItem, ListItemAvatar, ListItemIcon, ListItemText, Stack, Typography } from "@mui/material";
+import { Search, Check, Done, Close } from '@mui/icons-material';
 
 // Actions
 import { searchItemDetailFetch } from "../actions/itemSearchAction";
@@ -52,15 +52,18 @@ const SearchItems = ({ items }) => {
 const SearchItem = ({ item, onSearchItemDetail, isMobile }) => {
 
   const { selectedTags } = useSelector((state) => state.itemSearchState);
-  const { itemId, itemName, itemType, tags, dropInfos, desc, isGetting } = item;
+  const { itemId, itemName, itemType, tags, dropInfos, desc, isGetting, selectedCharactersGettting } = item;
   const makeTags = tags && tags[0].split(',').map(tag => ({ isTagMatch: selectedTags.includes(tag), label: '#' + tag }));
 
   return (
     <>
       <ListItem sx={{
         display: isMobile ? 'block' : 'flex',
-        backgroundColor: isGetting ? 'aliceblue' : ''
-      }}>
+        backgroundColor: isGetting ? 'aliceblue' : '',
+        border: 1,
+        marginBottom: 1
+      }}
+      >
 
         <ListItemAvatar>
           <Avatar alt="Remy Sharp" src={`https://img-api.neople.co.kr/df/items/${itemId}`} variant="square" />
@@ -130,21 +133,42 @@ const SearchItem = ({ item, onSearchItemDetail, isMobile }) => {
           }
         </Box>
 
-        {isGetting &&
+        {(isGetting) &&
           <Box sx={{
             display: 'flex',
+            marginRight: 1,
           }}>
             <Check />
             <Typography
-              sx={{ display: 'inline' }}
+              sx={{
+                display: 'flex',
+                alignItems: 'end'
+              }}
               variant="body2"
               color="text.primary"
               fontWeight={'bold'}
             >
-              보유중
+              검색 캐릭터 보유중
             </Typography>
           </Box>
         }
+
+        <Stack spacing={1}>
+          {
+            selectedCharactersGettting && selectedCharactersGettting.map((info, index) => (
+              <Chip
+                sx={{
+                  fontWeight: info.isGetting ? 'bold' : '',
+                  color: info.isGetting ? 'green' : 'gray',
+                }}
+                key={`getting-${index}`}
+                label={`${info.characterName}`}
+                onDelete={() => { }}
+                deleteIcon={info.isGetting ? <Done /> : <Close />}
+              />
+            ))
+          }
+        </Stack>
 
         <ListItemIcon>
           <IconButton edge="end" aria-label="delete" onClick={() => onSearchItemDetail(itemId)}>

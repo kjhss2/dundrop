@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Avatar, Box, Button, Chip, IconButton, Stack, TextField, Tooltip, Typography } from "@mui/material";
+import { Box, Button, Chip, IconButton, Stack, TextField, Tooltip, Typography } from "@mui/material";
 
 // Actions
 import { characterSearchFetch, onChangeField, selectCharacter } from "../actions/characterAction";

@@ -76,7 +76,7 @@ export const selectCharacter = (isSelect, serverId, characterId, characterName, 
         });
         // 중복 여부 검사 끝
         if (isAddPossible) {
-          selectedCharacters = [...selectedCharacters, { serverId, characterId, characterName }];
+          selectedCharacters = [...selectedCharacters, { serverId, characterId, characterName, timeline: [] }];
           window.sessionStorage.setItem('selectedCharacters', JSON.stringify(selectedCharacters));
         }
       }
@@ -97,7 +97,7 @@ export const selectCharacter = (isSelect, serverId, characterId, characterName, 
       }
     }
   } else {
-    selectedCharacters = [{ serverId, characterId, characterName }];
+    selectedCharacters = [{ serverId, characterId, characterName, timeline: [] }];
     window.sessionStorage.setItem('selectedCharacters', JSON.stringify(selectedCharacters));
   }
 
@@ -184,7 +184,7 @@ export const characterEquipmentSearchFetch = (serverId, characterId) => {
   };
 };
 
-export const characterTimelineFetch = (serverId, characterId) => {
+export const characterTimelineFetch = (serverId, characterId, isMainCharacter = false) => {
   // 검색 시작일 : 현재날짜 3달 전
   const startDate = moment().subtract(90, 'days').format('YYYY-MM-DD');
   // 검색 종료일 : 현재날짜
@@ -198,29 +198,59 @@ export const characterTimelineFetch = (serverId, characterId) => {
       .then(response => {
         const { status, data } = response;
         if (status === 200) {
-          dispatch({
-            type: ActionTypes.CHARACTER__FETCH_TIMELINE,
-            timeline: data.timeline
-          });
+          if (isMainCharacter) {
+            dispatch({
+              type: ActionTypes.CHARACTER__FETCH_TIMELINE,
+              timeline: data.timeline,
+              serverId,
+              characterId,
+              characterName: data.characterName,
+              isMainCharacter,
+            });
+          } else {
+            dispatch({
+              type: ActionTypes.CHARACTER__SELECT_CHARACTER_TIMELINE,
+              timeline: data.timeline,
+              serverId,
+              characterId,
+              characterName: data.characterName,
+              isMainCharacter,
+            });
+          }
 
           // get timeline next data
           if (data.timeline.next) {
-            characterTimelineFetchNext(dispatch, serverId, characterId, data.timeline.next);
+            characterTimelineFetchNext(dispatch, serverId, characterId, data.timeline.next, isMainCharacter);
           }
         }
       });
   };
 };
 
-export const characterTimelineFetchNext = async (dispatch, serverId, characterId, next) => {
+export const characterTimelineFetchNext = async (dispatch, serverId, characterId, next, isMainCharacter = false) => {
   callAPI(`/servers/${serverId}/characters/${characterId}/timeline?next=${next}&`, {}, dispatch)
     .then(response => {
       const { status, data } = response;
       if (status === 200) {
-        dispatch({
-          type: ActionTypes.CHARACTER__FETCH_TIMELINE,
-          timeline: data.timeline,
-        });
+        if (isMainCharacter) {
+          dispatch({
+            type: ActionTypes.CHARACTER__FETCH_TIMELINE,
+            timeline: data.timeline,
+            serverId,
+            characterId,
+            characterName: data.characterName,
+            isMainCharacter,
+          });
+        } else {
+          dispatch({
+            type: ActionTypes.CHARACTER__SELECT_CHARACTER_TIMELINE,
+            timeline: data.timeline,
+            serverId,
+            characterId,
+            characterName: data.characterName,
+            isMainCharacter,
+          });
+        }
         if (data.timeline.next) {
           characterTimelineFetchNext(dispatch, serverId, characterId, data.timeline.next);
         }
@@ -230,6 +260,10 @@ export const characterTimelineFetchNext = async (dispatch, serverId, characterId
 
 export const initCharacter = () => ({
   type: ActionTypes.CHARACTER__INIT,
+});
+
+export const initTimeline = () => ({
+  type: ActionTypes.CHARACTER__INIT_TIMELINE,
 });
 
 export const onChangeField = (label, value) => ({

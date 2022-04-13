@@ -5,8 +5,8 @@ import { Avatar, Box, Card, CardActionArea, CardContent, CardMedia, FormControlL
 import { Search } from '@mui/icons-material';
 
 // Actions
-import { characterEquipmentSearchFetch, characterInfoFetch, characterTimelineFetch, initCharacter } from "../actions/characterAction";
-import { initSearchItems, searchItemDetailFetch } from '../actions/itemSearchAction';
+import { characterEquipmentSearchFetch, characterInfoFetch, characterTimelineFetch, initCharacter, initTimeline } from "../actions/characterAction";
+import { initGettingItems, initSearchItems, searchItemDetailFetch } from '../actions/itemSearchAction';
 import { getItemRarityColor, getServerName } from '../lib/CommonFunction';
 
 // Components
@@ -23,17 +23,31 @@ const CharacterDetail = () => {
   const params = useParams();
   const dispatch = useDispatch();
   const { isMobile } = useSelector((state) => state.dimension);
-  const { character, tagEquipmentSummary, timeline, allEquipment } = useSelector((state) => state.characterState);
+  const { character, tagEquipmentSummary, timeline, allEquipment, selectedCharacters } = useSelector((state) => state.characterState);
 
   React.useEffect(() => {
+
+    initGettingItems();
+    dispatch(initSearchItems());
+    dispatch(initTimeline());
     dispatch(characterInfoFetch(params.serverId, params.characterId));
     dispatch(characterEquipmentSearchFetch(params.serverId, params.characterId));
-    dispatch(characterTimelineFetch(params.serverId, params.characterId));
-    dispatch(initSearchItems());
+    dispatch(characterTimelineFetch(params.serverId, params.characterId, true));
+
+    // 다중 캐릭터 타임라인 세팅
+    selectedCharacters.forEach(c => {
+      if (!(c.serverId === params.serverId && c.characterId === params.characterId)) {
+        // 다중 캐릭터에 포함된 캐릭터 정보라면 SKIP
+        dispatch(characterTimelineFetch(c.serverId, c.characterId));
+      }
+    });
+
     return () => { // cleanup
       dispatch(initSearchItems());
       dispatch(initCharacter());
+      dispatch(initTimeline());
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, params]);
 
   const onSearchItemDetail = (id) => {
