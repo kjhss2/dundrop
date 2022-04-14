@@ -118,34 +118,38 @@ const Home = () => {
         <TabPanel value={value} index={3}>
           <List component="nav" aria-label="mailbox folders">
             <ListItem>
-              <ListItemText primary="다중 캐릭터 획득이력 표시 기능 업데이트" secondary="2022-04-13 | 노블레스 코드용 보유 아이템 검색" />
+              <ListItemText primary="모바일 화면 가독성 업데이트 예정" secondary="2022-04-14 | 그 외에 신화 아이템 추가, 모험단 검색, 아이템만 검색 기능도 조금만 기다려주세요." />
             </ListItem>
             <Divider />
             <ListItem>
-              <ListItemText primary="최근 캐릭터 검색 이력 업데이트" secondary="2022-04-13" />
+              <ListItemText primary="다중 캐릭터 획득이력 표시 기능 업데이트(완료)" secondary="2022-04-13 | 노블레스 코드용 보유 아이템 검색" />
             </ListItem>
             <Divider />
             <ListItem>
-              <ListItemText primary="#크리티컬 히트 TAG 업데이트" secondary="2022-04-11 | TAG선택에는 표시 되지만 TAG요약에는 딜 관련이 아니며 해당되는 템 개수가 많아 제외 하였습니다." />
+              <ListItemText primary="최근 캐릭터 검색 이력 업데이트(완료)" secondary="2022-04-13" />
             </ListItem>
             <Divider />
             <ListItem>
-              <ListItemText primary="보유 아이템 TAG요약 업데이트" secondary="2022-04-10" />
+              <ListItemText primary="#크리티컬 히트 TAG 업데이트(완료)" secondary="2022-04-11 | TAG선택에는 표시 되지만 TAG요약에는 딜 관련이 아니며 해당되는 템 개수가 많아 제외 하였습니다." />
             </ListItem>
             <Divider />
             <ListItem>
-              <ListItemText primary="캐릭터 장착 아이템 TAG요약 업데이트" secondary="2022-04-10" />
+              <ListItemText primary="보유 아이템 TAG요약 업데이트(완료)" secondary="2022-04-10" />
             </ListItem>
             <Divider />
             <ListItem>
-              <ListItemText primary="아이템 Tag 추가(아칸셋) 업데이트" secondary="2022-04-09 | 자주 사용하는 순서대로 Tag 변경, 보유 아이템 전체 시트 Tag 필터 추가" />
-            </ListItem>
-            <ListItem>
-              <ListItemText primary="캐릭터 검색 메뉴 업데이트" secondary="2022-04-08 | 캐릭터별 보유 아이템 표시 기능" />
+              <ListItemText primary="캐릭터 장착 아이템 TAG요약 업데이트(완료)" secondary="2022-04-10" />
             </ListItem>
             <Divider />
             <ListItem>
-              <ListItemText primary="아이템 검색(105렙) 업데이트" secondary="2022-04-07" />
+              <ListItemText primary="아이템 Tag 추가(아칸셋) 업데이트(완료)" secondary="2022-04-09 | 자주 사용하는 순서대로 Tag 변경, 보유 아이템 전체 시트 Tag 필터 추가" />
+            </ListItem>
+            <ListItem>
+              <ListItemText primary="캐릭터 검색 메뉴 업데이트(완료)" secondary="2022-04-08 | 캐릭터별 보유 아이템 표시 기능" />
+            </ListItem>
+            <Divider />
+            <ListItem>
+              <ListItemText primary="아이템 검색(105렙) 업데이트(완료)" secondary="2022-04-07" />
             </ListItem>
             <Divider />
             <ListItem>
