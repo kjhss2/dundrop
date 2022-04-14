@@ -68,11 +68,12 @@ const Home = () => {
           던드롭은 현재 베타로 운영중이며, 불편한 점이 있으시면 문의주시면 감사하겠습니다.<br />
           <br />
           ※ 주요 기능<br />
-          1. 105렙 아이템 Tag 검색 및 드랍 정보<br />
+          1. 105렙 아이템 TAG검색 및 드랍 정보<br />
           2. 보유 중인 아이템 표시 기능<br />
           3. 캐릭터 아이템 획득 이력<br />
-          4. 캐릭터 장착 아이템 TAG 요약(22.04.10)<br />
-          5. 캐릭터 보유 아이템 TAG 요약(22.04.10)<br />
+          4. 캐릭터 장착 아이템 TAG요약(22.04.10)<br />
+          5. 캐릭터 보유 아이템 TAG요약(22.04.10)<br />
+          6. 다중 캐릭터 선택 기능(22.04.13)<br />
           <br />
           <Button
             onClick={() => navigate('/character')}
@@ -94,11 +95,15 @@ const Home = () => {
         <TabPanel value={value} index={2}>
           <List component="nav" aria-label="mailbox folders">
             <ListItem>
-              <ListItemText primary="#같은 특수문자가 포함된 캐릭터가 검색되지 않는 현상(수정완료)" secondary="2020.04.11" />
+              <ListItemText primary="일부 사용자 브라우저에서 보유 아이템 여부가 출력되지 않는 현상(확인중)" secondary="2022.04.13" />
             </ListItem>
             <Divider />
             <ListItem>
-              <ListItemText primary="상자 정가로 회득한 템이 보유 아이템에 표시 되지 않는 현상(수정완료)" secondary="2020.04.09 | 아이템 타임라인 항아리정가,초월 추가" />
+              <ListItemText sx={{ textDecoration: 'line-through' }} primary="#같은 특수문자가 포함된 캐릭터가 검색되지 않는 현상(수정완료)" secondary="2022.04.13" />
+            </ListItem>
+            <Divider />
+            <ListItem>
+              <ListItemText sx={{ textDecoration: 'line-through' }} primary="상자 정가로 회득한 템이 보유 아이템에 표시 되지 않는 현상(수정완료)" secondary="2022.04.09 | 아이템 타임라인 항아리정가,초월 추가" />
             </ListItem>
             <Divider />
           </List>
@@ -106,19 +111,23 @@ const Home = () => {
         <TabPanel value={value} index={3}>
           <List component="nav" aria-label="mailbox folders">
             <ListItem>
-              <ListItemText primary="다중 캐릭터별 보유 아이템 표시 기능(노블레스 코드용 보유 아이템 검색)" secondary="업데이트 예정" />
+              <ListItemText primary="다중 캐릭터 획득이력 표시 기능 업데이트" secondary="2022-04-13 | 노블레스 코드용 보유 아이템 검색" />
             </ListItem>
             <Divider />
             <ListItem>
-              <ListItemText primary="#크리티컬 히트 TAG 업데이트" secondary="2022-04-11 | TAG 선택에는 표시 되지만 TAG 요약에는 딜 관련이 아니며 해당되는 템 개수가 많아 제외 하였습니다." />
+              <ListItemText primary="최근 캐릭터 검색 이력 업데이트" secondary="2022-04-13" />
             </ListItem>
             <Divider />
             <ListItem>
-              <ListItemText primary="보유 아이템 TAG 요약 업데이트" secondary="2022-04-10" />
+              <ListItemText primary="#크리티컬 히트 TAG 업데이트" secondary="2022-04-11 | TAG선택에는 표시 되지만 TAG요약에는 딜 관련이 아니며 해당되는 템 개수가 많아 제외 하였습니다." />
             </ListItem>
             <Divider />
             <ListItem>
-              <ListItemText primary="캐릭터 장착 아이템 TAG 요약 업데이트" secondary="2022-04-10" />
+              <ListItemText primary="보유 아이템 TAG요약 업데이트" secondary="2022-04-10" />
+            </ListItem>
+            <Divider />
+            <ListItem>
+              <ListItemText primary="캐릭터 장착 아이템 TAG요약 업데이트" secondary="2022-04-10" />
             </ListItem>
             <Divider />
             <ListItem>

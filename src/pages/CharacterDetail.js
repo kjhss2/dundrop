@@ -1,12 +1,12 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Avatar, Box, Card, CardActionArea, CardContent, CardMedia, FormControlLabel, IconButton, ListItem, ListItemAvatar, ListItemIcon, ListItemText, Switch, Tab, Tabs, Typography } from '@mui/material';
+import { Avatar, Box, Card, CardActionArea, CardContent, CardMedia, FormControlLabel, IconButton, ListItem, ListItemAvatar, ListItemIcon, ListItemText, Switch, Tab, Tabs, Tooltip, Typography } from '@mui/material';
 import { Search } from '@mui/icons-material';
 
 // Actions
-import { characterEquipmentSearchFetch, characterInfoFetch, characterTimelineFetch, initCharacter } from "../actions/characterAction";
-import { initSearchItems, searchItemDetailFetch } from '../actions/itemSearchAction';
+import { characterEquipmentSearchFetch, characterInfoFetch, characterTimelineFetch, initCharacter, initTimeline } from "../actions/characterAction";
+import { initGettingItems, initSearchItems, searchItemDetailFetch } from '../actions/itemSearchAction';
 import { getItemRarityColor, getServerName } from '../lib/CommonFunction';
 
 // Components
@@ -23,17 +23,31 @@ const CharacterDetail = () => {
   const params = useParams();
   const dispatch = useDispatch();
   const { isMobile } = useSelector((state) => state.dimension);
-  const { character, tagEquipmentSummary, timeline, allEquipment } = useSelector((state) => state.characterState);
+  const { character, tagEquipmentSummary, timeline, allEquipment, selectedCharacters } = useSelector((state) => state.characterState);
 
   React.useEffect(() => {
+
+    initGettingItems();
+    dispatch(initSearchItems());
+    dispatch(initTimeline());
     dispatch(characterInfoFetch(params.serverId, params.characterId));
     dispatch(characterEquipmentSearchFetch(params.serverId, params.characterId));
-    dispatch(characterTimelineFetch(params.serverId, params.characterId));
-    dispatch(initSearchItems());
+    dispatch(characterTimelineFetch(params.serverId, params.characterId, true));
+
+    // 다중 캐릭터 타임라인 세팅
+    selectedCharacters.forEach(c => {
+      if (!(c.serverId === params.serverId && c.characterId === params.characterId)) {
+        // 다중 캐릭터에 포함된 캐릭터 정보라면 SKIP
+        dispatch(characterTimelineFetch(c.serverId, c.characterId));
+      }
+    });
+
     return () => { // cleanup
       dispatch(initSearchItems());
       dispatch(initCharacter());
+      dispatch(initTimeline());
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, params]);
 
   const onSearchItemDetail = (id) => {
@@ -70,9 +84,9 @@ const CharacterDetail = () => {
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
               <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" variant="scrollable" scrollButtons="auto">
                 <Tab label="장착 아이템" {...a11yProps(0)} />
-                <Tab label="보유 아이템 전체 시트" {...a11yProps(1)} />
-                <Tab label="Tag 검색" {...a11yProps(2)} />
-                <Tab label="아이템 획득 이력" {...a11yProps(3)} />
+                <Tab label="획득이력 아이템 전체 시트" {...a11yProps(1)} />
+                <Tab label="TAG검색" {...a11yProps(2)} />
+                <Tab label="아이템 획득이력" {...a11yProps(3)} />
               </Tabs>
             </Box>
             <TabPanel value={value} index={0}>
@@ -153,7 +167,7 @@ const CharacterInfo = ({ serverId, info, tagEquipmentSummary }) => {
                 marginTop: 2
               }}>
               <Typography variant="h6">
-                {`장착 아이템 TAG 요약`}
+                {`장착 아이템 TAG요약`}
               </Typography>
               {
                 tagEquipmentSummary.map((item, index) => {
@@ -195,7 +209,7 @@ const ItemSheets = ({ isMobile }) => {
     let _allTagsSummary = new Map();
 
     allItems.filter(item => item.isGetting).forEach(item => {
-      // 장착 장비 Tag 요약 정보 획득
+      // 장착 장비 TAG요약 정보 획득
       item.tags[0].split(',').filter(tag => !excludeTags.includes(tag)).forEach(tag => {
         // 이미 tag가 존재하면 카운터 추가, 없다면 신규 set 추가
         if (_allTagsSummary.has(tag)) {
@@ -209,7 +223,7 @@ const ItemSheets = ({ isMobile }) => {
     });
     // map to array
     _allTagsSummary = Array.from(_allTagsSummary, ([name, value]) => ({ name, value }));
-    // 장착 장비 Tag 요약 정보 정렬(sort)
+    // 장착 장비 TAG요약 정보 정렬(sort)
     _allTagsSummary.sort(({ value }, { value: bValue }) => bValue - value);
     setAllTagsSummary(_allTagsSummary);
   };
@@ -218,10 +232,30 @@ const ItemSheets = ({ isMobile }) => {
     <>
       <Box sx={{
         justifyContent: 'center',
-        width: '50%',
       }}>
-        <Box onClick={() => setOpen(!open)}>
-          <SelectTag tags={tags} setTags={onSetTags} open={open} setOpen={setOpen} />
+        <Box
+          sx={{
+            display: 'flex'
+          }}>
+          <Box
+            sx={{
+              flexGrow: 1,
+            }}
+            onClick={() => setOpen(!open)}>
+            <SelectTag tags={tags} setTags={onSetTags} open={open} setOpen={setOpen} />
+          </Box>
+          <Box sx={{
+            display: 'flex',
+            alignItems: 'center'
+          }}>
+            <Tooltip title="타임라인 기준 획득 하였던 아이템 이력을 바탕으로 출력됩니다. 아이템 해체 및 성장에 쓰인 아이템도 출력이 됩니다." placement="top">
+              <IconButton sx={{
+                fontSize: 16
+              }}>
+                획득이력 아이템 전체 시트 설명
+              </IconButton>
+            </Tooltip>
+          </Box>
         </Box>
         <FormControlLabel control={
           <Switch
@@ -229,7 +263,7 @@ const ItemSheets = ({ isMobile }) => {
             checked={checked}
             onChange={(e) => setChecked(e.target.checked)}
           />
-        } label="TAG 요약 숨기기" />
+        } label="TAG요약 숨기기" />
       </Box>
       <Box sx={{
         display: isMobile ? 'block' : 'flex',
@@ -246,7 +280,7 @@ const ItemSheets = ({ isMobile }) => {
           display: checked ? 'none' : ''
         }}>
           <Typography fontWeight={'bold'} fontSize={16}>
-            {`보유 아이템 TAG 요약`}
+            {`획득이력 아이템 TAG요약`}
           </Typography>
           {
             allTagsSummary.map((item, index) => {
@@ -344,4 +378,4 @@ function TabPanel(props) {
   );
 }
 
-export default CharacterDetail;
+export default CharacterDetail;;

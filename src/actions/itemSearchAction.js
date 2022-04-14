@@ -1,3 +1,4 @@
+import { IS_DEV } from '../config';
 import { callAPI } from '../lib/CommonApi';
 import * as ActionTypes from '../redux/ActionTypes';
 import { allItems } from './commonData';
@@ -39,14 +40,19 @@ export const searchItemDetailFetch = (id) => {
 };
 
 export const initGettingItems = () => {
+  if (IS_DEV) {
+    console.log('allItems - initGettingItems');
+  }
   allItems.forEach((item) => {
     item['isGetting'] = false;
+    item['selectedCharactersGettting'] = [];
     return item;
   });
+
 };
 
 export const searchItems105Fetch = (itemTypeKeyword, tagsKeyword, itemNameKeyword) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
 
     // Start isRequesting
     dispatch({ type: ActionTypes.COMMON__FETCH_REQUEST });
