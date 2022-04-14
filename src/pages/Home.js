@@ -2,6 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Box, Button, Divider, List, ListItem, ListItemText, Tab, Tabs, Typography } from "@mui/material";
 import Guide from "../components/Guide";
+import { useSelector } from "react-redux";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -32,8 +33,9 @@ function a11yProps(index) {
 
 const Home = () => {
 
-  const [value, setValue] = React.useState(0);
   const navigate = useNavigate();
+  const { isMobile } = useSelector((state) => state.dimension);
+  const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -63,9 +65,29 @@ const Home = () => {
         </TabPanel>
         <TabPanel value={value} index={0}>
           안녕하세요. 2006년부터 소소하게 던전앤파이터를 즐기고 있는 유저입니다.<br />
-          이번에 만렙 확장과 더불어 신규 105레벨 아이템을 좀 더 쉽게 검색하는 기능을 만들고자 사이트를 개발 하게 되었습니다.<br />
-          개발을 시작한지 얼마 안되서 부족한 점이 많지만 필요한 기능들을 추가할 예정입니다.<br />
+          이번에 만렙 확장과 더불어 신규 105레벨 아이템을 좀 더 쉽게 검색하는 기능을 만들고자 사이트를 개발하게 되었습니다.<br />
+          <br />
           던드롭은 현재 베타로 운영중이며, 불편한 점이 있으시면 문의주시면 감사하겠습니다.<br />
+          <br />
+          <Box sx={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            gap: isMobile ? 1 : 0,
+          }}>
+            <Button
+              onClick={() => navigate('/character')}
+              variant="outlined"
+            >
+              캐릭터 검색 바로 가기
+            </Button>
+            &nbsp;
+            <Button
+              onClick={() => handleChange(null, 1)}
+              variant="outlined"
+            >
+              사이트 사용방법 가이드 바로 가기
+            </Button>
+          </Box>
           <br />
           ※ 주요 기능<br />
           1. 105렙 아이템 TAG검색 및 드랍 정보<br />
@@ -75,22 +97,7 @@ const Home = () => {
           5. 캐릭터 보유 아이템 TAG요약(22.04.10)<br />
           6. 다중 캐릭터 선택 기능(22.04.13)<br />
           <br />
-          <Button
-            onClick={() => navigate('/character')}
-            variant="outlined"
-          >
-            캐릭터 검색 바로 가기
-          </Button>
-          &nbsp;
-          <Button
-            onClick={() => handleChange(null, 1)}
-            variant="outlined"
-          >
-            사이트 사용방법 가이드 바로 가기
-          </Button>
-          <br />
-          <br />
-          현재 사이트는 PC화면(넓이 1000px 이상)에서 최적화된 화면을 보실 수 있으며 모바일에서도 보시기 불편함이 없게 수정 예정입니다.
+          현재 사이트는 PC화면(넓이 1000px 이상)에서 최적화된 화면을 보실 수 있으며 모바일용 화면도 적용 예정입니다.
         </TabPanel>
         <TabPanel value={value} index={2}>
           <List component="nav" aria-label="mailbox folders">
