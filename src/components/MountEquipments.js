@@ -52,6 +52,11 @@ const SearchItem = ({ item, onSearchItemDetail, isMobile }) => {
   const { itemId, itemName, itemRarity, reinforce, refine, amplificationName, itemGradeName, slotName, enchant, growInfo, tags, dropInfos, desc, isCore, isCoreDesc } = item;
   const makeTags = tags && tags[0].split(',').map(tag => ({ label: '#' + tag }));
 
+  let totalOptionLevel = 0;
+  growInfo && growInfo.options.forEach(option => {
+    totalOptionLevel += option.level;
+  });
+
   return (
     <>
       <ListItem sx={{
@@ -212,8 +217,12 @@ const SearchItem = ({ item, onSearchItemDetail, isMobile }) => {
                   <Box sx={{
                     display: 'flex',
                     justifyContent: 'end',
+                    alignItems: 'center',
                     gap: 1,
                   }}>
+                    <Typography color={'#d32f2f'} fontWeight={'bold'} fontSize={18}>
+                      {`${totalOptionLevel}Lv`}
+                    </Typography>
                     {
                       growInfo.options.map((option, index) => (
                         <Typography key={index} color={'chocolate'} fontSize={14}>

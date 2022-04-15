@@ -117,7 +117,7 @@ const Home = () => {
         <TabPanel value={value} index={3}>
           <List component="nav" aria-label="mailbox folders">
             <ListItem>
-              <ListItemText primary="편의성 업데이트(완료)" secondary="2022-04-15 | 장착아이템 마부 정보 추가, 모바일 화면 최적화" />
+              <ListItemText primary="편의성 업데이트(완료)" secondary="2022-04-15 | 장착아이템 마부 정보 추가, 모바일 화면 최적화, 착용중인 장비 성장레벨 추가" />
             </ListItem>
             <Divider />
             <ListItem>

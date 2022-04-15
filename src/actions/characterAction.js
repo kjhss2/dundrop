@@ -139,9 +139,16 @@ export const characterEquipmentSearchFetch = (serverId, characterId) => {
 
           let filteredItems = [];
           let tagEquipmentSummary = new Map();
+          let totalEquipmentGrowLevel = 0;
 
           // API로 조회된 정보에 장착 장비 Tag, tags, desc 데이터 setting 작업(10점짜리 코드..)
           data.equipment.forEach(eq => {
+
+            // 장착아이템 총 성장레벨 계산
+            eq.growInfo && eq.growInfo.options.forEach(option => {
+              totalEquipmentGrowLevel += option.level;
+            });
+
             filteredItems = [...filteredItems, ...allItems.filter(({ itemName }) => itemName === eq.itemName).map(item => {
 
               // 장착 장비 TAG요약 정보 획득
@@ -180,7 +187,8 @@ export const characterEquipmentSearchFetch = (serverId, characterId) => {
           dispatch({
             type: ActionTypes.CHARACTER__FETCH_EQUIPMENT,
             allEquipment: data.equipment,
-            tagEquipmentSummary
+            tagEquipmentSummary,
+            totalEquipmentGrowLevel,
           });
         }
       });

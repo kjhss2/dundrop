@@ -126,6 +126,7 @@ const CharacterDetail = () => {
 const CharacterInfo = ({ serverId, info, tagEquipmentSummary, isMobile }) => {
 
   const navigate = useNavigate();
+  const { totalEquipmentGrowLevel } = useSelector((state) => state.characterState);
   const { characterId, characterName, jobGrowName, level, guildName, adventureName, status } = info;
 
   return (
@@ -141,7 +142,7 @@ const CharacterInfo = ({ serverId, info, tagEquipmentSummary, isMobile }) => {
           gap: 1,
         }}>
           <Box>
-            <Typography gutterBottom variant="h6" >
+            <Typography gutterBottom fontWeight={'bold'} fontSize={16}>
               {characterName}
             </Typography>
             <Typography variant="body2" color="text.secondary">
@@ -159,9 +160,15 @@ const CharacterInfo = ({ serverId, info, tagEquipmentSummary, isMobile }) => {
             <Typography variant="body2" color="text.secondary">
               {`레벨 : ${level}`}
             </Typography>
-            <Typography color="text.secondary" fontWeight={'bold'} fontSize={16}>
-              {`명성 : ${numberWithCommas(status.filter(s => s.name === '모험가 명성').map(s => s.value))}`}
+            <Typography color="mediumblue" fontWeight={'bold'} fontSize={16}>
+              {`명성 : ${numberWithCommas(status.filter(s => s.name === '모험가 명성').map(s => s.value)) || '0'}`}
             </Typography>
+            {
+              totalEquipmentGrowLevel > 0 &&
+              <Typography color="#d32f2f" fontWeight={'bold'} fontSize={16} >
+                {`장비 성장레벨 : ${numberWithCommas(totalEquipmentGrowLevel)}Lv`}
+              </Typography>
+            }
           </Box>
           {
             tagEquipmentSummary && tagEquipmentSummary.length > 0 &&
@@ -169,7 +176,7 @@ const CharacterInfo = ({ serverId, info, tagEquipmentSummary, isMobile }) => {
               sx={{
                 marginTop: isMobile ? 0 : 1
               }}>
-              <Typography variant="h6">
+              <Typography fontSize={16} fontWeight={'bold'}>
                 {`장착 아이템 TAG요약`}
               </Typography>
               {
