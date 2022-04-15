@@ -7,7 +7,7 @@ import { Search, Star } from '@mui/icons-material';
 import { searchItemDetailFetch } from "../actions/itemSearchAction";
 
 // Component
-import { getItemRarityColor } from "../lib/CommonFunction";
+import { getItemRarityColor, numberWithCommas } from "../lib/CommonFunction";
 import SearchItemDetailModal from "./SearchItemDetailModal";
 
 const MountEquipments = ({ items }) => {
@@ -199,12 +199,12 @@ const SearchItem = ({ item, onSearchItemDetail, isMobile }) => {
                   <Box sx={{
                   }}>
                     <Typography color={'#0d0e12'} fontSize={14}>
-                      {`총 피해 증가(${growInfo.total.damage})`}
+                      {`총 피해 증가(${numberWithCommas(growInfo.total.damage)})`}
                     </Typography>
                     {
                       growInfo.total.buff &&
                       <Typography color={'#0d0e12'} fontSize={14}>
-                        {`총 버프력 증가(${growInfo.total.buff})`}
+                        {`총 버프력 증가(${numberWithCommas(growInfo.total.buff)})`}
                       </Typography>
                     }
                   </Box>

@@ -7,7 +7,7 @@ import { Search } from '@mui/icons-material';
 // Actions
 import { characterEquipmentSearchFetch, characterInfoFetch, characterTimelineFetch, initCharacter, initTimeline } from "../actions/characterAction";
 import { initGettingItems, initSearchItems, searchItemDetailFetch } from '../actions/itemSearchAction';
-import { getItemRarityColor, getServerName } from '../lib/CommonFunction';
+import { getItemRarityColor, getServerName, numberWithCommas } from '../lib/CommonFunction';
 
 // Components
 import SearchItemDetailModal from '../components/SearchItemDetailModal';
@@ -160,7 +160,7 @@ const CharacterInfo = ({ serverId, info, tagEquipmentSummary, isMobile }) => {
               {`레벨 : ${level}`}
             </Typography>
             <Typography color="text.secondary" fontWeight={'bold'} fontSize={16}>
-              {`명성 : ${status.filter(s => s.name === '모험가 명성').map(s => s.value)}`}
+              {`명성 : ${numberWithCommas(status.filter(s => s.name === '모험가 명성').map(s => s.value))}`}
             </Typography>
           </Box>
           {

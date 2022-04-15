@@ -43,3 +43,12 @@ export const getItemRarityColor = (key) => {
       break;
   }
 };
+
+// NumberCommaGen Functions
+export function numberWithCommas(x, defaultZero = '0') {
+  if (x === 0) {
+    return defaultZero;
+  } else {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+}
