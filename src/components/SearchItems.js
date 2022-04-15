@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Avatar, Box, Chip, IconButton, List, ListItem, ListItemAvatar, ListItemIcon, ListItemText, Stack, Typography } from "@mui/material";
-import { Search, Check, Done, Close } from '@mui/icons-material';
+import { Avatar, Badge, Box, Chip, IconButton, List, ListItem, ListItemAvatar, ListItemIcon, ListItemText, Stack, Tooltip, Typography } from "@mui/material";
+import { Search, Check, Done, Close, Star } from '@mui/icons-material';
 
 // Actions
 import { searchItemDetailFetch } from "../actions/itemSearchAction";
@@ -52,7 +52,7 @@ const SearchItems = ({ items }) => {
 const SearchItem = ({ item, onSearchItemDetail, isMobile }) => {
 
   const { selectedTags } = useSelector((state) => state.itemSearchState);
-  const { itemId, itemName, itemType, tags, dropInfos, desc, isGetting, selectedCharactersGettting } = item;
+  const { itemId, itemName, itemType, tags, dropInfos, desc, isGetting, selectedCharactersGettting, isCore, isCoreDesc } = item;
   const makeTags = tags && tags[0].split(',').map(tag => ({ isTagMatch: selectedTags.includes(tag), label: '#' + tag }));
 
   return (
@@ -66,7 +66,19 @@ const SearchItem = ({ item, onSearchItemDetail, isMobile }) => {
       >
 
         <ListItemAvatar>
-          <Avatar alt="Remy Sharp" src={`https://img-api.neople.co.kr/df/items/${itemId}`} variant="square" />
+          <Tooltip title={(isCore ? `★${isCoreDesc}★` : '')} placement="top" disableInteractive>
+            <Badge
+              overlap="circular"
+              anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
+              badgeContent={
+                isCore ?
+                  <Star color={"error"} />
+                  : 0
+              }
+            >
+              <Avatar alt="Remy Sharp" src={`https://img-api.neople.co.kr/df/items/${itemId}`} variant="square" />
+            </Badge>
+          </Tooltip>
         </ListItemAvatar>
 
         <Box
@@ -149,7 +161,7 @@ const SearchItem = ({ item, onSearchItemDetail, isMobile }) => {
               color="text.primary"
               fontWeight={'bold'}
             >
-              검색 캐릭터 <br/> 획득이력 존재
+              검색 캐릭터 <br /> 획득이력 존재
             </Typography>
           </Box>
         }

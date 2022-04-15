@@ -48,7 +48,7 @@ const Home = () => {
           <Typography variant="h5">던드랍(DunDrop)</Typography>
         </Box>
         <Box sx={{ marginLeft: 2 }}>
-          <Typography variant="h7">던전앤파이터 TAG별 아이템 드랍정보, 보유 아이템 검색 사이트</Typography>
+          <Typography variant="h7">던전앤파이터 TAG별 아이템 드랍정보, 획득이력 아이템 검색 사이트</Typography>
         </Box>
       </Box>
       <Box sx={{ width: '100%' }}>
@@ -103,21 +103,25 @@ const Home = () => {
         <TabPanel value={value} index={2}>
           <List component="nav" aria-label="mailbox folders">
             <ListItem>
-              <ListItemText primary="일부 사용자 브라우저에서 보유 아이템 여부가 출력되지 않는 현상(확인중)" secondary="2022.04.13" />
+              <ListItemText sx={{ textDecoration: 'line-through' }} primary="일부 사용자 브라우저에서 보유 아이템 여부가 출력되지 않는 현상(완료)" secondary="2022.04.13 | PC 시간이 현재시간으로 되어 있지 않음. 서버시간을 가져오도록 수정 예정" />
             </ListItem>
             <Divider />
             <ListItem>
-              <ListItemText sx={{ textDecoration: 'line-through' }} primary="#같은 특수문자가 포함된 캐릭터가 검색되지 않는 현상(수정완료)" secondary="2022.04.13" />
+              <ListItemText sx={{ textDecoration: 'line-through' }} primary="#같은 특수문자가 포함된 캐릭터가 검색되지 않는 현상(완료)" secondary="2022.04.13" />
             </ListItem>
             <Divider />
             <ListItem>
-              <ListItemText sx={{ textDecoration: 'line-through' }} primary="상자 정가로 회득한 템이 보유 아이템에 표시 되지 않는 현상(수정완료)" secondary="2022.04.09 | 아이템 타임라인 항아리정가,초월 추가" />
+              <ListItemText sx={{ textDecoration: 'line-through' }} primary="상자 정가로 회득한 템이 보유 아이템에 표시 되지 않는 현상(완료)" secondary="2022.04.09 | 아이템 타임라인 항아리정가,초월 추가" />
             </ListItem>
             <Divider />
           </List>
         </TabPanel>
         <TabPanel value={value} index={3}>
           <List component="nav" aria-label="mailbox folders">
+            <ListItem>
+              <ListItemText primary="코어 아이템 별표 표시(완료)" secondary="2022-04-15 | 코어 아이템인 경우 별표 표시와 마우스를 올려면 어떤 코어인지 출력" />
+            </ListItem>
+            <Divider />
             <ListItem>
               <ListItemText primary="모바일 화면 가독성 업데이트 예정" secondary="2022-04-14 | 그 외에 신화 아이템 추가, 모험단 검색, 아이템만 검색 기능도 조금만 기다려주세요." />
             </ListItem>

@@ -159,6 +159,8 @@ export const characterEquipmentSearchFetch = (serverId, characterId) => {
               // tags, desc setting
               eq['tags'] = item.tags;
               eq['desc'] = item.desc;
+              eq['isCore'] = item.isCore;
+              eq['isCoreDesc'] = item.isCoreDesc;
               return eq;
             })];
 

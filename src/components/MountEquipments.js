@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Avatar, Box, IconButton, List, ListItem, ListItemAvatar, ListItemIcon, ListItemText, Typography } from "@mui/material";
-import { Search } from '@mui/icons-material';
+import { Avatar, Badge, Box, IconButton, List, ListItem, ListItemAvatar, ListItemIcon, ListItemText, Tooltip, Typography } from "@mui/material";
+import { Search, Star } from '@mui/icons-material';
 
 // Actions
 import { searchItemDetailFetch } from "../actions/itemSearchAction";
@@ -49,7 +49,7 @@ const MountEquipments = ({ items }) => {
 
 const SearchItem = ({ item, onSearchItemDetail, isMobile }) => {
 
-  const { itemId, itemName, itemRarity, reinforce, refine, amplificationName, itemGradeName, slotName, growInfo, tags, dropInfos, desc } = item;
+  const { itemId, itemName, itemRarity, reinforce, refine, amplificationName, itemGradeName, slotName, growInfo, tags, dropInfos, desc, isCore, isCoreDesc } = item;
   const makeTags = tags && tags[0].split(',').map(tag => ({ label: '#' + tag }));
 
   return (
@@ -74,7 +74,19 @@ const SearchItem = ({ item, onSearchItemDetail, isMobile }) => {
         </Box>
 
         <ListItemAvatar>
-          <Avatar alt="Remy Sharp" src={`https://img-api.neople.co.kr/df/items/${itemId}`} variant="square" />
+          <Tooltip title={(isCore ? `★${isCoreDesc}★` : '')} placement="top" disableInteractive>
+            <Badge
+              overlap="circular"
+              anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
+              badgeContent={
+                isCore ?
+                  <Star color={"error"} />
+                  : 0
+              }
+            >
+              <Avatar alt="Remy Sharp" src={`https://img-api.neople.co.kr/df/items/${itemId}`} variant="square" />
+            </Badge>
+          </Tooltip>
         </ListItemAvatar>
 
         <Box
