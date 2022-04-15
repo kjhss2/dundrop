@@ -80,12 +80,13 @@ const SearchItem = ({ item, isMobile }) => {
 
       <CardActionArea sx={{
         display: isMobile ? 'flex' : ''
-      }}>
+      }}
+        onClick={() => navigate(`/character/${serverId}/${characterId}`)}
+      >
         <CardMedia
           sx={{
             maxWidth: isMobile ? 150 : 250
           }}
-          onClick={() => navigate(`/character/${serverId}/${characterId}`)}
           component="img"
           image={`https://img-api.neople.co.kr/df/servers/${serverId}/characters/${characterId}?zoom=1`}
           alt="green iguana"
