@@ -1,6 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { Avatar, Box, Tooltip, Typography } from "@mui/material";
+import { Avatar, Badge, Box, Tooltip, Typography } from "@mui/material";
+import { Star } from "@mui/icons-material";
 import SearchItemDetailModal from "./SearchItemDetailModal";
 import { searchItemDetailFetch } from "../actions/itemSearchAction";
 
@@ -41,14 +42,25 @@ const ItemSheet = ({ items, filter, tags }) => {
               return false;
             }
           }).map(item => (
-            <Tooltip key={item.itemId} title={item.itemName + ' : ' + item.dropInfos} placement="top" disableInteractive>
+            <Tooltip key={item.itemId} title={(item.isCore ? `★${item.isCoreDesc}★` : '') + item.itemName + (item.dropInfos ? `: ${item.dropInfos}` : '')} placement="top" disableInteractive>
               <Box sx={{
-                opacity: item.isGetting ? '1' : '0.5',
-                cursor: 'pointer'
+                cursor: 'pointer',
               }}
                 onClick={() => onSearchItemDetail(item.itemId)}
               >
-                <Avatar alt="Remy Sharp" src={`https://img-api.neople.co.kr/df/items/${item.itemId}`} variant="square" />
+                <Badge
+                  overlap="circular"
+                  anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
+                  badgeContent={
+                    item.isCore ?
+                      <Star color={"error"} />
+                      : 0
+                  }
+                >
+                  <Avatar alt="Remy Sharp" src={`https://img-api.neople.co.kr/df/items/${item.itemId}`} variant="square" sx={{
+                    opacity: item.isGetting ? 1 : 0.5,
+                  }} />
+                </Badge>
               </Box>
             </Tooltip>
           ))

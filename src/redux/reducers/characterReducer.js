@@ -12,6 +12,7 @@ const initState = {
 
   // 다중 캐릭터 변수
   selectedCharacters: JSON.parse(sessionStorage.getItem("selectedCharacters")) || [],
+  totalEquipmentGrowLevel: 0,
 };
 
 const makeGettingItemIds = (
@@ -107,6 +108,7 @@ export const characterState = (state = Object.assign({}, initState), action) => 
         tagEquipmentSummary: [],
         timeline: [],
         gettingItemIds: new Set([]),
+        totalEquipmentGrowLevel: 0,
       };
 
     case ActionTypes.CHARACTER__FETCH_ITEMS:
@@ -127,6 +129,7 @@ export const characterState = (state = Object.assign({}, initState), action) => 
         ...state,
         allEquipment: action.allEquipment,
         tagEquipmentSummary: action.tagEquipmentSummary,
+        totalEquipmentGrowLevel: action.totalEquipmentGrowLevel,
       };
 
     case ActionTypes.CHARACTER__FETCH_INFO:
@@ -144,6 +147,7 @@ export const characterState = (state = Object.assign({}, initState), action) => 
           return c;
         }),
         gettingItemIds: new Set([]),
+        totalEquipmentGrowLevel: 0,
       };
 
     case ActionTypes.CHARACTER__FETCH_TIMELINE:

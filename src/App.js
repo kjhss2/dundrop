@@ -15,6 +15,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import NotFound from './pages/NotFound';
 import Home from './pages/Home';
+import RouteChangeTracker from './RouteChangeTracker';
 
 // Pages
 import ItemSearch from './pages/ItemSearch';
@@ -41,6 +42,9 @@ function App() {
       window.removeEventListener('resize', handleResize);
     };
   }, [handleResize]);
+
+  // React Google Analytics
+  RouteChangeTracker();
 
   return (
     <>

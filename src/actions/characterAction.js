@@ -7,7 +7,7 @@ export const characterSearchFetch = (charName) => {
 
   if (!charName) {
     window.alert('캐릭터명을 입력해 주세요.');
-    return;
+    return () => { };
   }
 
   let wordType = '&wordType=full';
@@ -23,8 +23,8 @@ export const characterSearchFetch = (charName) => {
     const histories = characterSearchHistory.split(',');
     // 최근 검색 캐릭터명이 같다면 이력 제외 처리
     if (histories[0] !== charName) {
-      // 검색 이력이 10개가 넘는다면 마지막 검색 기록 제거 처리
-      if (histories.length > 9) {
+      // 검색 이력이 5개가 넘는다면 마지막 검색 기록 제거 처리
+      if (histories.length > 4) {
         const lastCommaIndex = characterSearchHistory.lastIndexOf(',');
         characterSearchHistory = characterSearchHistory.substring(0, lastCommaIndex);
       }
@@ -139,9 +139,16 @@ export const characterEquipmentSearchFetch = (serverId, characterId) => {
 
           let filteredItems = [];
           let tagEquipmentSummary = new Map();
+          let totalEquipmentGrowLevel = 0;
 
           // API로 조회된 정보에 장착 장비 Tag, tags, desc 데이터 setting 작업(10점짜리 코드..)
           data.equipment.forEach(eq => {
+
+            // 장착아이템 총 성장레벨 계산
+            eq.growInfo && eq.growInfo.options.forEach(option => {
+              totalEquipmentGrowLevel += option.level;
+            });
+
             filteredItems = [...filteredItems, ...allItems.filter(({ itemName }) => itemName === eq.itemName).map(item => {
 
               // 장착 장비 TAG요약 정보 획득
@@ -159,6 +166,9 @@ export const characterEquipmentSearchFetch = (serverId, characterId) => {
               // tags, desc setting
               eq['tags'] = item.tags;
               eq['desc'] = item.desc;
+              eq['dropInfos'] = item.dropInfos;
+              eq['isCore'] = item.isCore;
+              eq['isCoreDesc'] = item.isCoreDesc;
               return eq;
             })];
 
@@ -177,7 +187,8 @@ export const characterEquipmentSearchFetch = (serverId, characterId) => {
           dispatch({
             type: ActionTypes.CHARACTER__FETCH_EQUIPMENT,
             allEquipment: data.equipment,
-            tagEquipmentSummary
+            tagEquipmentSummary,
+            totalEquipmentGrowLevel,
           });
         }
       });

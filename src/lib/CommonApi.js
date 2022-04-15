@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { IS_DEV, API_KEY, NEOPLE_DF_API } from '../config';
+import { IS_DEV, NEOPLE_DF_API } from '../config';
 import * as ActionTypes from '../redux/ActionTypes';
 
 const axiosApiInstance = axios.create({
@@ -21,7 +21,7 @@ export const callAPI = async (endPoint, config = {}, dispatch, skipSpinner) => {
 };
 
 const commonFetch = async (endPoint, config, dispatch, skipSpinner) => {
-  const apiUrl = NEOPLE_DF_API + endPoint + API_KEY;
+  const apiUrl = NEOPLE_DF_API + endPoint + process.env.REACT_APP_NEOPLE_API_SERVER;
 
   // 개발모드일때 API Call URL Console 출력
   if (IS_DEV) console.debug(`(1)[DEV - API Request] => `, { endPoint, config });

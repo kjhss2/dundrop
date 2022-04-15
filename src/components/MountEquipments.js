@@ -1,13 +1,13 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Avatar, Box, IconButton, List, ListItem, ListItemAvatar, ListItemIcon, ListItemText, Typography } from "@mui/material";
-import { Search } from '@mui/icons-material';
+import { Avatar, Badge, Box, IconButton, List, ListItem, ListItemAvatar, ListItemIcon, ListItemText, Tooltip, Typography } from "@mui/material";
+import { Search, Star } from '@mui/icons-material';
 
 // Actions
 import { searchItemDetailFetch } from "../actions/itemSearchAction";
 
 // Component
-import { getItemRarityColor } from "../lib/CommonFunction";
+import { getItemRarityColor, numberWithCommas } from "../lib/CommonFunction";
 import SearchItemDetailModal from "./SearchItemDetailModal";
 
 const MountEquipments = ({ items }) => {
@@ -49,138 +49,199 @@ const MountEquipments = ({ items }) => {
 
 const SearchItem = ({ item, onSearchItemDetail, isMobile }) => {
 
-  const { itemId, itemName, itemRarity, reinforce, refine, amplificationName, itemGradeName, slotName, growInfo, tags, dropInfos, desc } = item;
+  const { itemId, itemName, itemRarity, reinforce, refine, amplificationName, itemGradeName, slotName, enchant, growInfo, tags, dropInfos, desc, isCore, isCoreDesc } = item;
   const makeTags = tags && tags[0].split(',').map(tag => ({ label: '#' + tag }));
+
+  let totalOptionLevel = 0;
+  growInfo && growInfo.options.forEach(option => {
+    totalOptionLevel += option.level;
+  });
 
   return (
     <>
       <ListItem sx={{
         display: isMobile ? 'block' : 'flex',
         padding: 0,
-        gap: 0,
         border: 1,
-        marginBottom: 1
+        marginBottom: 1,
       }}>
 
         <Box sx={{
-          minWidth: 80,
-          textAlign: 'center',
+          display: 'flex',
+          flexGrow: 1,
         }}>
-          <Typography
-            sx={{ fontWeight: 'bold' }}
-          >
-            {`${slotName} `}
-          </Typography>
-        </Box>
-
-        <ListItemAvatar>
-          <Avatar alt="Remy Sharp" src={`https://img-api.neople.co.kr/df/items/${itemId}`} variant="square" />
-        </ListItemAvatar>
-
-        <Box
-          sx={{
-            flexGrow: 1,
+          {/* 장비유형/장비 이미지 */}
+          <Box sx={{
             display: 'flex',
             alignItems: 'center',
-          }}
-        >
-          <Box>
-            <ListItemText
-              primary={itemName}
-              sx={{
-                color: getItemRarityColor(itemRarity)
-              }}
-              secondary={
-                <React.Fragment>
-                  <Typography
-                    sx={{ display: 'inline' }}
-                    component="span"
-                    variant="body2"
-                    color="text.primary"
-                  >
-                    {`${itemRarity} `}
-                    {itemGradeName && `${itemGradeName}`}
-                  </Typography>
-                  {desc && ` | ${desc}`}
-                </React.Fragment>
-              }
-            />
-            {
-              makeTags && makeTags.map((tag, index) => (
-                <React.Fragment key={index}>
-                  <Typography
-                    sx={{ display: 'inline' }}
-                    component="span"
-                    variant="body2"
-                    color="text.primary"
-                  >
-                    {tag.label}
-                  </Typography>
-                </React.Fragment>
-              ))
-            }
-
-            {
-              dropInfos &&
+            justifyContent: 'center',
+            flexWrap: 'wrap',
+          }}>
+            <Box sx={{
+              minWidth: 80,
+              textAlign: 'center',
+            }}>
               <Typography
-                sx={{ color: '#df6a07' }}
+                sx={{ fontWeight: 'bold' }}
               >
-                드랍 정보
+                {`${slotName} `}
               </Typography>
-            }
-            {
-              dropInfos && dropInfos.map((info, index) => (
-                <Typography key={index}
-                  variant="body2"
-                  color="text.primary"
+            </Box>
+
+            <ListItemAvatar sx={{
+              textAlign: 'center',
+              justifyContent: 'center',
+            }}>
+              <Tooltip title={(isCore ? `★${isCoreDesc}★` : '')} placement="top" disableInteractive>
+                <Badge
+                  overlap="circular"
+                  anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
+                  badgeContent={
+                    isCore ?
+                      <Star color={"error"} />
+                      : 0
+                  }
                 >
-                  {info}
-                </Typography>
-              ))
-            }
+                  <Avatar alt="Remy Sharp" src={`https://img-api.neople.co.kr/df/items/${itemId}`} variant="square" />
+                </Badge>
+              </Tooltip>
+            </ListItemAvatar>
           </Box>
 
-          <Box sx={{
-            flexGrow: 1,
-            textAlign: 'end',
-            marginRight: 2,
-          }}>
-            {
-              growInfo &&
-              <Box>
-                <Box sx={{
-                }}>
-                  <Typography color={'#0d0e12'} fontSize={14}>
-                    {`총 피해 증가(${growInfo.total.damage})`}
-                  </Typography>
-                  {
-                    growInfo.total.buff &&
-                    <Typography color={'#0d0e12'} fontSize={14}>
-                      {`총 버프력 증가(${growInfo.total.buff})`}
+          {/* 아이템 정보 */}
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: isMobile ? 'block' : 'flex',
+              alignItems: 'center',
+              flexWrap: 'wrap',
+              textAlign: isMobile ? 'end' : '',
+              marginRight: 2
+            }}
+          >
+            <Box sx={{
+              flexWrap: 'wrap',
+            }}>
+              <ListItemText
+                primary={itemName}
+                sx={{
+                  color: getItemRarityColor(itemRarity),
+                }}
+                secondary={
+                  <React.Fragment>
+                    <Typography
+                      component="span"
+                      variant="body2"
+                      color={getItemRarityColor(itemRarity)}
+                    >
+                      {`${itemRarity} `}
                     </Typography>
-                  }
-                </Box>
-
-                <Box sx={{
-                  display: 'flex',
-                  justifyContent: 'end',
-                  gap: 1,
-                }}>
-                  {
-                    growInfo.options.map((option, index) => (
-                      <Typography key={index} color={'chocolate'} fontSize={14}>
-                        {`${option.level}`}{growInfo.options.length > index + 1 && ' |'}
+                    <Typography
+                      component="span"
+                      variant="body2"
+                      color="text.primary"
+                    >
+                      {itemGradeName && `${itemGradeName}`}
+                    </Typography>
+                    {desc && ` | ${desc}`}
+                  </React.Fragment>
+                }
+              />
+              <Box sx={{
+                textAlign: isMobile ? 'end' : '',
+                marginBottom: isMobile ? 1 : 0,
+              }}>
+                {
+                  dropInfos &&
+                  <Typography
+                    sx={{
+                      color: '#853333',
+                      fontSize: 14,
+                      fontWeight: 'bold'
+                    }}
+                  >
+                    {dropInfos.toString()}
+                  </Typography>
+                }
+                {
+                  makeTags && makeTags.map((tag, index) => (
+                    <React.Fragment key={index}>
+                      <Typography
+                        component="span"
+                        variant="body2"
+                        color="text.primary"
+                      >
+                        {tag.label}
                       </Typography>
-                    ))
-                  }
-                </Box>
+                    </React.Fragment>
+                  ))
+                }
               </Box>
-            }
+            </Box>
+
+            <Box sx={{
+              flexGrow: 1,
+              flexWrap: 'wrap',
+              textAlign: 'end',
+              marginRight: isMobile ? 0 : 2,
+            }}>
+              {enchant && enchant.status && enchant.status.map((en, index) => (
+                <Typography key={index} color={'#1976d2'} fontSize={14}>
+                  {`${en.name + ' ' + en.value}`}
+                </Typography>
+              ))
+              }
+            </Box>
+
+            <Box sx={{
+              textAlign: 'end',
+              marginRight: isMobile ? 0 : 2,
+            }}>
+              {
+                growInfo &&
+                <Box sx={{
+                }}>
+                  <Box sx={{
+                  }}>
+                    <Typography color={'#0d0e12'} fontSize={14}>
+                      {`총 피해 증가(${numberWithCommas(growInfo.total.damage)})`}
+                    </Typography>
+                    {
+                      growInfo.total.buff &&
+                      <Typography color={'#0d0e12'} fontSize={14}>
+                        {`총 버프력 증가(${numberWithCommas(growInfo.total.buff)})`}
+                      </Typography>
+                    }
+                  </Box>
+
+                  <Box sx={{
+                    display: 'flex',
+                    justifyContent: 'end',
+                    alignItems: 'center',
+                    gap: 1,
+                  }}>
+                    <Typography color={'#d32f2f'} fontWeight={'bold'} fontSize={18}>
+                      {`${totalOptionLevel}Lv`}
+                    </Typography>
+                    {
+                      growInfo.options.map((option, index) => (
+                        <Typography key={index} color={'chocolate'} fontSize={14}>
+                          {`${option.level}`}{growInfo.options.length > index + 1 && ' |'}
+                        </Typography>
+                      ))
+                    }
+                  </Box>
+                </Box>
+              }
+            </Box>
           </Box>
         </Box>
 
+        {/* 강화/증폭 */}
         <Box sx={{
-          minWidth: 100
+          minWidth: 70,
+          textAlign: 'end',
+          marginRight: 2,
         }}>
           <Typography
             sx={{
@@ -192,11 +253,16 @@ const SearchItem = ({ item, onSearchItemDetail, isMobile }) => {
           </Typography>
         </Box>
 
-        <ListItemIcon>
-          <IconButton edge="end" aria-label="delete" onClick={() => onSearchItemDetail(itemId)}>
-            <Search />
-          </IconButton>
-        </ListItemIcon>
+        {/* 서치 아이콘 */}
+        <Box sx={{
+          textAlign: 'end',
+        }}>
+          <ListItemIcon>
+            <IconButton edge="end" aria-label="delete" onClick={() => onSearchItemDetail(itemId)}>
+              <Search />
+            </IconButton>
+          </ListItemIcon>
+        </Box>
       </ListItem>
     </>
   );

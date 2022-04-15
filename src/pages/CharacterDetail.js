@@ -7,7 +7,7 @@ import { Search } from '@mui/icons-material';
 // Actions
 import { characterEquipmentSearchFetch, characterInfoFetch, characterTimelineFetch, initCharacter, initTimeline } from "../actions/characterAction";
 import { initGettingItems, initSearchItems, searchItemDetailFetch } from '../actions/itemSearchAction';
-import { getItemRarityColor, getServerName } from '../lib/CommonFunction';
+import { getItemRarityColor, getServerName, numberWithCommas } from '../lib/CommonFunction';
 
 // Components
 import SearchItemDetailModal from '../components/SearchItemDetailModal';
@@ -69,11 +69,11 @@ const CharacterDetail = () => {
         }}>
           {/* 캐릭터 정보 */}
           <Box sx={{
-            maxWidth: isMobile ? 180 : 240
+            maxWidth: isMobile ? '100%' : 240
           }}>
             {
               character &&
-              <CharacterInfo info={character} serverId={params.serverId} tagEquipmentSummary={tagEquipmentSummary} />
+              <CharacterInfo info={character} serverId={params.serverId} tagEquipmentSummary={tagEquipmentSummary} isMobile={isMobile} />
             }
           </Box>
 
@@ -123,9 +123,10 @@ const CharacterDetail = () => {
 };
 
 // 캐릭터 정보
-const CharacterInfo = ({ serverId, info, tagEquipmentSummary }) => {
+const CharacterInfo = ({ serverId, info, tagEquipmentSummary, isMobile }) => {
 
   const navigate = useNavigate();
+  const { totalEquipmentGrowLevel } = useSelector((state) => state.characterState);
   const { characterId, characterName, jobGrowName, level, guildName, adventureName, status } = info;
 
   return (
@@ -133,14 +134,17 @@ const CharacterInfo = ({ serverId, info, tagEquipmentSummary }) => {
       <CardActionArea onClick={() => navigate(`/character/${serverId}/${characterId}`)}>
         <CardMedia
           component="img"
-          image={`https://img-api.neople.co.kr/df/servers/${serverId}/characters/${characterId}?zoom=3`}
+          image={`https://img-api.neople.co.kr/df/servers/${serverId}/characters/${characterId}?zoom=1`}
           alt="green iguana"
         />
-        <CardContent>
-          <Typography gutterBottom variant="h6" component="div">
-            {characterName}
-          </Typography>
+        <CardContent sx={{
+          display: isMobile ? 'flex' : '',
+          gap: 1,
+        }}>
           <Box>
+            <Typography gutterBottom fontWeight={'bold'} fontSize={16}>
+              {characterName}
+            </Typography>
             <Typography variant="body2" color="text.secondary">
               {`모험단 : ${adventureName}`}
             </Typography>
@@ -156,17 +160,23 @@ const CharacterInfo = ({ serverId, info, tagEquipmentSummary }) => {
             <Typography variant="body2" color="text.secondary">
               {`레벨 : ${level}`}
             </Typography>
-            <Typography color="text.secondary" fontWeight={'bold'} fontSize={16}>
-              {`명성 : ${status.filter(s => s.name === '모험가 명성').map(s => s.value)}`}
+            <Typography color="mediumblue" fontWeight={'bold'} fontSize={16}>
+              {`명성 : ${numberWithCommas(status.filter(s => s.name === '모험가 명성').map(s => s.value)) || '0'}`}
             </Typography>
+            {
+              totalEquipmentGrowLevel > 0 &&
+              <Typography color="#d32f2f" fontWeight={'bold'} fontSize={16} >
+                {`장비 성장레벨 : ${numberWithCommas(totalEquipmentGrowLevel)}Lv`}
+              </Typography>
+            }
           </Box>
           {
             tagEquipmentSummary && tagEquipmentSummary.length > 0 &&
             <Box
               sx={{
-                marginTop: 2
+                marginTop: isMobile ? 0 : 1
               }}>
-              <Typography variant="h6">
+              <Typography fontSize={16} fontWeight={'bold'}>
                 {`장착 아이템 TAG요약`}
               </Typography>
               {
@@ -235,24 +245,26 @@ const ItemSheets = ({ isMobile }) => {
       }}>
         <Box
           sx={{
-            display: 'flex'
+            display: 'flex',
+            alignItems: 'center'
           }}>
           <Box
             sx={{
               flexGrow: 1,
+              minWidth: 120,
             }}
-            onClick={() => setOpen(!open)}>
+            onClick={() => setOpen(!open)}
+          >
             <SelectTag tags={tags} setTags={onSetTags} open={open} setOpen={setOpen} />
           </Box>
-          <Box sx={{
-            display: 'flex',
-            alignItems: 'center'
-          }}>
+          <Box>
             <Tooltip title="타임라인 기준 획득 하였던 아이템 이력을 바탕으로 출력됩니다. 아이템 해체 및 성장에 쓰인 아이템도 출력이 됩니다." placement="top">
-              <IconButton sx={{
-                fontSize: 16
-              }}>
-                획득이력 아이템 전체 시트 설명
+              <IconButton>
+                <Typography fontWeight={'bold'} sx={{
+                  fontSize: 16
+                }}>
+                  획득이력 아이템 전체 시트 설명
+                </Typography>
               </IconButton>
             </Tooltip>
           </Box>
@@ -266,7 +278,7 @@ const ItemSheets = ({ isMobile }) => {
         } label="TAG요약 숨기기" />
       </Box>
       <Box sx={{
-        display: isMobile ? 'block' : 'flex',
+        display: 'flex',
         gap: 1.5,
       }}>
         <Box>
@@ -277,7 +289,8 @@ const ItemSheets = ({ isMobile }) => {
           }
         </Box>
         <Box sx={{
-          display: checked ? 'none' : ''
+          display: checked ? 'none' : '',
+          minWidth: 110,
         }}>
           <Typography fontWeight={'bold'} fontSize={16}>
             {`획득이력 아이템 TAG요약`}
@@ -305,46 +318,51 @@ const SearchItem = ({ item, onSearchItemDetail, isMobile }) => {
     <ListItem sx={{
       display: isMobile ? 'block' : 'flex'
     }}>
+      <Box sx={{
+        display: 'flex',
+        alignItems: 'center',
+        flexGrow: 1,
+      }}>
+        <ListItemAvatar>
+          <Avatar alt="Remy Sharp" src={`https://img-api.neople.co.kr/df/items/${itemId}`} variant="square" />
+        </ListItemAvatar>
 
-      <ListItemAvatar>
-        <Avatar alt="Remy Sharp" src={`https://img-api.neople.co.kr/df/items/${itemId}`} variant="square" />
-      </ListItemAvatar>
-
-      <Box
-        sx={{
-          flexGrow: 1,
-        }}
-      >
-        <ListItemText
-          primary={itemName}
+        <Box
           sx={{
-            color: getItemRarityColor(itemRarity)
+            flexGrow: 1,
           }}
-          secondary={
-            <React.Fragment>
-              <Typography
-                sx={{ display: 'inline' }}
-                component="span"
-                variant="body2"
-                color="text.primary"
-              >
-                {`${itemRarity} | `}
-                {`획득일 : ${date} `}
-                {channelName && ` | 채널 : ${channelName}`}
-                {channelNo && `(${channelNo})`}
-              </Typography>
-              {dungeonName && ` | ${dungeonName}`}
-              {` | ${name || ''}`}
-            </React.Fragment>
-          }
-        />
-      </Box>
+        >
+          <ListItemText
+            primary={itemName}
+            sx={{
+              color: getItemRarityColor(itemRarity)
+            }}
+            secondary={
+              <React.Fragment>
+                <Typography
+                  sx={{ display: 'inline' }}
+                  component="span"
+                  variant="body2"
+                  color="text.primary"
+                >
+                  {`${itemRarity} | `}
+                  {`획득일 : ${date} `}
+                  {channelName && ` | 채널 : ${channelName}`}
+                  {channelNo && `(${channelNo})`}
+                </Typography>
+                {dungeonName && ` | ${dungeonName}`}
+                {` | ${name || ''}`}
+              </React.Fragment>
+            }
+          />
+        </Box>
 
-      <ListItemIcon>
-        <IconButton edge="end" aria-label="delete" onClick={() => onSearchItemDetail(itemId)}>
-          <Search />
-        </IconButton>
-      </ListItemIcon>
+        <ListItemIcon>
+          <IconButton edge="end" aria-label="delete" onClick={() => onSearchItemDetail(itemId)}>
+            <Search />
+          </IconButton>
+        </ListItemIcon>
+      </Box>
     </ListItem>
   );
 };

@@ -18,14 +18,14 @@ const CharacterItems = () => {
     <>
       <LoadingView>
         <Box sx={{
-          display: isMobile ? '' : 'flex',
+          display: 'flex',
           flexWrap: 'wrap',
           gap: 1,
           p: 1,
         }}>
           {
             characters && characters.map((item, index) => (
-              <SearchItem key={index} item={item} />
+              <SearchItem key={index} item={item} isMobile={isMobile} />
             ))
           }
           {
@@ -43,7 +43,7 @@ const CharacterItems = () => {
   );
 };
 
-const SearchItem = ({ item }) => {
+const SearchItem = ({ item, isMobile }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { selectedCharacters } = useSelector((state) => state.characterState);
@@ -78,18 +78,21 @@ const SearchItem = ({ item }) => {
         </FormGroup>
       </CardContent>
 
-      <CardActionArea>
+      <CardActionArea sx={{
+        display: isMobile ? 'flex' : ''
+      }}
+        onClick={() => navigate(`/character/${serverId}/${characterId}`)}
+      >
         <CardMedia
           sx={{
-            maxWidth: 250
+            maxWidth: isMobile ? 150 : 250
           }}
-          onClick={() => navigate(`/character/${serverId}/${characterId}`)}
           component="img"
           image={`https://img-api.neople.co.kr/df/servers/${serverId}/characters/${characterId}?zoom=1`}
           alt="green iguana"
         />
         <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
+          <Typography gutterBottom fontWeight={'bold'} fontSize={isMobile ? 17 : 19} component="div">
             {characterName}
           </Typography>
           <Typography variant="body2" color="text.secondary">
