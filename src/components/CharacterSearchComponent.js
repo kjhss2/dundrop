@@ -1,6 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Box, Button, Chip, IconButton, Stack, TextField, Tooltip, Typography } from "@mui/material";
+import ReactGA from "react-ga";
 
 // Actions
 import { characterSearchFetch, onChangeField, selectCharacter } from "../actions/characterAction";
@@ -17,6 +18,13 @@ const CharacterSearchComponent = () => {
 
   const onSearch = () => {
     dispatch(characterSearchFetch(charName));
+
+    // React Google Analytics Event(캐릭터명 검색 수집)
+    ReactGA.event({
+      category: "Search",
+      action: charName,
+      label: "Button",
+    });
   };
 
   const removeSession = () => {
