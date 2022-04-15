@@ -45,7 +45,7 @@ const Home = () => {
     <>
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
         <Box>
-          <Typography variant="h5">던드롭(DunDrop)</Typography>
+          <Typography variant="h5">던드랍(DunDrop)</Typography>
         </Box>
         <Box sx={{ marginLeft: 2 }}>
           <Typography variant="h7">던전앤파이터 TAG별 아이템 드랍정보, 보유 아이템 검색 사이트</Typography>
@@ -64,10 +64,11 @@ const Home = () => {
           <Guide />
         </TabPanel>
         <TabPanel value={value} index={0}>
-          안녕하세요. 2006년부터 소소하게 던전앤파이터를 즐기고 있는 유저입니다.<br />
-          이번에 만렙 확장과 더불어 신규 105레벨 아이템을 좀 더 쉽게 검색하는 기능을 만들고자 사이트를 개발하게 되었습니다.<br />
+          안녕하세요. 석유는 아니고 화석 쯤 되는 던파 유저입니다.<br />
+          이번에 만렙 확장과 더불어 신규 105레벨 아이템을 좀 더 쉽게 검색하고 싶어서 사이트를 개발하게 되었습니다.<br />
+          좋은건 나눠쓰란 말이 있죠. 저도 사용하는 사이트인 만큼 편리한 기능 많이 추가 하겠습니다.<br />
           <br />
-          던드롭은 현재 베타로 운영중이며, 불편한 점이 있으시면 문의주시면 감사하겠습니다.<br />
+          던드랍은 현재 베타로 운영중이며, 불편한 점이 있으시면 문의주시면 감사하겠습니다.<br />
           <br />
           <Box sx={{
             display: 'flex',
