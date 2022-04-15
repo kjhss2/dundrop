@@ -16,7 +16,7 @@ const ItemSearch105 = () => {
       <SearchItems items={searchItems105} />
       <Box sx={{
         gap: 1,
-        marginTop: 5
+        marginTop: 6
       }}>
         <Typography variant="body1" color="text.primary">
           {'무기는 제외하였습니다.'} &nbsp;

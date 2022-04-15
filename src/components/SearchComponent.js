@@ -38,40 +38,50 @@ const SearchComponent = () => {
   return (
     <Box sx={{
       display: isMobile ? '' : 'flex',
-      alignItems: 'center',
+      // alignItems: 'center',
       gap: 1,
     }}>
 
-      <SelectItemType itemType={itemType} setItemType={onSetItemType} />
-
-      <Box
-        sx={{
-          flexGrow: 1,
-          minWidth: 50,
-        }}
-        onClick={() => setOpen(!open)}
-      >
-        <SelectTag tags={tags} setTags={onSetTags} open={open} setOpen={setOpen} />
+      <Box sx={{
+        flexGrow: 1,
+        display: isMobile ? 'flex' : 'flex', gap: 1
+      }}>
+        <SelectItemType itemType={itemType} setItemType={onSetItemType} />
+        <Box
+          sx={{
+            flexGrow: 1,
+            minWidth: 50,
+          }}
+          onClick={() => setOpen(!open)}
+        >
+          <SelectTag tags={tags} setTags={onSetTags} open={open} setOpen={setOpen} />
+        </Box>
       </Box>
 
-      <Box
-        sx={{
-          flexGrow: 1,
-          minWidth: 50,
-        }}
-      >
-        <TextField
-          id="tf-name"
-          label="아이템명"
-          variant="outlined"
-          fullWidth
-          defaultValue={keyword}
-          onChange={(e) => setKeyword(e.target.value)}
-          onKeyDown={(e) => e.key === 'Enter' && onSearch()}
-        />
+      <Box sx={{
+        flexGrow: 1,
+        display: isMobile ? 'flex' : 'flex', gap: 1,
+        marginTop: isMobile ? 1 : 0
+      }}>
+        <Box
+          sx={{
+            flexGrow: 1,
+            minWidth: 50,
+          }}
+        >
+          <TextField
+            id="tf-name"
+            label="아이템명"
+            variant="outlined"
+            fullWidth
+            defaultValue={keyword}
+            onChange={(e) => setKeyword(e.target.value)}
+            onKeyDown={(e) => e.key === 'Enter' && onSearch()}
+          />
+        </Box>
+        <Button variant="text" onClick={() => onSearch()}>검색</Button>
       </Box>
 
-      <Button variant="text" onClick={() => onSearch()}>검색</Button>
       <Tooltip title="타임라인 기준 획득 하였던 아이템 이력을 바탕으로 출력됩니다. 아이템 해체 및 성장에 쓰인 아이템도 출력이 됩니다." placement="top">
         <IconButton sx={{
           fontSize: 16

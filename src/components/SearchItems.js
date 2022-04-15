@@ -36,11 +36,15 @@ const SearchItems = ({ items }) => {
           }
           {
             (items && items.length === 0) &&
-            <Typography
-              color="text.primary"
-            >
-              {'조회된 정보가 없습니다. 원하는 장비유형, Tag를 선택하거나 검색버튼을 클릭해 주세요.'}
-            </Typography>
+            <Box sx={{
+              marginTop: 3
+            }}>
+              <Typography
+                color="text.primary"
+              >
+                {'조회된 정보가 없습니다. 원하는 장비유형, Tag를 선택하거나 검색버튼을 클릭해 주세요.'}
+              </Typography>
+            </Box>
           }
         </List>
       </LoadingView>
@@ -61,70 +65,76 @@ const SearchItem = ({ item, onSearchItemDetail, isMobile }) => {
         display: isMobile ? 'block' : 'flex',
         backgroundColor: isGetting ? 'aliceblue' : '',
         border: 1,
-        marginBottom: 1
+        marginBottom: 1,
       }}
       >
+        <Box sx={{
+          display: 'flex',
+          alignItems: 'center',
+        }}>
+          <ListItemAvatar>
+            <Tooltip title={(isCore ? `★${isCoreDesc}★` : '')} placement="top" disableInteractive>
+              <Badge
+                overlap="circular"
+                anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
+                badgeContent={
+                  isCore ?
+                    <Star color={"error"} />
+                    : 0
+                }
+              >
+                <Avatar alt="Remy Sharp" src={`https://img-api.neople.co.kr/df/items/${itemId}`} variant="square" />
+              </Badge>
+            </Tooltip>
+          </ListItemAvatar>
 
-        <ListItemAvatar>
-          <Tooltip title={(isCore ? `★${isCoreDesc}★` : '')} placement="top" disableInteractive>
-            <Badge
-              overlap="circular"
-              anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
-              badgeContent={
-                isCore ?
-                  <Star color={"error"} />
-                  : 0
-              }
-            >
-              <Avatar alt="Remy Sharp" src={`https://img-api.neople.co.kr/df/items/${itemId}`} variant="square" />
-            </Badge>
-          </Tooltip>
-        </ListItemAvatar>
-
-        <Box
-          sx={{
-            width: 450,
-          }}
-        >
-          <ListItemText
-            primary={itemName}
+          <Box
             sx={{
-              color: getItemRarityColor('에픽')
+              width: 450,
             }}
-            secondary={
-              <React.Fragment>
-                <Typography
-                  sx={{ display: 'inline' }}
-                  component="span"
-                  variant="body2"
-                  color="text.primary"
-                >
-                  {`${itemType} `}
-                </Typography>
-                {` | ${desc}`}
-              </React.Fragment>
+          >
+            <ListItemText
+              primary={itemName}
+              sx={{
+                color: getItemRarityColor('에픽')
+              }}
+              secondary={
+                <React.Fragment>
+                  <Typography
+                    sx={{ display: 'inline' }}
+                    component="span"
+                    variant="body2"
+                    color="text.primary"
+                  >
+                    {`${itemType} `}
+                  </Typography>
+                  {` | ${desc}`}
+                </React.Fragment>
+              }
+            />
+            {
+              makeTags.map((tag, index) => (
+                <React.Fragment key={index}>
+                  <Typography
+                    sx={{ display: 'inline' }}
+                    component="span"
+                    variant="body2"
+                    color="text.primary"
+                    fontWeight={tag.isTagMatch ? 'bold' : ''}
+                  >
+                    {tag.label}
+                  </Typography>
+                </React.Fragment>
+              ))
             }
-          />
-          {
-            makeTags.map((tag, index) => (
-              <React.Fragment key={index}>
-                <Typography
-                  sx={{ display: 'inline' }}
-                  component="span"
-                  variant="body2"
-                  color="text.primary"
-                  fontWeight={tag.isTagMatch ? 'bold' : ''}
-                >
-                  {tag.label}
-                </Typography>
-              </React.Fragment>
-            ))
-          }
+          </Box>
         </Box>
 
         <Box
           sx={{
             flexGrow: 1,
+            // textAlign: 'end',
+            marginLeft: 1,
           }}
         >
           <Typography
@@ -150,6 +160,8 @@ const SearchItem = ({ item, onSearchItemDetail, isMobile }) => {
             display: 'flex',
             alignItems: 'center',
             marginRight: 1,
+            marginTop: isMobile ? 1 : 0,
+            marginBottom: isMobile ? 1 : 0,
           }}>
             <Check />
             <Typography
@@ -182,12 +194,16 @@ const SearchItem = ({ item, onSearchItemDetail, isMobile }) => {
             ))
           }
         </Stack>
+        <Box sx={{
+          textAlign: 'end',
+        }}>
+          <ListItemIcon>
+            <IconButton edge="end" aria-label="delete" onClick={() => onSearchItemDetail(itemId)}>
+              <Search />
+            </IconButton>
+          </ListItemIcon>
+        </Box>
 
-        <ListItemIcon>
-          <IconButton edge="end" aria-label="delete" onClick={() => onSearchItemDetail(itemId)}>
-            <Search />
-          </IconButton>
-        </ListItemIcon>
       </ListItem>
     </>
   );

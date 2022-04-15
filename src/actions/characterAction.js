@@ -7,7 +7,7 @@ export const characterSearchFetch = (charName) => {
 
   if (!charName) {
     window.alert('캐릭터명을 입력해 주세요.');
-    return;
+    return () => { };
   }
 
   let wordType = '&wordType=full';
@@ -23,8 +23,8 @@ export const characterSearchFetch = (charName) => {
     const histories = characterSearchHistory.split(',');
     // 최근 검색 캐릭터명이 같다면 이력 제외 처리
     if (histories[0] !== charName) {
-      // 검색 이력이 10개가 넘는다면 마지막 검색 기록 제거 처리
-      if (histories.length > 9) {
+      // 검색 이력이 5개가 넘는다면 마지막 검색 기록 제거 처리
+      if (histories.length > 4) {
         const lastCommaIndex = characterSearchHistory.lastIndexOf(',');
         characterSearchHistory = characterSearchHistory.substring(0, lastCommaIndex);
       }
@@ -159,6 +159,7 @@ export const characterEquipmentSearchFetch = (serverId, characterId) => {
               // tags, desc setting
               eq['tags'] = item.tags;
               eq['desc'] = item.desc;
+              eq['dropInfos'] = item.dropInfos;
               eq['isCore'] = item.isCore;
               eq['isCoreDesc'] = item.isCoreDesc;
               return eq;

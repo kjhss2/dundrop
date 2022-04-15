@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Box, Button, Chip, IconButton, Stack, TextField, Tooltip, Typography } from "@mui/material";
+import { Box, Button, Chip, IconButton, TextField, Tooltip, Typography } from "@mui/material";
 import ReactGA from "react-ga";
 
 // Actions
@@ -104,10 +104,13 @@ const CharacterSearchComponent = () => {
       {
         <Box sx={{
           flexGrow: 1,
+          marginTop: isMobile ? 2 : 0,
         }}>
           <Box sx={{
             display: 'flex',
-            alignItems: 'center'
+            alignItems: 'center',
+            gap: 1,
+            marginBottom: isMobile ? 1 : 0
           }}>
             <Typography variant="h6">다중 캐릭터 목록(최대 4캐릭)</Typography>
             <Tooltip title="노블레스 코드용 선택한 캐릭터 아이템 획득이력 여부 표시" placement="top">
@@ -119,7 +122,12 @@ const CharacterSearchComponent = () => {
             </Tooltip>
           </Box>
 
-          <Stack direction="row" spacing={1}>
+          <Box sx={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            gap: 1
+          }}
+          >
             {
               selectedCharacters && selectedCharacters.map((c) => (
                 <Chip
@@ -130,7 +138,7 @@ const CharacterSearchComponent = () => {
                 />
               ))
             }
-          </Stack>
+          </Box>
           {
             selectedCharacters && selectedCharacters.length === 0 &&
             <Typography variant="h7">캐릭터 검색 후 다중 캐릭터를 선택해 주세요.</Typography>

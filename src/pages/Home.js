@@ -93,12 +93,10 @@ const Home = () => {
           ※ 주요 기능<br />
           1. 105레벨 아이템 TAG검색 및 드랍정보<br />
           2. 캐릭터 아이템 획득여부 표시기능<br />
-          3. 캐릭터 아이템 획득이력<br />
-          4. 캐릭터 장착아이템 TAG요약<br />
-          5. 캐릭터 획득이력 아이템 TAG요약<br />
-          6. 다중 캐릭터 선택 기능(22.04.13)<br />
+          3. 캐릭터 장착아이템 TAG요약<br />
+          4. 캐릭터 획득이력 아이템 TAG요약<br />
+          5. 다중 캐릭터 선택 기능<br />
           <br />
-          현재 사이트는 PC화면(넓이 1000px 이상)에서 최적화된 화면을 보실 수 있으며 모바일용 화면도 적용 예정입니다.
         </TabPanel>
         <TabPanel value={value} index={2}>
           <List component="nav" aria-label="mailbox folders">
@@ -119,11 +117,11 @@ const Home = () => {
         <TabPanel value={value} index={3}>
           <List component="nav" aria-label="mailbox folders">
             <ListItem>
-              <ListItemText primary="코어 아이템 별표 표시(완료)" secondary="2022-04-15 | 코어 아이템인 경우 별표 표시와 마우스를 올려면 어떤 코어인지 출력" />
+              <ListItemText primary="편의성 업데이트(완료)" secondary="2022-04-15 | 장착아이템 마부 정보 추가, 모바일 화면 최적화" />
             </ListItem>
             <Divider />
             <ListItem>
-              <ListItemText primary="모바일 화면 가독성 업데이트 예정" secondary="2022-04-14 | 그 외에 신화 아이템 추가, 모험단 검색, 아이템만 검색 기능도 조금만 기다려주세요." />
+              <ListItemText primary="코어 아이템 별표 표시(완료)" secondary="2022-04-15 | 코어 아이템인 경우 별표 표시와 마우스를 올려면 어떤 코어인지 출력" />
             </ListItem>
             <Divider />
             <ListItem>

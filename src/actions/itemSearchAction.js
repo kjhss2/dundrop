@@ -7,7 +7,7 @@ export const searchItemsFetch = (itemName) => {
 
   if (!itemName) {
     window.alert('아이템명을 입력해 주세요.');
-    return;
+    return () => { };
   }
 
   return (dispatch) => {
