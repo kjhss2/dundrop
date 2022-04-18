@@ -69,7 +69,7 @@ const SearchItem = ({ item, isMobile }) => {
   }, [item, selectedCharacters]);// 아이템 목록과 다중 캐릭터 선택 변경 시 업데이트
 
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card sx={isMobile ? { flexGrow: 1 } : { maxWidth: 345 }}>
       <CardContent sx={{
         backgroundColor: '#d3d3d3',
       }}>
