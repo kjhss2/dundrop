@@ -1,9 +1,14 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { Avatar, Badge, Box, Tooltip, Typography } from "@mui/material";
+import { Avatar, Badge, Box, Typography } from "@mui/material";
 import { Star } from "@mui/icons-material";
-import SearchItemDetailModal from "./SearchItemDetailModal";
+
+// Actions
 import { searchItemDetailFetch } from "../actions/itemSearchAction";
+
+// Components
+import SearchItemDetailModal from "./SearchItemDetailModal";
+import TooltipComponent from "./TooltipComponent";
 
 const ItemSheet = ({ items, filter, tags }) => {
 
@@ -42,7 +47,7 @@ const ItemSheet = ({ items, filter, tags }) => {
               return false;
             }
           }).map(item => (
-            <Tooltip key={item.itemId} title={(item.isCore ? `★${item.isCoreDesc}★` : '') + item.itemName + (item.dropInfos ? `: ${item.dropInfos}` : '')} placement="top" disableInteractive>
+            <TooltipComponent key={item.itemId} title={(item.isCore ? `★${item.isCoreDesc}★` : '') + item.itemName + (item.dropInfos ? `: ${item.dropInfos}` : '')}>
               <Box sx={{
                 cursor: 'pointer',
               }}
@@ -62,7 +67,7 @@ const ItemSheet = ({ items, filter, tags }) => {
                   }} />
                 </Badge>
               </Box>
-            </Tooltip>
+            </TooltipComponent>
           ))
         }
       </Box>
