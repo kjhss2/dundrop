@@ -96,7 +96,7 @@ export const allItems = [
 
   // 머리어깨
   { itemId: "818d02df7a254fb171ae5bd56cdea770", itemName: '근력 보강 숄더', itemType: '머리어깨', tags: ['없음'], dropInfos: ['왕의 요람', '백색의 땅'], desc: '템주으면 이속증가 못주으면 이속감소' },
-  { itemId: "630d6c93e1652b76d34e9aba482fdf6d", itemName: '끝을 바라보는 시선', itemType: '머리어깨', tags: ['콤보,MP 과소모,아칸'], dropInfos: ['캐니언 힐', '나사우 삼림'], desc: 'HP 0되면 그뒤부터 MP소모' },
+  { itemId: "630d6c93e1652b76d34e9aba482fdf6d", itemName: '끝을 바라보는 시선', itemType: '머리어깨', tags: ['콤보,MP 과소모,아칸'], dropInfos: ['캐니언 힐', '나사우 삼림'], desc: '콤보 유지시 피해증가, MP 과소모' },
   { itemId: "59b756d84bf9478eaca58bed8f74762f", itemName: '데저트 컨실멘트 숄더', itemType: '머리어깨', tags: ['화상,크리티컬 히트'], dropInfos: ['캐니언 힐', '나사우 삼림'], desc: '화상 딜상승 + 본인 화상시 유틸', isCore: true, isCoreDesc: '화상 코어' },
   { itemId: "82e9dd8fb1c6810d06fdf15288238f72", itemName: '드래곤 헌터', itemType: '머리어깨', tags: ['화속성 강화,크리티컬 히트'], dropInfos: ['캐니언 힐', '나사우 삼림'], desc: '' },
   { itemId: "4e162f544f731ce0189c46842eedafe4", itemName: '마그네틱 서치 스캔', itemType: '머리어깨', tags: ['감전,크리티컬 히트'], dropInfos: ['캐니언 힐', '나사우 삼림'], desc: '감전딜 상승과 본인감전시 유틸', isCore: true, isCoreDesc: '감전 코어' },
