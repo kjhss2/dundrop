@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Avatar, Badge, Box, IconButton, List, ListItem, ListItemAvatar, ListItemIcon, ListItemText, Tooltip, Typography } from "@mui/material";
+import { Avatar, Badge, Box, IconButton, List, ListItem, ListItemAvatar, ListItemIcon, ListItemText, Typography } from "@mui/material";
 import { Search, Star } from '@mui/icons-material';
 
 // Actions
@@ -9,6 +9,7 @@ import { searchItemDetailFetch } from "../actions/itemSearchAction";
 // Component
 import { getItemRarityColor, numberWithCommas } from "../lib/CommonFunction";
 import SearchItemDetailModal from "./SearchItemDetailModal";
+import TooltipComponent from "./TooltipComponent";
 
 const MountEquipments = ({ items }) => {
 
@@ -92,7 +93,7 @@ const SearchItem = ({ item, onSearchItemDetail, isMobile }) => {
               textAlign: 'center',
               justifyContent: 'center',
             }}>
-              <Tooltip title={(isCore ? `★${isCoreDesc}★` : '')} placement="top" disableInteractive>
+              <TooltipComponent title={(isCore ? `★${isCoreDesc}★` : '')}>
                 <Badge
                   overlap="circular"
                   anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
@@ -104,7 +105,7 @@ const SearchItem = ({ item, onSearchItemDetail, isMobile }) => {
                 >
                   <Avatar alt="Remy Sharp" src={`https://img-api.neople.co.kr/df/items/${itemId}`} variant="square" />
                 </Badge>
-              </Tooltip>
+              </TooltipComponent>
             </ListItemAvatar>
           </Box>
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Avatar, Box, Card, CardActionArea, CardContent, CardMedia, FormControlLabel, IconButton, ListItem, ListItemAvatar, ListItemIcon, ListItemText, Switch, Tab, Tabs, Tooltip, Typography } from '@mui/material';
+import { Avatar, Box, Card, CardActionArea, CardContent, CardMedia, FormControlLabel, IconButton, ListItem, ListItemAvatar, ListItemIcon, ListItemText, Switch, Tab, Tabs, Typography } from '@mui/material';
 import { Search } from '@mui/icons-material';
 
 // Actions
@@ -17,6 +17,7 @@ import LoadingView from '../components/LoadingView';
 import SelectTag from '../components/select/SelectTag';
 import { allItems, excludeTags, itemTypes } from '../actions/commonData';
 import MountEquipments from '../components/MountEquipments';
+import TooltipComponent from '../components/TooltipComponent';
 
 const CharacterDetail = () => {
 
@@ -258,7 +259,7 @@ const ItemSheets = ({ isMobile }) => {
             <SelectTag tags={tags} setTags={onSetTags} open={open} setOpen={setOpen} />
           </Box>
           <Box>
-            <Tooltip title="타임라인 기준 획득 하였던 아이템 이력을 바탕으로 출력됩니다. 아이템 해체 및 성장에 쓰인 아이템도 출력이 됩니다." placement="top">
+            <TooltipComponent title={"타임라인 기준 획득 하였던 아이템 이력을 바탕으로 출력됩니다. 아이템 해체 및 성장에 쓰인 아이템도 출력이 됩니다."}>
               <IconButton>
                 <Typography fontWeight={'bold'} sx={{
                   fontSize: 16
@@ -266,7 +267,7 @@ const ItemSheets = ({ isMobile }) => {
                   획득이력 아이템 전체 시트 설명
                 </Typography>
               </IconButton>
-            </Tooltip>
+            </TooltipComponent>
           </Box>
         </Box>
         <FormControlLabel control={

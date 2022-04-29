@@ -1,12 +1,13 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Box, Button, Chip, IconButton, TextField, Tooltip, Typography } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import { Box, Button, Chip, IconButton, TextField, Typography } from "@mui/material";
 import ReactGA from "react-ga";
 
 // Actions
 import { characterSearchFetch, onChangeField, selectCharacter } from "../actions/characterAction";
-import { useNavigate } from "react-router-dom";
 import { getServerName } from '../lib/CommonFunction';
+import TooltipComponent from './TooltipComponent';
 
 const CharacterSearchComponent = () => {
 
@@ -107,19 +108,17 @@ const CharacterSearchComponent = () => {
           marginTop: isMobile ? 2 : 0,
         }}>
           <Box sx={{
-            display: 'flex',
+            display: isMobile ? 'block' : 'flex',
             alignItems: 'center',
             gap: 1,
             marginBottom: isMobile ? 1 : 0
           }}>
             <Typography variant="h6">다중 캐릭터 목록(최대 4캐릭)</Typography>
-            <Tooltip title="노블레스 코드용 선택한 캐릭터 아이템 획득이력 여부 표시" placement="top">
-              <IconButton sx={{
-                fontSize: 16
-              }}>
+            <TooltipComponent title={'노블레스 코드용 선택한 캐릭터 아이템 획득이력 여부 표시'}>
+              <IconButton sx={{ fontSize: 16 }}>
                 다중 캐릭터란 ?
               </IconButton>
-            </Tooltip>
+            </TooltipComponent>
           </Box>
 
           <Box sx={{
