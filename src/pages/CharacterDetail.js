@@ -7,7 +7,7 @@ import { Search } from '@mui/icons-material';
 // Actions
 import { characterEquipmentSearchFetch, characterInfoFetch, characterTimelineFetch, initCharacter, initTimeline } from "../actions/characterAction";
 import { initGettingItems, initSearchItems, searchItemDetailFetch } from '../actions/itemSearchAction';
-import { getItemRarityColor, getServerName, numberWithCommas } from '../lib/CommonFunction';
+import { getItemRarityColor, getServerName, makeItemDropInfoSummary, numberWithCommas } from '../lib/CommonFunction';
 
 // Components
 import SearchItemDetailModal from '../components/SearchItemDetailModal';
@@ -127,7 +127,7 @@ const CharacterDetail = () => {
 const CharacterInfo = ({ serverId, info, tagEquipmentSummary, isMobile }) => {
 
   const navigate = useNavigate();
-  const { totalEquipmentGrowLevel } = useSelector((state) => state.characterState);
+  const { totalEquipmentGrowLevel, mountItemDropInfoSummary } = useSelector((state) => state.characterState);
   const { characterId, characterName, jobGrowName, level, guildName, adventureName, status } = info;
 
   return (
@@ -139,49 +139,72 @@ const CharacterInfo = ({ serverId, info, tagEquipmentSummary, isMobile }) => {
           alt="green iguana"
         />
         <CardContent sx={{
-          display: isMobile ? 'flex' : '',
           gap: 1,
         }}>
-          <Box>
-            <Typography gutterBottom fontWeight={'bold'} fontSize={16}>
-              {characterName}
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              {`모험단 : ${adventureName}`}
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              {`서버 : ${getServerName(serverId)}`}
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              {`길드 : ${guildName || ''}`}
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              {`직업 : ${jobGrowName}`}
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              {`레벨 : ${level}`}
-            </Typography>
-            <Typography color="mediumblue" fontWeight={'bold'} fontSize={16}>
-              {`명성 : ${numberWithCommas(status.filter(s => s.name === '모험가 명성').map(s => s.value)) || '0'}`}
-            </Typography>
-            {
-              totalEquipmentGrowLevel > 0 &&
-              <Typography color="#d32f2f" fontWeight={'bold'} fontSize={16} >
-                {`장비 성장레벨 : ${numberWithCommas(totalEquipmentGrowLevel)}Lv`}
+          <Box sx={{
+            display: isMobile ? 'flex' : '',
+          }}>
+            <Box>
+              <Typography gutterBottom fontWeight={'bold'} fontSize={16}>
+                {characterName}
               </Typography>
-            }
-          </Box>
-          {
-            tagEquipmentSummary && tagEquipmentSummary.length > 0 &&
-            <Box
-              sx={{
-                marginTop: isMobile ? 0 : 1
-              }}>
-              <Typography fontSize={16} fontWeight={'bold'}>
-                {`장착 아이템 TAG요약`}
+              <Typography variant="body2" color="text.secondary">
+                {`모험단 : ${adventureName}`}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                {`서버 : ${getServerName(serverId)}`}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                {`길드 : ${guildName || ''}`}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                {`직업 : ${jobGrowName}`}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                {`레벨 : ${level}`}
+              </Typography>
+              <Typography color="mediumblue" fontWeight={'bold'} fontSize={16}>
+                {`명성 : ${numberWithCommas(status.filter(s => s.name === '모험가 명성').map(s => s.value)) || '0'}`}
               </Typography>
               {
-                tagEquipmentSummary.map((item, index) => {
+                totalEquipmentGrowLevel > 0 &&
+                <Typography color="#d32f2f" fontWeight={'bold'} fontSize={16} >
+                  {`장비 성장레벨 : ${numberWithCommas(totalEquipmentGrowLevel)}Lv`}
+                </Typography>
+              }
+            </Box>
+            {
+              tagEquipmentSummary && tagEquipmentSummary.length > 0 &&
+              <Box
+                sx={{
+                  marginTop: isMobile ? 0 : 1
+                }}>
+                <Typography fontSize={16} fontWeight={'bold'}>
+                  {`장착 아이템 TAG요약`}
+                </Typography>
+                {
+                  tagEquipmentSummary.map((item, index) => {
+                    return (
+                      <Typography key={index} variant="body2" color="text.secondary">
+                        {`#${item.name}(${item.value})`}
+                      </Typography>
+                    );
+                  })
+                }
+              </Box>
+            }
+          </Box>
+
+          {
+            mountItemDropInfoSummary && mountItemDropInfoSummary.length > 0 &&
+            <Box sx={{
+              marginTop: 1
+            }}>
+              <Typography fontSize={16} fontWeight={'bold'}>
+                {`장착 아이템 드랍 요약`}
+              </Typography>
+              {
+                mountItemDropInfoSummary.map((item, index) => {
                   return (
                     <Typography key={index} variant="body2" color="text.secondary">
                       {`#${item.name}(${item.value})`}
@@ -203,13 +226,29 @@ const ItemSheets = ({ isMobile }) => {
 
   const [tags, setTags] = React.useState([]);
   const [open, setOpen] = React.useState(false);
-  const [checked, setChecked] = React.useState(false);
+  const [tagChecked, setTagChecked] = React.useState(false);
   const [allTagsSummary, setAllTagsSummary] = React.useState([]);
+  const [dropInfoSummary, setDropInfoSummary] = React.useState([]);
 
   React.useEffect(() => {
     makeAllTagSummray();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [allItems]);
+
+  React.useEffect(() => {
+    // 드랍정보 요약
+    setDropInfoSummary(makeItemDropInfoSummary(allItems.filter(item => {
+      let matchCount = tags.length;
+      // 선택된 Tag 시트 표시
+      tags.forEach(tag => {
+        if (item.tags[0].includes(tag)) {
+          matchCount--;
+        }
+      });
+      return matchCount < 1;
+    })));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tags]);
 
   const onSetTags = (_tags) => {
     setTags(_tags);
@@ -236,6 +275,8 @@ const ItemSheets = ({ isMobile }) => {
     _allTagsSummary = Array.from(_allTagsSummary, ([name, value]) => ({ name, value }));
     // 장착 장비 TAG요약 정보 정렬(sort)
     _allTagsSummary.sort(({ value }, { value: bValue }) => bValue - value);
+
+    // TAG정보 요약
     setAllTagsSummary(_allTagsSummary);
   };
 
@@ -271,17 +312,22 @@ const ItemSheets = ({ isMobile }) => {
           </Box>
         </Box>
         <FormControlLabel control={
-          <Switch
-            defaultChecked
-            checked={checked}
-            onChange={(e) => setChecked(e.target.checked)}
-          />
-        } label="TAG요약 숨기기" />
+          <>
+            <Typography>TAG요약</Typography>
+            <Switch
+              defaultChecked
+              checked={tagChecked}
+              onChange={(e) => setTagChecked(e.target.checked)}
+            />
+          </>
+        } label="드랍요약" />
       </Box>
+
       <Box sx={{
         display: 'flex',
         gap: 1.5,
       }}>
+        {/* 아이템 목록 */}
         <Box>
           {
             itemTypes.filter(type => type.value !== 'ALL').map((type, index) => (
@@ -289,8 +335,10 @@ const ItemSheets = ({ isMobile }) => {
             ))
           }
         </Box>
+
+        {/* 획득이력 아이템 TAG요약 */}
         <Box sx={{
-          display: checked ? 'none' : '',
+          display: tagChecked ? 'none' : '',
           minWidth: 110,
         }}>
           <Typography fontWeight={'bold'} fontSize={16}>
@@ -298,6 +346,25 @@ const ItemSheets = ({ isMobile }) => {
           </Typography>
           {
             allTagsSummary.map((item, index) => {
+              return (
+                <Typography key={index} variant="body2" color="text.secondary">
+                  {`#${item.name}(${item.value})`}
+                </Typography>
+              );
+            })
+          }
+        </Box>
+
+        {/* 아이템 드랍 요약 */}
+        <Box sx={{
+          display: tagChecked ? '' : 'none',
+          minWidth: 110,
+        }}>
+          <Typography fontWeight={'bold'} fontSize={16}>
+            {`아이템 드랍 요약`}
+          </Typography>
+          {
+            dropInfoSummary.map((item, index) => {
               return (
                 <Typography key={index} variant="body2" color="text.secondary">
                   {`#${item.name}(${item.value})`}

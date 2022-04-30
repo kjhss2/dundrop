@@ -1,4 +1,5 @@
 import { allItems } from '../../actions/commonData';
+import { makeItemDropInfoSummary } from '../../lib/CommonFunction';
 import * as ActionTypes from '../ActionTypes';
 
 const initState = {
@@ -6,6 +7,7 @@ const initState = {
   characters: [],
   character: '',
   allEquipment: [],
+  mountItemDropInfoSummary: [],
   tagEquipmentSummary: [],
   timeline: [],
   gettingItemIds: new Set([]),
@@ -128,6 +130,7 @@ export const characterState = (state = Object.assign({}, initState), action) => 
       return {
         ...state,
         allEquipment: action.allEquipment,
+        mountItemDropInfoSummary: makeItemDropInfoSummary(action.allEquipment),
         tagEquipmentSummary: action.tagEquipmentSummary,
         totalEquipmentGrowLevel: action.totalEquipmentGrowLevel,
       };
