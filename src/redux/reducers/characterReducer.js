@@ -1,11 +1,12 @@
-import { allItems } from '../../actions/commonData';
-import { makeItemDropInfoSummary } from '../../lib/CommonFunction';
-import * as ActionTypes from '../ActionTypes';
+import { allItems } from "../../actions/commonData";
+import { makeItemDropInfoSummary } from "../../lib/CommonFunction";
+import * as ActionTypes from "../ActionTypes";
 
 const initState = {
-  characterSearchHistory: window.sessionStorage.getItem('characterSearchHistory') || '',
+  characterSearchHistory:
+    window.localStorage.getItem("characterSearchHistory") || "",
   characters: [],
-  character: '',
+  character: "",
   allEquipment: [],
   mountItemDropInfoSummary: [],
   tagEquipmentSummary: [],
@@ -13,7 +14,8 @@ const initState = {
   gettingItemIds: new Set([]),
 
   // 다중 캐릭터 변수
-  selectedCharacters: JSON.parse(sessionStorage.getItem("selectedCharacters")) || [],
+  selectedCharacters:
+    JSON.parse(localStorage.getItem("selectedCharacters")) || [],
   totalEquipmentGrowLevel: 0,
 };
 
@@ -25,7 +27,6 @@ const makeGettingItemIds = (
   characterName,
   isMainCharacter
 ) => {
-
   let selectedCharactersGettingItemIds = new Set([]);
 
   if (timeline && timeline.rows.length > 0) {
@@ -50,21 +51,20 @@ const makeGettingItemIds = (
 
   // 타임라인 기반 보유 아이템 여부 업데이트
   allItems.forEach((item) => {
-
     // 메인 캐릭터 isGetting 처리
     if (isMainCharacter) {
       if (gettingItemIds.has(item.itemId)) {
-        item['isGetting'] = true;
+        item["isGetting"] = true;
       } else {
-        item['isGetting'] = false;
+        item["isGetting"] = false;
       }
     }
 
     // 다중 캐릭터 isGetting 처리
     if (selectedCharactersGettingItemIds.has(item.itemId)) {
-      if (item['selectedCharactersGettting']) {
+      if (item["selectedCharactersGettting"]) {
         let findGetting = false;
-        item['selectedCharactersGettting'].forEach(c => {
+        item["selectedCharactersGettting"].forEach((c) => {
           if (c.serverId === serverId && c.characterId === characterId) {
             if (c.isGetting === false) {
               c.isGetting = true;
@@ -73,25 +73,38 @@ const makeGettingItemIds = (
           }
         });
         if (findGetting === false) {
-          item['selectedCharactersGettting'] = [...item['selectedCharactersGettting'], { serverId, characterId, characterName, isGetting: true }];
+          item["selectedCharactersGettting"] = [
+            ...item["selectedCharactersGettting"],
+            { serverId, characterId, characterName, isGetting: true },
+          ];
         }
       } else {
-        item['selectedCharactersGettting'] = [{ serverId, characterId, characterName, isGetting: true }];
+        item["selectedCharactersGettting"] = [
+          { serverId, characterId, characterName, isGetting: true },
+        ];
       }
     } else {
-      if (item['selectedCharactersGettting'] && item['selectedCharactersGettting'].length > 0) {
+      if (
+        item["selectedCharactersGettting"] &&
+        item["selectedCharactersGettting"].length > 0
+      ) {
         let findGetting = false;
-        item['selectedCharactersGettting'].forEach(c => {
+        item["selectedCharactersGettting"].forEach((c) => {
           if (c.serverId === serverId && c.characterId === characterId) {
             findGetting = true;
           }
         });
 
         if (findGetting === false) {
-          item['selectedCharactersGettting'] = [...item['selectedCharactersGettting'], { serverId, characterId, characterName, isGetting: false }];
+          item["selectedCharactersGettting"] = [
+            ...item["selectedCharactersGettting"],
+            { serverId, characterId, characterName, isGetting: false },
+          ];
         }
       } else {
-        item['selectedCharactersGettting'] = [{ serverId, characterId, characterName, isGetting: false }];
+        item["selectedCharactersGettting"] = [
+          { serverId, characterId, characterName, isGetting: false },
+        ];
       }
     }
   });
@@ -99,13 +112,15 @@ const makeGettingItemIds = (
   return { gettingItemIds };
 };
 
-export const characterState = (state = Object.assign({}, initState), action) => {
+export const characterState = (
+  state = Object.assign({}, initState),
+  action
+) => {
   switch (action.type) {
-
     case ActionTypes.CHARACTER__INIT:
       return {
         ...state,
-        character: '',
+        character: "",
         allEquipment: [],
         tagEquipmentSummary: [],
         timeline: [],
@@ -116,14 +131,16 @@ export const characterState = (state = Object.assign({}, initState), action) => 
     case ActionTypes.CHARACTER__FETCH_ITEMS:
       return {
         ...state,
-        characters: action.items.sort(({ level }, { level: bLevel }) => bLevel - level),
+        characters: action.items.sort(
+          ({ level }, { level: bLevel }) => bLevel - level
+        ),
         characterSearchHistory: action.characterSearchHistory,
       };
 
     case ActionTypes.CHARACTER__SELECT_CHARACTERS:
       return {
         ...state,
-        selectedCharacters: action.selectedCharacters
+        selectedCharacters: action.selectedCharacters,
       };
 
     case ActionTypes.CHARACTER__FETCH_EQUIPMENT:
@@ -145,7 +162,7 @@ export const characterState = (state = Object.assign({}, initState), action) => 
       return {
         ...state,
         timeline: [],
-        selectedCharacters: state.selectedCharacters.map(c => {
+        selectedCharacters: state.selectedCharacters.map((c) => {
           c.timeline = [];
           return c;
         }),
@@ -154,14 +171,13 @@ export const characterState = (state = Object.assign({}, initState), action) => 
       };
 
     case ActionTypes.CHARACTER__FETCH_TIMELINE:
-
       const { gettingItemIds } = makeGettingItemIds(
         state.gettingItemIds,
         action.timeline,
         action.serverId,
         action.characterId,
         action.characterName,
-        action.isMainCharacter,
+        action.isMainCharacter
       );
 
       return {
@@ -177,7 +193,7 @@ export const characterState = (state = Object.assign({}, initState), action) => 
         action.serverId,
         action.characterId,
         action.characterName,
-        action.isMainCharacter,
+        action.isMainCharacter
       );
       return {
         ...state,

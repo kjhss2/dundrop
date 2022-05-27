@@ -29,7 +29,7 @@ const CharacterSearchComponent = () => {
   };
 
   const removeSession = () => {
-    window.sessionStorage.removeItem('characterSearchHistory');
+    window.localStorage.removeItem('characterSearchHistory');
     dispatch(onChangeField('characterSearchHistory', ''));
   };
 
