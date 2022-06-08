@@ -156,13 +156,14 @@ const Home = () => {
           <List component="nav" aria-label="mailbox folders">
             <ListItem>
               <ListItemText
-                primary="개인적인 일 때문에 바빠서 업데이트에 소홀했지만 시간 내서 개선 사항 업데이트 하겠습니다!"
-                secondary="2022-05-27"
+                primary="캐릭터 타임라인 정보 오류 수정"
+                secondary="2022-06-08"
               />
             </ListItem>
             <Divider />
             <ListItem>
               <ListItemText
+                sx={{ textDecoration: "line-through" }}
                 primary="창이 닫히더라도 검색 기록이 남아 있도록 수정(완료)"
                 secondary="2022-05-27 | 캐릭터 검색 기록 / 다중 캐릭릭터 선택 적용"
               />

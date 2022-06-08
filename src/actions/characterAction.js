@@ -6,7 +6,7 @@ import { allItems, excludeTags } from "./commonData";
 export const characterSearchFetch = (charName) => {
   if (!charName) {
     window.alert("캐릭터명을 입력해 주세요.");
-    return () => {};
+    return () => { };
   }
 
   let wordType = "&wordType=full";
@@ -250,57 +250,83 @@ export const characterEquipmentSearchFetch = (serverId, characterId) => {
 export const characterTimelineFetch = (
   serverId,
   characterId,
+  sDate,
+  eDate,
   isMainCharacter = false
 ) => {
-  // 검색 시작일 : 현재날짜 3달 전
-  const startDate = moment().subtract(90, "days").format("YYYY-MM-DD");
-  // 검색 종료일 : 현재날짜
-  const endDate = moment().format("YYYY-MM-DD HH:mm");
+  // // 검색 시작일 : 현재날짜 3달 전
+  // const startDate = moment().subtract(90, "days").format("YYYY-MM-DD");
+  // // 검색 종료일 : 현재날짜
+  // const endDate = moment().format("YYYY-MM-DD HH:mm");
   return (dispatch) => {
-    // code 504 : 아이템 획득(항아리)
-    // code 505 : 아이템 획득(지옥 파티)
-    // code 515 : 아이템 초월 수령 (NPC)
-    // code 516 : 아이템 초월 (초월의돌)
-    callAPI(
-      `/servers/${serverId}/characters/${characterId}/timeline?limit=100&startDate=${startDate}&endDate=${endDate}&code=504,505,515,516&`,
-      {},
-      dispatch
-    ).then((response) => {
-      const { status, data } = response;
-      if (status === 200) {
-        if (isMainCharacter) {
-          dispatch({
-            type: ActionTypes.CHARACTER__FETCH_TIMELINE,
-            timeline: data.timeline,
-            serverId,
-            characterId,
-            characterName: data.characterName,
-            isMainCharacter,
-          });
-        } else {
-          dispatch({
-            type: ActionTypes.CHARACTER__SELECT_CHARACTER_TIMELINE,
-            timeline: data.timeline,
-            serverId,
-            characterId,
-            characterName: data.characterName,
-            isMainCharacter,
-          });
-        }
+    // 최대 검색 기간이 90일이므로 90일 이상일 경우 90일 이하로 나눠서 API 요청
+    if (moment.duration(eDate.diff(sDate)).asDays() > 90) {
+      const startDate = sDate.format("YYYY-MM-DD");
+      const endDate = moment(sDate).add(90, "days");
 
-        // get timeline next data
-        if (data.timeline.next) {
-          characterTimelineFetchNext(
-            dispatch,
-            serverId,
-            characterId,
-            data.timeline.next,
-            isMainCharacter
-          );
-        }
-      }
-    });
+      const nextStartDate = moment(sDate).add(91, "days");
+      dispatch(characterTimelineFetch(serverId, characterId, nextStartDate, eDate, isMainCharacter));
+      characterTimelineFetchAPI(dispatch, serverId, characterId, startDate, endDate, isMainCharacter);
+    } else {
+      const startDate = sDate.format("YYYY-MM-DD");
+      characterTimelineFetchAPI(dispatch, serverId, characterId, startDate, eDate, isMainCharacter);
+    }
   };
+};
+
+const characterTimelineFetchAPI = (dispatch, serverId, characterId, sDate, eDate, isMainCharacter) => {
+
+  let endDate;
+  // 검색 종료 날짜가 오늘 날짜라면 시:분을 현재 시간으로 세팅
+  if (moment(eDate).format('YYYY-MM-DD') === moment().format('YYYY-MM-DD')) {
+    endDate = eDate.format('YYYY-MM-DD HH:mm');
+  } else {
+    endDate = eDate.format('YYYY-MM-DD 23:59');
+  }
+
+  // code 504 : 아이템 획득(항아리)
+  // code 505 : 아이템 획득(지옥 파티)
+  // code 515 : 아이템 초월 수령 (NPC)
+  // code 516 : 아이템 초월 (초월의돌)
+  callAPI(
+    `/servers/${serverId}/characters/${characterId}/timeline?limit=100&startDate=${sDate}&endDate=${endDate}&code=504,505,515,516&`,
+    {},
+    dispatch
+  ).then((response) => {
+    const { status, data } = response;
+    if (status === 200) {
+      if (isMainCharacter) {
+        dispatch({
+          type: ActionTypes.CHARACTER__FETCH_TIMELINE,
+          timeline: data.timeline,
+          serverId,
+          characterId,
+          characterName: data.characterName,
+          isMainCharacter,
+        });
+      } else {
+        dispatch({
+          type: ActionTypes.CHARACTER__SELECT_CHARACTER_TIMELINE,
+          timeline: data.timeline,
+          serverId,
+          characterId,
+          characterName: data.characterName,
+          isMainCharacter,
+        });
+      }
+
+      // get timeline next data
+      if (data.timeline.next) {
+        characterTimelineFetchNext(
+          dispatch,
+          serverId,
+          characterId,
+          data.timeline.next,
+          isMainCharacter
+        );
+      }
+    }
+  });
 };
 
 export const characterTimelineFetchNext = async (
@@ -341,7 +367,8 @@ export const characterTimelineFetchNext = async (
           dispatch,
           serverId,
           characterId,
-          data.timeline.next
+          data.timeline.next,
+          isMainCharacter
         );
       }
     }

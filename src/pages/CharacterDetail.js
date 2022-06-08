@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Avatar, Box, Card, CardActionArea, CardContent, CardMedia, FormControlLabel, IconButton, ListItem, ListItemAvatar, ListItemIcon, ListItemText, Switch, Tab, Tabs, Typography } from '@mui/material';
 import { Search } from '@mui/icons-material';
+import moment from "moment";
 
 // Actions
 import { characterEquipmentSearchFetch, characterInfoFetch, characterTimelineFetch, initCharacter, initTimeline } from "../actions/characterAction";
@@ -33,13 +34,19 @@ const CharacterDetail = () => {
     dispatch(initTimeline());
     dispatch(characterInfoFetch(params.serverId, params.characterId));
     dispatch(characterEquipmentSearchFetch(params.serverId, params.characterId));
-    dispatch(characterTimelineFetch(params.serverId, params.characterId, true));
+
+    // 2022.03.17 : 던파 110레벨 업데이트
+    const startDate = moment('2022-03-17');
+    // 검색 종료일 : 현재날짜
+    const endDate = moment();
+
+    dispatch(characterTimelineFetch(params.serverId, params.characterId, startDate, endDate, true));
 
     // 다중 캐릭터 타임라인 세팅
     selectedCharacters.forEach(c => {
       if (!(c.serverId === params.serverId && c.characterId === params.characterId)) {
         // 다중 캐릭터에 포함된 캐릭터 정보라면 SKIP
-        dispatch(characterTimelineFetch(c.serverId, c.characterId));
+        dispatch(characterTimelineFetch(c.serverId, c.characterId, startDate, endDate));
       }
     });
 
@@ -101,7 +108,7 @@ const CharacterDetail = () => {
             </TabPanel>
             <TabPanel value={value} index={3}>
               {
-                timeline.map((row, index) => (
+                timeline.sort(({ date }, { date: bDate }) => new Date(bDate) - new Date(date)).map((row, index) => (
                   <SearchItem key={index} item={row} onSearchItemDetail={onSearchItemDetail} isMobile={isMobile} />
                 ))
               }
