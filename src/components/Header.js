@@ -1,7 +1,6 @@
 import React from "react";
 import { useNavigate, Outlet, useMatch, useResolvedPath } from 'react-router-dom';
 import { AppBar, Box, Button, Container, Toolbar } from "@mui/material";
-import { useSelector } from "react-redux";
 
 const menus = [
   { title: '캐릭터 검색', url: '/character', active: true },
@@ -11,7 +10,6 @@ const menus = [
 
 const Header = () => {
   const navigate = useNavigate();
-  const { isMobile } = useSelector((state) => state.dimension);
 
   return (
     <>
@@ -23,7 +21,7 @@ const Header = () => {
               onClick={() => navigate("/")}
               sx={{ color: 'white', display: 'block', fontSize: 17 }}
             >
-              DunDrop{isMobile && <br />}(Beta)
+              DunDrop
             </Button>
 
             <Box
